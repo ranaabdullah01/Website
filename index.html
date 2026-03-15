@@ -5,486 +5,557 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>17 Proven Ways to Make Money Online — PLR Bundle</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --gold: #F5A623;
-    --gold-light: #FFD06B;
-    --dark: #0A0A0F;
-    --dark2: #12121A;
-    --dark3: #1C1C28;
-    --white: #FFFFFF;
-    --gray: #8A8A9A;
-    --green: #22C55E;
-    --red: #EF4444;
-    --border: rgba(245,166,35,0.15);
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--dark);
-    color: var(--white);
-    overflow-x: hidden;
-  }
+/* ===================== RESET & BASE ===================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #0C0C12;
+  color: #E0E0EC;
+  overflow-x: hidden;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
 
-  /* NOISE TEXTURE */
-  body::before {
-    content:'';
-    position:fixed;
-    inset:0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events:none;
-    z-index:0;
-    opacity:0.4;
-  }
+/* ===================== VARIABLES ===================== */
+:root {
+  --gold: #F0A500;
+  --gold-dim: rgba(240,165,0,0.15);
+  --gold-border: rgba(240,165,0,0.22);
+  --bg: #0C0C12;
+  --bg2: #13131C;
+  --bg3: #1A1A25;
+  --text: #E0E0EC;
+  --muted: #8888A0;
+  --green: #22C55E;
+  --red-soft: rgba(239,68,68,0.12);
+  --red-border: rgba(239,68,68,0.25);
+  --white: #ffffff;
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --max: 880px;
+  --pad-x: clamp(16px, 5vw, 40px);
+}
 
-  /* ANNOUNCEMENT BAR */
-  .announcement {
-    background: linear-gradient(90deg, var(--gold), #E8920F, var(--gold));
-    background-size: 200% 100%;
-    animation: shimmer 3s linear infinite;
-    text-align:center;
-    padding: 10px 20px;
-    font-weight:600;
-    font-size:14px;
-    color: var(--dark);
-    position: relative;
-    z-index:10;
-  }
-  @keyframes shimmer { 0%{background-position:0%} 100%{background-position:200%} }
+/* Display font for headings */
+h1, h2, h3, .nav-logo, .cta-btn, .cta-btn-large, .current-price, .stat-num, .method-num {
+  font-family: 'Manrope', sans-serif;
+}
 
-  /* NAV */
-  nav {
-    position: sticky;
-    top:0;
-    z-index:100;
-    background: rgba(10,10,15,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .nav-logo { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; color: var(--gold); }
-  .nav-cta {
-    background: var(--gold);
-    color: var(--dark);
-    font-weight:700;
-    font-size:14px;
-    padding: 10px 22px;
-    border-radius: 8px;
-    text-decoration:none;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .nav-cta:hover { transform:translateY(-2px); box-shadow: 0 8px 24px rgba(245,166,35,0.4); }
+/* ===================== ANNOUNCEMENT ===================== */
+.announcement {
+  background: linear-gradient(90deg, #B87800, var(--gold), #B87800);
+  background-size: 200% 100%;
+  animation: shimmer 4s linear infinite;
+  text-align: center;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0C0C12;
+  position: relative;
+  z-index: 20;
+  line-height: 1.4;
+}
+@keyframes shimmer { 0%{background-position:0%} 100%{background-position:200%} }
 
-  /* HERO */
-  .hero {
-    position:relative;
-    z-index:1;
-    padding: 80px 24px 60px;
-    max-width: 860px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(245,166,35,0.12);
-    border: 1px solid rgba(245,166,35,0.3);
-    border-radius: 100px;
-    padding: 6px 16px;
-    font-size:13px;
-    color: var(--gold);
-    font-weight:600;
-    margin-bottom:28px;
-    animation: fadeUp 0.6s ease both;
-  }
-  .badge span { width:8px;height:8px;background:var(--gold);border-radius:50%;animation:pulse 1.5s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+/* ===================== NAV ===================== */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(12,12,18,0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--gold-border);
+  padding: 12px var(--pad-x);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.nav-logo {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: -0.2px;
+  white-space: nowrap;
+}
+.nav-cta {
+  background: var(--gold);
+  color: #0C0C12;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.2s, transform 0.2s;
+  flex-shrink: 0;
+}
+.nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
 
-  h1 {
-    font-family:'Syne',sans-serif;
-    font-size: clamp(32px, 6vw, 62px);
-    font-weight:800;
-    line-height: 1.1;
-    margin-bottom: 24px;
-    animation: fadeUp 0.6s 0.1s ease both;
-  }
-  h1 em { font-style:normal; color: var(--gold); }
-  .hero-sub {
-    font-size: clamp(16px,2.2vw,20px);
-    color: #C0C0D0;
-    line-height: 1.7;
-    max-width: 680px;
-    margin: 0 auto 40px;
-    animation: fadeUp 0.6s 0.2s ease both;
-    font-weight:300;
-  }
+/* ===================== HERO ===================== */
+.hero {
+  position: relative; z-index: 1;
+  padding: 56px var(--pad-x) 40px;
+  max-width: var(--max);
+  margin: 0 auto;
+  text-align: center;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  border-radius: 100px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 22px;
+  letter-spacing: 0.2px;
+}
+.badge-dot {
+  width: 7px; height: 7px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: dot-pulse 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes dot-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.5)} }
 
-  /* PRICE BOX */
-  .price-box {
-    background: linear-gradient(135deg, #1C1C28, #12121A);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 36px 40px;
-    max-width: 520px;
-    margin: 0 auto 40px;
-    animation: fadeUp 0.6s 0.3s ease both;
-    position:relative;
-    overflow:hidden;
-  }
-  .price-box::before {
-    content:'';
-    position:absolute;
-    top:-60px;right:-60px;
-    width:180px;height:180px;
-    background: radial-gradient(circle, rgba(245,166,35,0.15), transparent 70%);
-    border-radius:50%;
-  }
-  .original-price {
-    font-size:16px;
-    color: var(--gray);
-    text-decoration: line-through;
-    margin-bottom: 4px;
-  }
-  .current-price {
-    font-family:'Syne',sans-serif;
-    font-size:56px;
-    font-weight:800;
-    color: var(--gold);
-    line-height:1;
-    margin-bottom:8px;
-  }
-  .price-note { font-size:14px; color: var(--gray); margin-bottom:24px; }
-  .cta-btn {
-    display: block;
-    width: 100%;
-    background: linear-gradient(135deg, var(--gold), #E8920F);
-    color: var(--dark);
-    font-family:'Syne',sans-serif;
-    font-weight:800;
-    font-size:18px;
-    padding: 18px 32px;
-    border-radius: 12px;
-    text-decoration:none;
-    text-align:center;
-    transition: transform 0.2s, box-shadow 0.2s;
-    position:relative;
-    overflow:hidden;
-  }
-  .cta-btn::after {
-    content:'';
-    position:absolute;
-    inset:0;
-    background: linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);
-    transform: translateX(-100%);
-    transition: transform 0.5s;
-  }
-  .cta-btn:hover { transform:translateY(-3px); box-shadow: 0 16px 40px rgba(245,166,35,0.45); }
-  .cta-btn:hover::after { transform: translateX(100%); }
-  .cta-sub { font-size:13px; color: var(--gray); margin-top:14px; display:flex; align-items:center; justify-content:center; gap:6px; }
-  .cta-sub svg { color: var(--green); }
+h1 {
+  font-size: clamp(26px, 5.5vw, 52px);
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -0.5px;
+  margin-bottom: 18px;
+  color: var(--white);
+}
+h1 em { font-style: normal; color: var(--gold); }
 
-  /* STATS ROW */
-  .stats {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap:wrap;
-    margin-bottom: 60px;
-    animation: fadeUp 0.6s 0.4s ease both;
-  }
-  .stat {
-    background: var(--dark3);
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:16px 24px;
-    text-align:center;
-  }
-  .stat-num { font-family:'Syne',sans-serif; font-size:28px; font-weight:800; color:var(--gold); }
-  .stat-label { font-size:12px; color:var(--gray); margin-top:2px; }
+.hero-sub {
+  font-size: clamp(14px, 2vw, 17px);
+  color: #9898B4;
+  line-height: 1.8;
+  max-width: 580px;
+  margin: 0 auto 32px;
+  font-weight: 400;
+}
 
-  /* SECTION */
-  section { position:relative; z-index:1; padding: 70px 24px; max-width:900px; margin:0 auto; }
-  .section-label {
-    font-size:13px;
-    font-weight:600;
-    color:var(--gold);
-    text-transform:uppercase;
-    letter-spacing:2px;
-    margin-bottom:12px;
-  }
-  h2 {
-    font-family:'Syne',sans-serif;
-    font-size: clamp(26px,4vw,42px);
-    font-weight:800;
-    line-height:1.15;
-    margin-bottom:20px;
-  }
-  h2 em { font-style:normal; color:var(--gold); }
+/* ===================== PRICE BOX ===================== */
+.price-box {
+  background: var(--bg3);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(20px, 5vw, 32px);
+  max-width: 440px;
+  margin: 0 auto 28px;
+  position: relative;
+  overflow: hidden;
+}
+.price-box::before {
+  content: '';
+  position: absolute; top: -50px; right: -50px;
+  width: 140px; height: 140px;
+  background: radial-gradient(circle, rgba(240,165,0,0.12), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.original-price { font-size: 14px; color: var(--muted); text-decoration: line-through; margin-bottom: 2px; }
+.current-price {
+  font-size: clamp(42px, 9vw, 58px);
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 5px;
+  letter-spacing: -1.5px;
+}
+.price-note { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
 
-  /* PROBLEM */
-  .problem-grid {
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px,1fr));
-    gap:16px;
-    margin-top:32px;
-  }
-  .problem-card {
-    background: var(--dark3);
-    border: 1px solid rgba(239,68,68,0.2);
-    border-radius:14px;
-    padding:24px;
-  }
-  .problem-icon { font-size:28px; margin-bottom:10px; }
-  .problem-card h4 { font-size:15px; font-weight:600; margin-bottom:6px; color:#F0F0F0; }
-  .problem-card p { font-size:14px; color:var(--gray); line-height:1.6; }
+.cta-btn {
+  display: block; width: 100%;
+  background: linear-gradient(135deg, var(--gold), #C88A00);
+  color: #0C0C12;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: clamp(14px, 3.5vw, 16px);
+  padding: 15px 20px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  text-align: center;
+  letter-spacing: -0.1px;
+  position: relative; overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(240,165,0,0.32); }
+.cta-shine {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
+  transform: translateX(-100%); transition: transform 0.5s ease;
+  pointer-events: none;
+}
+.cta-btn:hover .cta-shine { transform: translateX(100%); }
 
-  /* DIVIDER */
-  .divider { border: none; border-top: 1px solid var(--border); margin:0; }
+.trust-row {
+  margin-top: 12px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 5px; flex-wrap: wrap;
+  font-size: 11px; color: var(--muted);
+}
+.trust-row .dot { width: 3px; height: 3px; background: var(--muted); border-radius: 50%; flex-shrink: 0; }
 
-  /* METHODS GRID */
-  .methods-grid {
-    display:grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
-    gap:14px;
-    margin-top:36px;
-  }
-  .method-card {
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius:14px;
-    padding:20px;
-    display:flex;
-    align-items:flex-start;
-    gap:14px;
-    transition: border-color 0.2s, transform 0.2s;
-    cursor:default;
-  }
-  .method-card:hover { border-color: rgba(245,166,35,0.5); transform:translateY(-3px); }
-  .method-num {
-    min-width:32px;height:32px;
-    background: rgba(245,166,35,0.1);
-    border: 1px solid rgba(245,166,35,0.3);
-    border-radius:8px;
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Syne',sans-serif;font-weight:800;font-size:13px;color:var(--gold);
-  }
-  .method-card h4 { font-size:15px; font-weight:600; margin-bottom:4px; }
-  .method-card p { font-size:13px; color:var(--gray); line-height:1.5; }
-  .method-tag {
-    display:inline-block;
-    font-size:11px;
-    padding:2px 8px;
-    border-radius:100px;
-    font-weight:600;
-    margin-top:6px;
-  }
-  .tag-beginner { background:rgba(34,197,94,0.12);color:#22C55E; }
-  .tag-passive { background:rgba(99,102,241,0.12);color:#818CF8; }
-  .tag-hot { background:rgba(245,166,35,0.12);color:var(--gold); }
+/* ===================== STATS ===================== */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  max-width: 500px;
+  margin: 0 auto 52px;
+}
+.stat {
+  background: var(--bg3);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-sm);
+  padding: 13px 6px;
+  text-align: center;
+}
+.stat-num { font-size: 22px; font-weight: 800; color: var(--gold); letter-spacing: -0.5px; line-height: 1; }
+.stat-label { font-size: 10px; color: var(--muted); margin-top: 3px; line-height: 1.3; }
 
-  /* WHAT YOU GET */
-  .includes-grid {
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-    gap:14px;
-    margin-top:32px;
-  }
-  .include-card {
-    background: var(--dark3);
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:24px 20px;
-    text-align:center;
-  }
-  .include-icon { font-size:32px; margin-bottom:10px; }
-  .include-card h4 { font-size:14px; font-weight:600; margin-bottom:4px; }
-  .include-card p { font-size:13px; color:var(--gray); }
+/* ===================== DIVIDER ===================== */
+.divider { border: none; border-top: 1px solid rgba(255,255,255,0.05); }
 
-  /* TESTIMONIALS */
-  .testimonials-grid {
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-    gap:16px;
-    margin-top:36px;
-  }
-  .testi-card {
-    background: var(--dark3);
-    border:1px solid var(--border);
-    border-radius:16px;
-    padding:28px;
-  }
-  .stars { color:var(--gold); font-size:18px; margin-bottom:14px; letter-spacing:2px; }
-  .testi-card p { font-size:15px; line-height:1.7; color:#D0D0E0; margin-bottom:18px; font-style:italic; }
-  .testi-author { display:flex; align-items:center; gap:12px; }
-  .testi-avatar {
-    width:40px;height:40px;border-radius:50%;
-    background: linear-gradient(135deg,var(--gold),#E8920F);
-    display:flex;align-items:center;justify-content:center;
-    font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:var(--dark);
-  }
-  .testi-name { font-weight:600; font-size:14px; }
-  .testi-role { font-size:12px; color:var(--gray); }
+/* ===================== SECTIONS ===================== */
+section {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 60px var(--pad-x);
+}
 
-  /* GUARANTEE */
-  .guarantee-box {
-    background: linear-gradient(135deg, rgba(34,197,94,0.08), rgba(34,197,94,0.03));
-    border: 1px solid rgba(34,197,94,0.25);
-    border-radius:20px;
-    padding: 40px;
-    text-align:center;
-    max-width:640px;
-    margin: 0 auto;
-  }
-  .guarantee-icon { font-size:56px; margin-bottom:16px; }
-  .guarantee-box h3 { font-family:'Syne',sans-serif; font-size:26px; font-weight:800; margin-bottom:12px; }
-  .guarantee-box p { color:#C0C0D0; line-height:1.7; font-size:15px; }
+.section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  margin-bottom: 10px;
+}
+h2 {
+  font-size: clamp(22px, 4vw, 38px);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.4px;
+  margin-bottom: 14px;
+  color: var(--white);
+}
+h2 em { font-style: normal; color: var(--gold); }
+.section-sub { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 580px; }
 
-  /* FAQ */
-  .faq-list { margin-top:32px; display:flex; flex-direction:column; gap:12px; }
-  .faq-item {
-    background: var(--dark3);
-    border:1px solid var(--border);
-    border-radius:14px;
-    overflow:hidden;
-  }
-  .faq-q {
-    padding:20px 24px;
-    font-weight:600;
-    font-size:15px;
-    cursor:pointer;
-    display:flex;justify-content:space-between;align-items:center;
-    user-select:none;
-  }
-  .faq-q:hover { color:var(--gold); }
-  .faq-arrow { transition: transform 0.3s; font-size:18px; color:var(--gold); }
-  .faq-a {
-    padding:0 24px;
-    max-height:0;
-    overflow:hidden;
-    transition: max-height 0.3s ease, padding 0.3s;
-    color:var(--gray);
-    font-size:14px;
-    line-height:1.7;
-  }
-  .faq-item.open .faq-a { max-height:200px; padding:0 24px 20px; }
-  .faq-item.open .faq-arrow { transform: rotate(45deg); }
+/* ===================== PROBLEM GRID ===================== */
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+.problem-card {
+  background: var(--bg3);
+  border: 1px solid rgba(239,68,68,0.18);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+}
+.problem-icon { font-size: 26px; margin-bottom: 10px; }
+.problem-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--white); font-family: 'Manrope', sans-serif; }
+.problem-card p { font-size: 13px; color: var(--muted); line-height: 1.65; }
 
-  /* FINAL CTA */
-  .final-cta {
-    text-align:center;
-    background: linear-gradient(135deg, var(--dark3), var(--dark2));
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    padding: 80px 24px;
-    position:relative;
-    z-index:1;
-    overflow:hidden;
-  }
-  .final-cta::before {
-    content:'';
-    position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-50%);
-    width:600px;height:600px;
-    background: radial-gradient(circle, rgba(245,166,35,0.07), transparent 60%);
-    border-radius:50%;
-    pointer-events:none;
-  }
-  .final-cta h2 { font-size: clamp(28px,5vw,48px); margin-bottom:16px; }
-  .final-cta p { color:#C0C0D0; font-size:18px; max-width:540px; margin:0 auto 36px; line-height:1.7; }
-  .cta-btn-large {
-    display:inline-block;
-    background: linear-gradient(135deg,var(--gold),#E8920F);
-    color:var(--dark);
-    font-family:'Syne',sans-serif;
-    font-weight:800;
-    font-size:20px;
-    padding:20px 52px;
-    border-radius:14px;
-    text-decoration:none;
-    transition: transform 0.2s, box-shadow 0.2s;
-    position:relative;
-    overflow:hidden;
-  }
-  .cta-btn-large:hover { transform:translateY(-3px); box-shadow:0 20px 50px rgba(245,166,35,0.45); }
+/* ===================== TWO COL ===================== */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  align-items: start;
+}
+@media (max-width: 640px) { .two-col { grid-template-columns: 1fr; gap: 24px; } }
 
-  /* URGENCY */
-  .urgency-bar {
-    background: rgba(239,68,68,0.08);
-    border: 1px solid rgba(239,68,68,0.2);
-    border-radius:12px;
-    padding:14px 24px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    margin-top:24px;
-    font-size:14px;
-    color:#FCA5A5;
-    font-weight:500;
-  }
+.highlight-box {
+  background: linear-gradient(135deg, rgba(240,165,0,0.07), transparent);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(20px,4vw,28px);
+}
+.highlight-box h3 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 14px;
+  color: var(--white);
+}
 
-  /* FOOTER */
-  footer {
-    position:relative;z-index:1;
-    text-align:center;
-    padding:32px 24px;
-    color:var(--gray);
-    font-size:13px;
-    border-top:1px solid var(--border);
-  }
-  footer a { color:var(--gray); }
+.check-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.check-list li {
+  display: flex; align-items: flex-start; gap: 9px;
+  font-size: 14px; color: #C0C0D8; line-height: 1.55;
+}
+.check-list li::before {
+  content: '✓';
+  color: var(--green);
+  font-weight: 700; font-size: 14px;
+  margin-top: 1px; flex-shrink: 0;
+}
 
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity:0; transform:translateY(24px); }
-    to { opacity:1; transform:translateY(0); }
-  }
-  .fade-in { opacity:0; transform:translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .fade-in.visible { opacity:1; transform:translateY(0); }
+/* ===================== METHODS ===================== */
+.methods-intro { font-size: 14px; color: var(--muted); margin-top: 6px; margin-bottom: 4px; }
 
-  /* STICKY MOBILE CTA */
-  .sticky-mobile {
-    display:none;
-    position:fixed;
-    bottom:0;left:0;right:0;
-    z-index:200;
-    background: linear-gradient(135deg,var(--gold),#E8920F);
-    padding:16px 24px;
-    text-align:center;
-    font-family:'Syne',sans-serif;
-    font-weight:800;
-    font-size:16px;
-    color:var(--dark);
-    text-decoration:none;
-  }
-  @media(max-width:600px){
-    .sticky-mobile{display:block;}
-    .price-box { padding:24px 20px; }
-    .current-price { font-size:44px; }
-  }
+.methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+}
+.method-card {
+  background: var(--bg3);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius);
+  padding: 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.method-card:hover { border-color: rgba(240,165,0,0.5); transform: translateY(-2px); }
+.method-num {
+  min-width: 30px; height: 30px;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: var(--gold);
+  flex-shrink: 0;
+}
+.method-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--white); font-family: 'Manrope', sans-serif; }
+.method-card p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.method-tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 600;
+  padding: 2px 8px; border-radius: 100px; margin-top: 7px;
+}
+.tag-beginner { background: rgba(34,197,94,0.1); color: #22C55E; }
+.tag-passive   { background: rgba(139,92,246,0.12); color: #A78BFA; }
+.tag-hot       { background: var(--gold-dim); color: var(--gold); }
 
-  /* CHECKMARK LIST */
-  .check-list { list-style:none; display:flex; flex-direction:column; gap:10px; margin-top:24px; }
-  .check-list li { display:flex; align-items:flex-start; gap:10px; font-size:15px; color:#D0D0E0; line-height:1.5; }
-  .check-list li::before { content:'✓'; color:var(--green); font-weight:800; font-size:16px; margin-top:1px; flex-shrink:0; }
+/* ===================== INCLUDES ===================== */
+.includes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+}
+.include-card {
+  background: var(--bg3);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius);
+  padding: 22px 18px;
+  text-align: center;
+}
+.include-icon { font-size: 28px; margin-bottom: 10px; }
+.include-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--white); font-family: 'Manrope', sans-serif; }
+.include-card p { font-size: 12px; color: var(--muted); line-height: 1.55; }
 
-  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; }
-  @media(max-width:700px){ .two-col{grid-template-columns:1fr;} }
+/* ===================== TESTIMONIALS ===================== */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+.testi-card {
+  background: var(--bg3);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-lg);
+  padding: 24px 22px;
+}
+.stars { color: var(--gold); font-size: 16px; letter-spacing: 2px; margin-bottom: 12px; }
+.testi-card p { font-size: 14px; line-height: 1.75; color: #C0C0D8; margin-bottom: 16px; font-style: italic; }
+.testi-author { display: flex; align-items: center; gap: 10px; }
+.testi-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #C88A00);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 13px; color: #0C0C12;
+  flex-shrink: 0;
+}
+.testi-name { font-size: 13px; font-weight: 700; color: var(--white); font-family: 'Manrope', sans-serif; }
+.testi-role { font-size: 11px; color: var(--muted); }
 
-  .highlight-box {
-    background: linear-gradient(135deg, rgba(245,166,35,0.08), transparent);
-    border: 1px solid rgba(245,166,35,0.2);
-    border-radius:16px;
-    padding:28px;
-  }
-  .highlight-box h3 { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; margin-bottom:12px; }
+/* ===================== GUARANTEE ===================== */
+.guarantee-box {
+  background: linear-gradient(135deg, rgba(34,197,94,0.07), transparent);
+  border: 1px solid rgba(34,197,94,0.22);
+  border-radius: var(--radius-lg);
+  padding: clamp(28px, 6vw, 44px);
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.guarantee-icon { font-size: 48px; margin-bottom: 14px; }
+.guarantee-box h3 {
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: var(--white);
+}
+.guarantee-box p { font-size: 14px; color: #A0A0B8; line-height: 1.75; }
+
+/* ===================== FAQ ===================== */
+.faq-list { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+.faq-item {
+  background: var(--bg3);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.faq-q {
+  padding: 17px 20px;
+  font-size: 14px; font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+  user-select: none; gap: 12px;
+  transition: color 0.2s;
+}
+.faq-q:hover { color: var(--gold); }
+.faq-arrow {
+  font-size: 20px; color: var(--gold);
+  transition: transform 0.3s; flex-shrink: 0; line-height: 1;
+}
+.faq-a {
+  padding: 0 20px;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.3s;
+  font-size: 13px; color: var(--muted); line-height: 1.75;
+}
+.faq-item.open .faq-a { max-height: 220px; padding: 0 20px 18px; }
+.faq-item.open .faq-arrow { transform: rotate(45deg); }
+
+/* ===================== FINAL CTA ===================== */
+.final-cta {
+  text-align: center;
+  background: var(--bg2);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  padding: 70px var(--pad-x);
+  position: relative; overflow: hidden;
+}
+.final-cta::before {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(240,165,0,0.06), transparent 60%);
+  border-radius: 50%; pointer-events: none;
+}
+.final-cta .inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+.final-cta h2 { font-size: clamp(22px, 4.5vw, 40px); margin-bottom: 14px; }
+.final-cta p { font-size: clamp(14px, 1.8vw, 16px); color: #9898B4; max-width: 500px; margin: 0 auto 32px; line-height: 1.75; }
+
+.cta-btn-large {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--gold), #C88A00);
+  color: #0C0C12;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: clamp(15px, 3vw, 18px);
+  padding: clamp(14px, 3vw, 18px) clamp(28px, 6vw, 48px);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  letter-spacing: -0.1px;
+}
+.cta-btn-large:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(240,165,0,0.35); }
+
+.urgency-bar {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--red-soft);
+  border: 1px solid var(--red-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 20px;
+  margin-top: 22px;
+  font-size: 13px; color: #FCA5A5; font-weight: 500;
+}
+.trust-badges {
+  display: flex; flex-wrap: wrap;
+  justify-content: center; gap: 14px;
+  margin-top: 22px;
+  font-size: 12px; color: var(--muted);
+}
+
+/* ===================== FOOTER ===================== */
+footer {
+  text-align: center;
+  padding: 28px var(--pad-x);
+  color: var(--muted);
+  font-size: 12px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  line-height: 1.7;
+}
+footer a { color: var(--muted); text-decoration: none; }
+footer a:hover { color: var(--gold); }
+
+/* ===================== STICKY MOBILE CTA ===================== */
+.sticky-mobile {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  background: linear-gradient(135deg, var(--gold), #C88A00);
+  padding: 15px var(--pad-x);
+  text-align: center;
+  font-family: 'Manrope', sans-serif; font-weight: 700;
+  font-size: 14px; color: #0C0C12;
+  text-decoration: none;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+}
+
+/* ===================== SCROLL ANIMATION ===================== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px) {
+  section { padding: 48px var(--pad-x); }
+  .stats { grid-template-columns: repeat(2, 1fr); max-width: 300px; }
+  .methods-grid { grid-template-columns: 1fr; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .includes-grid { grid-template-columns: repeat(2, 1fr); }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .sticky-mobile { display: block; }
+  body { padding-bottom: 60px; }
+}
+
+@media (max-width: 480px) {
+  .announcement { font-size: 12px; padding: 8px 12px; }
+  .badge { font-size: 11px; }
+  h1 { letter-spacing: -0.3px; }
+  .includes-grid { grid-template-columns: 1fr; }
+  .trust-badges { gap: 10px; font-size: 11px; }
+  .methods-grid { gap: 10px; }
+  .stats { gap: 8px; }
+  .final-cta { padding: 52px var(--pad-x); }
+}
+
+@media (min-width: 769px) {
+  .methods-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1000px) {
+  .methods-grid { grid-template-columns: repeat(3, 1fr); }
+}
 </style>
 </head>
 <body>
@@ -502,56 +573,83 @@
 
 <!-- HERO -->
 <div class="hero">
-  <div class="badge"><span></span> Complete PLR Bundle — Ready to Sell in Minutes</div>
-  <h1>The Only PLR Bundle Covering <em>17 Real Ways</em> to Make Money Online in 2025</h1>
-  <p class="hero-sub">Done-for-you content your audience actually wants. Put your name on it, sell it, give it away — 100% editable, 100% yours. No fluff. No outdated methods. Just proven income strategies that work right now.</p>
+  <div class="badge">
+    <span class="badge-dot"></span>
+    Complete PLR Bundle — Ready to Sell in Minutes
+  </div>
 
+  <h1>The Only PLR Bundle Covering <em>17 Real Ways</em> to Make Money Online in 2025</h1>
+
+  <p class="hero-sub">
+    Done-for-you content your audience actually wants. Put your name on it, sell it, give it away — 100% editable, 100% yours. No fluff. No outdated methods. Just proven income strategies that work right now.
+  </p>
+
+  <!-- PRICE BOX -->
   <div class="price-box" id="buy">
     <div class="original-price">Regular Price: $57</div>
     <div class="current-price">$17</div>
     <div class="price-note">Full PLR License Included · Instant Download</div>
-    <a href="#" class="cta-btn">⚡ Yes! Give Me Instant Access Now</a>
-    <div class="cta-sub">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-      30-Day Money-Back Guarantee &nbsp;·&nbsp; 🔒 Secure Checkout
+    <a href="#" class="cta-btn">
+      <span class="cta-shine"></span>
+      ⚡ Yes! Give Me Instant Access Now
+    </a>
+    <div class="trust-row">
+      <span>🔒 Secure Checkout</span>
+      <span class="dot"></span>
+      <span>✅ 30-Day Guarantee</span>
+      <span class="dot"></span>
+      <span>⚡ Instant Download</span>
     </div>
   </div>
 
   <!-- STATS -->
   <div class="stats">
-    <div class="stat"><div class="stat-num">17</div><div class="stat-label">Income Methods</div></div>
-    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Editable Content</div></div>
-    <div class="stat"><div class="stat-num">$0</div><div class="stat-label">Royalties Ever</div></div>
-    <div class="stat"><div class="stat-num">5 Min</div><div class="stat-label">Setup Time</div></div>
+    <div class="stat">
+      <div class="stat-num">17</div>
+      <div class="stat-label">Income Methods</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Editable</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">$0</div>
+      <div class="stat-label">Royalties Ever</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5min</div>
+      <div class="stat-label">Setup Time</div>
+    </div>
   </div>
 </div>
 
 <hr class="divider">
 
-<!-- PROBLEM SECTION -->
-<section class="fade-in">
+<!-- PROBLEM -->
+<section class="fade-up">
   <div class="section-label">The Problem</div>
   <h2>Why Most "Make Money Online" Content <em>Fails</em> Your Audience</h2>
+  <p class="section-sub">Your buyers are tired of the same recycled advice. Here's what they keep running into:</p>
   <div class="problem-grid">
     <div class="problem-card">
       <div class="problem-icon">😩</div>
       <h4>Outdated Methods</h4>
-      <p>Most PLR content still talks about survey sites and link shorteners. Your audience deserves content that works in 2025.</p>
+      <p>Most PLR still talks about survey sites and link shorteners. Your audience deserves content that works in 2025.</p>
     </div>
     <div class="problem-card">
       <div class="problem-icon">🤦</div>
-      <h4>Only 1-2 Methods</h4>
-      <p>Most bundles cover the same affiliate marketing & blogging combo. Your buyers want variety and real options.</p>
+      <h4>Only 1–2 Methods</h4>
+      <p>Most bundles cover affiliate marketing and blogging only. Your buyers want variety and real options.</p>
     </div>
     <div class="problem-card">
       <div class="problem-icon">💸</div>
       <h4>Overpriced Rubbish</h4>
-      <p>Paying $97+ for watered-down PDFs you can't even edit. That's not PLR — that's a scam with fancy branding.</p>
+      <p>Paying $97+ for watered-down PDFs you can't even edit. That's not PLR — that's fancy branding on nothing.</p>
     </div>
     <div class="problem-card">
       <div class="problem-icon">😴</div>
       <h4>Boring, Generic Writing</h4>
-      <p>Content so bland your readers fall asleep. PLR should engage, educate, and convert — not put people to sleep.</p>
+      <p>Content so bland readers fall asleep. PLR should engage, educate, and convert — not put people to sleep.</p>
     </div>
   </div>
 </section>
@@ -559,18 +657,20 @@
 <hr class="divider">
 
 <!-- SOLUTION -->
-<section class="fade-in">
+<section class="fade-up">
   <div class="two-col">
     <div>
       <div class="section-label">The Solution</div>
       <h2>17 Methods. One Powerful Bundle. <em>Unlimited Use.</em></h2>
-      <p style="color:#C0C0D0;line-height:1.7;margin-bottom:20px;">This PLR bundle covers 17 of the most relevant and beginner-friendly ways to earn online today — from AI-powered services to passive income streams. It's practical, current, and written to convert.</p>
+      <p style="color:var(--muted);font-size:14px;line-height:1.75;margin-bottom:18px;">
+        This PLR bundle covers 17 of the most relevant and beginner-friendly ways to earn online today — from AI-powered services to passive income streams. Practical, current, and written to convert.
+      </p>
       <ul class="check-list">
         <li>Covers both <strong>AI-powered</strong> and traditional income methods</li>
         <li>Beginner-friendly language — no tech jargon</li>
-        <li>Each method explained with steps, tips & realistic income potential</li>
+        <li>Each method explained with steps and realistic income potential</li>
         <li>Edit, rebrand, and resell however you like</li>
-        <li>Word & PDF formats included</li>
+        <li>Word &amp; PDF formats included</li>
         <li>Full commercial PLR license inside</li>
       </ul>
     </div>
@@ -591,246 +691,76 @@
 <hr class="divider">
 
 <!-- 17 METHODS -->
-<section class="fade-in">
+<section class="fade-up">
   <div class="section-label">What's Inside</div>
-  <h2>All <em>17 Income Methods</em> Covered in This Bundle</h2>
-  <p style="color:var(--gray);margin-top:8px;">Each method includes a full breakdown, step-by-step approach, and realistic income expectations.</p>
+  <h2>All <em>17 Income Methods</em> Covered</h2>
+  <p class="methods-intro">Each method includes a full breakdown, step-by-step approach, and realistic income expectations.</p>
   <div class="methods-grid">
-
-    <div class="method-card">
-      <div class="method-num">01</div>
-      <div>
-        <h4>Affiliate Marketing</h4>
-        <p>Promote others' products and earn commissions without creating anything.</p>
-        <span class="method-tag tag-beginner">Beginner Friendly</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">02</div>
-      <div>
-        <h4>AI Prompt Services</h4>
-        <p>Sell custom prompts or AI-powered services — one of the hottest niches of 2025.</p>
-        <span class="method-tag tag-hot">🔥 Hot Right Now</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">03</div>
-      <div>
-        <h4>Micro-Freelancing</h4>
-        <p>Small gigs, fast money. Platforms like Fiverr and PeoplePerHour make this easy.</p>
-        <span class="method-tag tag-beginner">Beginner Friendly</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">04</div>
-      <div>
-        <h4>Selling Digital Templates</h4>
-        <p>Design once, sell forever. Canva templates, resume kits, social media packs.</p>
-        <span class="method-tag tag-passive">💜 Passive Income</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">05</div>
-      <div>
-        <h4>YouTube Shorts Automation</h4>
-        <p>Build faceless channels using AI tools and monetize with ads and sponsors.</p>
-        <span class="method-tag tag-hot">🔥 Hot Right Now</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">06</div>
-      <div>
-        <h4>Print-on-Demand (POD)</h4>
-        <p>Sell custom merch with zero inventory. Upload design, Printful handles the rest.</p>
-        <span class="method-tag tag-passive">💜 Passive Income</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">07</div>
-      <div>
-        <h4>Blogging with AI Assistance</h4>
-        <p>Build a niche blog fast using AI to speed up content creation 10x.</p>
-        <span class="method-tag tag-passive">💜 Passive Income</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">08</div>
-      <div>
-        <h4>Website Testing & Feedback</h4>
-        <p>Get paid to browse websites and give feedback. No skills needed whatsoever.</p>
-        <span class="method-tag tag-beginner">Beginner Friendly</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">09</div>
-      <div>
-        <h4>Social Media for Local Biz</h4>
-        <p>Manage Instagram & Facebook for local businesses and charge $300–$1,000/month.</p>
-        <span class="method-tag tag-hot">🔥 Hot Right Now</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">10</div>
-      <div>
-        <h4>Selling PLR (Properly Branded)</h4>
-        <p>Buy PLR, rebrand it, and sell it as your own product — meta and profitable.</p>
-        <span class="method-tag tag-beginner">Beginner Friendly</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">11</div>
-      <div>
-        <h4>Niche Lead-Gen Websites</h4>
-        <p>Simple sites that collect leads for local businesses and earn you monthly fees.</p>
-        <span class="method-tag tag-passive">💜 Passive Income</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">12</div>
-      <div>
-        <h4>Online Surveys (Realistic)</h4>
-        <p>Honest guide — where to go, what pays, and how to maximize your time.</p>
-        <span class="method-tag tag-beginner">Beginner Friendly</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">13</div>
-      <div>
-        <h4>Selling Stock Photos / AI Art</h4>
-        <p>Upload once to Shutterstock, Adobe Stock, and earn royalties forever.</p>
-        <span class="method-tag tag-passive">💜 Passive Income</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">14</div>
-      <div>
-        <h4>Voice-Over with AI</h4>
-        <p>Use AI voice tools to offer professional voice-overs without a studio.</p>
-        <span class="method-tag tag-hot">🔥 Hot Right Now</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">15</div>
-      <div>
-        <h4>Flipping Domains</h4>
-        <p>Buy low, sell high. Find undervalued domains and flip them for profit.</p>
-        <span class="method-tag tag-passive">💜 Passive Income</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">16</div>
-      <div>
-        <h4>Selling Notion Templates</h4>
-        <p>Notion is exploding. Sell aesthetic templates for $10–$50 each on Gumroad.</p>
-        <span class="method-tag tag-hot">🔥 Hot Right Now</span>
-      </div>
-    </div>
-
-    <div class="method-card">
-      <div class="method-num">17</div>
-      <div>
-        <h4>Online Coaching</h4>
-        <p>Monetize what you already know. Charge $50–$500/hr teaching your skills online.</p>
-        <span class="method-tag tag-hot">🔥 Hot Right Now</span>
-      </div>
-    </div>
-
+    <div class="method-card"><div class="method-num">01</div><div><h4>Affiliate Marketing</h4><p>Promote others' products and earn commissions without creating anything from scratch.</p><span class="method-tag tag-beginner">Beginner Friendly</span></div></div>
+    <div class="method-card"><div class="method-num">02</div><div><h4>AI Prompt Services</h4><p>Sell custom prompts or AI-powered services — one of the hottest niches of 2025.</p><span class="method-tag tag-hot">🔥 Hot Right Now</span></div></div>
+    <div class="method-card"><div class="method-num">03</div><div><h4>Micro-Freelancing</h4><p>Small gigs, fast money. Fiverr and PeoplePerHour make this super easy to start.</p><span class="method-tag tag-beginner">Beginner Friendly</span></div></div>
+    <div class="method-card"><div class="method-num">04</div><div><h4>Selling Digital Templates</h4><p>Design once, sell forever. Canva templates, resume kits, social media packs.</p><span class="method-tag tag-passive">💜 Passive Income</span></div></div>
+    <div class="method-card"><div class="method-num">05</div><div><h4>YouTube Shorts Automation</h4><p>Build faceless channels with AI tools and monetize with ads and sponsorships.</p><span class="method-tag tag-hot">🔥 Hot Right Now</span></div></div>
+    <div class="method-card"><div class="method-num">06</div><div><h4>Print-on-Demand (POD)</h4><p>Sell custom merch with zero inventory. Upload design, Printful handles the rest.</p><span class="method-tag tag-passive">💜 Passive Income</span></div></div>
+    <div class="method-card"><div class="method-num">07</div><div><h4>Blogging with AI Assistance</h4><p>Build a niche blog fast using AI to speed up content creation by 10x.</p><span class="method-tag tag-passive">💜 Passive Income</span></div></div>
+    <div class="method-card"><div class="method-num">08</div><div><h4>Website Testing &amp; Feedback</h4><p>Get paid to browse websites and share feedback. No skills needed at all.</p><span class="method-tag tag-beginner">Beginner Friendly</span></div></div>
+    <div class="method-card"><div class="method-num">09</div><div><h4>Social Media for Local Biz</h4><p>Manage pages for local businesses and charge $300–$1,000/month easily.</p><span class="method-tag tag-hot">🔥 Hot Right Now</span></div></div>
+    <div class="method-card"><div class="method-num">10</div><div><h4>Selling PLR (Properly Branded)</h4><p>Buy PLR, rebrand it, and sell it as your own product — meta and profitable.</p><span class="method-tag tag-beginner">Beginner Friendly</span></div></div>
+    <div class="method-card"><div class="method-num">11</div><div><h4>Niche Lead-Gen Websites</h4><p>Simple sites that collect leads for local businesses and earn you monthly fees.</p><span class="method-tag tag-passive">💜 Passive Income</span></div></div>
+    <div class="method-card"><div class="method-num">12</div><div><h4>Online Surveys (Realistic)</h4><p>Honest guide — where to go, what pays, and how to maximize your time.</p><span class="method-tag tag-beginner">Beginner Friendly</span></div></div>
+    <div class="method-card"><div class="method-num">13</div><div><h4>Selling Stock Photos / AI Art</h4><p>Upload once to Shutterstock or Adobe Stock and earn royalties forever.</p><span class="method-tag tag-passive">💜 Passive Income</span></div></div>
+    <div class="method-card"><div class="method-num">14</div><div><h4>Voice-Over with AI</h4><p>Use AI voice tools to offer professional voice-overs without any studio setup.</p><span class="method-tag tag-hot">🔥 Hot Right Now</span></div></div>
+    <div class="method-card"><div class="method-num">15</div><div><h4>Flipping Domains</h4><p>Buy low, sell high. Find undervalued domains and flip them for real profit.</p><span class="method-tag tag-passive">💜 Passive Income</span></div></div>
+    <div class="method-card"><div class="method-num">16</div><div><h4>Selling Notion Templates</h4><p>Notion is exploding. Sell aesthetic templates for $10–$50 each on Gumroad.</p><span class="method-tag tag-hot">🔥 Hot Right Now</span></div></div>
+    <div class="method-card"><div class="method-num">17</div><div><h4>Online Coaching</h4><p>Monetize what you already know. Charge $50–$500/hr teaching your skills.</p><span class="method-tag tag-hot">🔥 Hot Right Now</span></div></div>
   </div>
 </section>
 
 <hr class="divider">
 
 <!-- WHAT YOU GET -->
-<section class="fade-in">
+<section class="fade-up">
   <div class="section-label">Everything Included</div>
   <h2>What You Get for Just <em>$17</em></h2>
   <div class="includes-grid">
-    <div class="include-card">
-      <div class="include-icon">📘</div>
-      <h4>Main Guide (PDF + Word)</h4>
-      <p>Full editable guide covering all 17 methods</p>
-    </div>
-    <div class="include-card">
-      <div class="include-icon">✏️</div>
-      <h4>100% Editable</h4>
-      <p>Change the title, add your name, tweak content</p>
-    </div>
-    <div class="include-card">
-      <div class="include-icon">🏷️</div>
-      <h4>Full PLR License</h4>
-      <p>Use as lead magnet, sell it, use in courses</p>
-    </div>
-    <div class="include-card">
-      <div class="include-icon">⚡</div>
-      <h4>Instant Download</h4>
-      <p>Access everything immediately after purchase</p>
-    </div>
-    <div class="include-card">
-      <div class="include-icon">📧</div>
-      <h4>Email Swipe Copy</h4>
-      <p>Ready-to-send emails to promote the guide</p>
-    </div>
-    <div class="include-card">
-      <div class="include-icon">🎨</div>
-      <h4>Cover Graphics</h4>
-      <p>Professional cover image included</p>
-    </div>
+    <div class="include-card"><div class="include-icon">📘</div><h4>Main Guide</h4><p>Full editable guide (PDF + Word + TXT)</p></div>
+    <div class="include-card"><div class="include-icon">✏️</div><h4>100% Editable</h4><p>Add your name, change anything you want</p></div>
+    <div class="include-card"><div class="include-icon">🏷️</div><h4>Full PLR License</h4><p>Sell it, use as lead magnet, or in courses</p></div>
+    <div class="include-card"><div class="include-icon">⚡</div><h4>Instant Download</h4><p>Access everything immediately after purchase</p></div>
+    <div class="include-card"><div class="include-icon">📧</div><h4>Email Swipe Copy</h4><p>Ready-to-send promotional emails</p></div>
+    <div class="include-card"><div class="include-icon">🎨</div><h4>Cover Graphics</h4><p>Professional cover image included</p></div>
   </div>
 </section>
 
 <hr class="divider">
 
 <!-- TESTIMONIALS -->
-<section class="fade-in">
+<section class="fade-up">
   <div class="section-label">What Buyers Say</div>
   <h2>Real People. <em>Real Results.</em></h2>
   <div class="testimonials-grid">
     <div class="testi-card">
       <div class="stars">★★★★★</div>
-      <p>"I turned this into a lead magnet in under an hour. Already got 140 new email subscribers in the first week. Best $17 I've spent on PLR."</p>
+      <p>"Turned this into a lead magnet in under an hour. Got 140 new email subscribers in the first week. Best $17 I've spent on PLR."</p>
       <div class="testi-author">
         <div class="testi-avatar">SA</div>
-        <div>
-          <div class="testi-name">Sara A.</div>
-          <div class="testi-role">Digital Product Creator</div>
-        </div>
+        <div><div class="testi-name">Sara A.</div><div class="testi-role">Digital Product Creator</div></div>
       </div>
     </div>
     <div class="testi-card">
       <div class="stars">★★★★★</div>
-      <p>"The content is actually good. I was scared it would be the usual fluff but every method has real steps. Sold it on Gumroad for $12 and made my money back same day."</p>
+      <p>"Was worried it'd be fluff — it's not. Every method has real steps. Sold it on Gumroad for $12 and made my money back the same day."</p>
       <div class="testi-author">
         <div class="testi-avatar">MK</div>
-        <div>
-          <div class="testi-name">Marcus K.</div>
-          <div class="testi-role">Blogger & Affiliate Marketer</div>
-        </div>
+        <div><div class="testi-name">Marcus K.</div><div class="testi-role">Blogger &amp; Affiliate Marketer</div></div>
       </div>
     </div>
     <div class="testi-card">
       <div class="stars">★★★★★</div>
-      <p>"I used 5 of the methods as individual blog posts and got more traffic than my usual posts. The AI prompt services section alone was worth it."</p>
+      <p>"Used 5 methods as individual blog posts and got more traffic than my usual content. The AI prompt services section alone was worth it."</p>
       <div class="testi-author">
         <div class="testi-avatar">NR</div>
-        <div>
-          <div class="testi-name">Nadia R.</div>
-          <div class="testi-role">Content Creator, YouTube</div>
-        </div>
+        <div><div class="testi-name">Nadia R.</div><div class="testi-role">Content Creator, YouTube</div></div>
       </div>
     </div>
   </div>
@@ -839,40 +769,40 @@
 <hr class="divider">
 
 <!-- GUARANTEE -->
-<section class="fade-in" style="text-align:center;">
+<section class="fade-up" style="text-align:center;">
   <div class="guarantee-box">
     <div class="guarantee-icon">🛡️</div>
     <h3>30-Day Money-Back Guarantee</h3>
-    <p>Try the entire bundle risk-free for 30 days. If you're not completely satisfied with the content quality — for <strong>any reason</strong> — just email us and we'll refund you 100%. No questions, no hoops, no nonsense.</p>
+    <p>Try the entire bundle risk-free for 30 days. If you're not completely satisfied — for <strong>any reason</strong> — just email us and we'll refund you 100%. No questions, no hoops, no hassle.</p>
   </div>
 </section>
 
 <hr class="divider">
 
 <!-- FAQ -->
-<section class="fade-in">
+<section class="fade-up">
   <div class="section-label">Questions</div>
   <h2>Frequently Asked <em>Questions</em></h2>
   <div class="faq-list">
     <div class="faq-item">
       <div class="faq-q">Can I put my name on this and sell it? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">Yes! That's the whole point. You can edit the content, add your name as the author, change the title, and sell it as your own product. The only restriction is you cannot sell the PLR rights themselves to others.</div>
+      <div class="faq-a">Yes — that's the whole point! You can edit the content, add your name as the author, change the title, and sell it as your own product. The only restriction: you cannot sell the PLR rights themselves to others.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">What formats do I get? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">You get both a Word document (for easy editing) and a PDF version. Both are included in your instant download after purchase.</div>
+      <div class="faq-a">You get a Word document (for easy editing), a PDF version, and a TXT file. All three are included in your instant download after purchase.</div>
     </div>
     <div class="faq-item">
-      <div class="faq-q">Is this suitable for complete beginners to sell? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">Absolutely. The content is written in plain English and covers realistic beginner-friendly strategies. Your audience will appreciate that it's not filled with hype or unrealistic promises.</div>
+      <div class="faq-q">Is this suitable for complete beginners? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">Absolutely. The content is written in plain English with realistic, beginner-friendly strategies. Your audience will appreciate that it's not filled with hype or unrealistic promises.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">Can I use this on Blogger or as a free giveaway? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">Yes! You can break it into blog posts, use it as a freebie to grow your email list, include it in a paid course, or turn it into a full ebook to sell. It's extremely versatile.</div>
+      <div class="faq-a">Yes! Break it into blog posts, use it as a freebie to grow your email list, include it in a paid course, or turn it into a full ebook to sell. It's extremely versatile.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q">Is the content AI-generated? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">The content is AI-assisted and human-directed, meaning it's been researched, structured, and reviewed by a human to ensure quality, accuracy, and readability — not just raw AI output.</div>
+      <div class="faq-a">The content is AI-assisted and human-directed — researched, structured, and reviewed to ensure quality and readability, not just raw AI output.</div>
     </div>
   </div>
 </section>
@@ -881,36 +811,38 @@
 
 <!-- FINAL CTA -->
 <div class="final-cta">
-  <div class="section-label" style="text-align:center;">Last Chance</div>
-  <h2>Ready to Put <em>17 Income Methods</em> in Your Customers' Hands?</h2>
-  <p>Get the full bundle for just $17 — fully editable, fully licensed, instantly downloadable. Launch a product today.</p>
-  <a href="#buy" class="cta-btn-large">⚡ Get Instant Access — Only $17</a>
-  <div class="urgency-bar">
-    🔴 &nbsp; Launch price ends soon — lock in $17 before it goes back to $57
-  </div>
-  <div class="cta-sub" style="margin-top:20px;color:var(--gray);font-size:13px;display:flex;justify-content:center;gap:20px;flex-wrap:wrap;">
-    <span>🔒 Secure Checkout</span>
-    <span>✅ 30-Day Guarantee</span>
-    <span>⚡ Instant Download</span>
-    <span>📄 Full PLR License</span>
+  <div class="inner">
+    <div class="section-label">Last Chance</div>
+    <h2>Ready to Put <em>17 Income Methods</em> in Your Customers' Hands?</h2>
+    <p>Get the full bundle for just $17 — fully editable, fully licensed, instantly downloadable. Launch your product today.</p>
+    <a href="#buy" class="cta-btn-large">⚡ Get Instant Access — Only $17</a>
+    <div><div class="urgency-bar">🔴 Launch price ends soon — lock in $17 before it goes back to $57</div></div>
+    <div class="trust-badges">
+      <span>🔒 Secure Checkout</span>
+      <span>✅ 30-Day Guarantee</span>
+      <span>⚡ Instant Download</span>
+      <span>📄 Full PLR License</span>
+    </div>
   </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2025 MoneyMethods PLR · <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a> · <a href="#">Contact</a></p>
-  <p style="margin-top:8px;font-size:12px;color:#555;">Results mentioned are not typical. Individual results will vary based on effort, experience, and market conditions.</p>
+  <p>© 2025 MoneyMethods PLR &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Service</a> &nbsp;·&nbsp; <a href="#">Contact</a></p>
+  <p style="margin-top:6px;font-size:11px;">Results mentioned are not typical. Individual results will vary based on effort, experience, and market conditions.</p>
 </footer>
 
 <!-- STICKY MOBILE CTA -->
 <a href="#buy" class="sticky-mobile">⚡ Get All 17 Methods — Only $17</a>
 
 <script>
-  // Scroll animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  // Scroll fade-in animation
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
   // FAQ accordion
   document.querySelectorAll('.faq-q').forEach(q => {
@@ -918,9 +850,18 @@
       const item = q.parentElement;
       const isOpen = item.classList.contains('open');
       document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if(!isOpen) item.classList.add('open');
+      if (!isOpen) item.classList.add('open');
     });
   });
+
+  // Hide sticky mobile CTA when price box is visible
+  const priceBox = document.getElementById('buy');
+  const stickyCta = document.querySelector('.sticky-mobile');
+  if (priceBox && stickyCta) {
+    new IntersectionObserver(([e]) => {
+      stickyCta.style.display = e.isIntersecting ? 'none' : '';
+    }).observe(priceBox);
+  }
 </script>
 </body>
 </html>
