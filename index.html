@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- Markdown parser for dynamic body content -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <style>
 /* ===================== RESET & BASE ===================== */
@@ -31,7 +33,6 @@ body {
   --bg3: #17171F;
   --bg4: #1E1E28;
   --text: #D8D8E8;
-  --muted: #7070888;
   --muted: #70708A;
   --green: #4ADE80;
   --white: #F8F8FF;
@@ -48,7 +49,6 @@ h1, h2, h3 { font-family: 'DM Serif Display', serif; line-height: 1.15; color: v
 h1 { font-size: clamp(30px, 5.5vw, 56px); letter-spacing: -0.5px; }
 h2 { font-size: clamp(24px, 4vw, 40px); letter-spacing: -0.3px; }
 h3 { font-size: clamp(18px, 2.5vw, 24px); }
-
 em { font-style: normal; color: var(--lime); }
 
 /* ===================== ANNOUNCEMENT ===================== */
@@ -805,7 +805,7 @@ footer a:hover { color: var(--lime); }
 </head>
 <body>
 
-<!-- ANNOUNCEMENT -->
+<!-- ANNOUNCEMENT (static – you can also move to CMS if desired) -->
 <div class="announcement">
   🔥 Launch Price: Only $9 Today — Price Increases to $27 on Friday &nbsp;·&nbsp; <strong>Instant Access</strong>
 </div>
@@ -822,18 +822,18 @@ footer a:hover { color: var(--lime); }
   <div class="hero-glow"></div>
   <div class="hero">
 
-    <div class="hero-badge">
+    <div class="hero-badge" id="hero-badge">
       <span class="hero-badge-dot"></span>
       Step-by-Step · Beginner Friendly · No Budget Needed
     </div>
 
-    <h1>Get Your First Affiliate Sale Using AI in <em>7 Days</em></h1>
-    <p class="hero-sub">A simple 4-step system built for complete beginners. No experience. No paid ads. No technical skills. Just follow the steps.</p>
+    <h1 id="hero-headline">Get Your First Affiliate Sale Using AI in <em>7 Days</em></h1>
+    <p class="hero-sub" id="hero-subhead">A simple 4-step system built for complete beginners. No experience. No paid ads. No technical skills. Just follow the steps.</p>
 
     <!-- PRICE BOX -->
     <div class="price-box" id="buy">
-      <div class="old-price">Regular Price: $27</div>
-      <div class="big-price">$9</div>
+      <div class="old-price" id="old-price">Regular Price: $27</div>
+      <div class="big-price" id="big-price">$9</div>
       <div class="price-sub">One-time payment · Instant access · 30-day guarantee</div>
       <a href="#" class="cta-main">⚡ Get Instant Access Now</a>
       <div class="trust-row">
@@ -845,7 +845,7 @@ footer a:hover { color: var(--lime); }
       </div>
     </div>
 
-    <!-- STATS -->
+    <!-- STATS (static) -->
     <div class="hero-stats">
       <div class="hstat"><div class="hstat-num">4</div><div class="hstat-label">Step System</div></div>
       <div class="hstat"><div class="hstat-num">7</div><div class="hstat-label">Days to First Sale</div></div>
@@ -1090,32 +1090,8 @@ footer a:hover { color: var(--lime); }
     </div>
   </div>
 
-  <div class="testi-grid" style="margin-top:14px;">
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <blockquote>"I followed Module 1 and 2 on day one. By day 6 I had my first $12 commission. Never thought it would actually work this fast."</blockquote>
-      <div class="testi-author">
-        <div class="testi-av">JM</div>
-        <div><div class="testi-name">James M.</div><div class="testi-role">Student, UK</div></div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <blockquote>"No tech skills, no money, no idea what I was doing. The AI prompts in Module 2 made content creation actually easy. Got a sale in week two."</blockquote>
-      <div class="testi-author">
-        <div class="testi-av">PL</div>
-        <div><div class="testi-name">Priya L.</div><div class="testi-role">Stay-at-home parent, Canada</div></div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <blockquote>"I wasted months on other stuff before finding this. The free traffic strategy in Module 3 actually drives real visitors. Simple and it works."</blockquote>
-      <div class="testi-author">
-        <div class="testi-av">AO</div>
-        <div><div class="testi-name">Ahmed O.</div><div class="testi-role">First-time affiliate, Nigeria</div></div>
-      </div>
-    </div>
-  </div>
+  <!-- Testimonials will be injected here by CMS -->
+  <div class="testi-grid" id="testimonials-container"></div>
 </section>
 
 <!-- CTA INTERLUDE 2 -->
@@ -1157,8 +1133,8 @@ footer a:hover { color: var(--lime); }
   </div>
 
   <div class="final-price-box">
-    <div class="final-old">Total Value: $57</div>
-    <div class="final-new">$9</div>
+    <div class="final-old" id="final-old">Total Value: $57</div>
+    <div class="final-new" id="final-new">$9</div>
     <div class="final-note">One-time payment · Instant download · 30-day money-back guarantee</div>
     <a href="#" class="cta-large">⚡ Get Instant Access for $9</a>
     <div><div class="urgency-pill">🔴 Price increases to $27 on Friday</div></div>
@@ -1229,36 +1205,7 @@ footer a:hover { color: var(--lime); }
   <div class="section-eyebrow">Questions</div>
   <h2>Frequently Asked <em>Questions</em></h2>
 
-  <div class="faq-list">
-    <div class="faq-item">
-      <div class="faq-q">Do I need any experience to start? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">No. This system is designed from the ground up for people who have never done affiliate marketing before. Every step is explained in plain language with no assumed knowledge. If you can follow instructions, you can do this.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Do I need to spend money on ads or tools? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">No paid advertising. No premium tools. The entire system uses free platforms and free AI tools. The only thing you spend is your time — and the $9 for this guide.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">How long does it take to get a first sale? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">The system is designed around a 7-day timeline. Most people who follow all four steps see their first click within 3–5 days. A first sale typically happens within 7–14 days. Some people are faster, some slower — it depends on how consistently you post.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Does this work outside the US? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">Yes. The affiliate programs we recommend accept members from most countries worldwide. The free traffic platforms are also global. We note any country-specific restrictions inside the guide.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">What if the AI tools I'm using are bad? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">We only recommend free AI tools that are reliable and consistently available. We also give you the exact prompts to use — so even if the output isn't perfect, you'll know how to guide it to get usable content quickly.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">What format does the guide come in? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">You get a PDF guide with all four modules, the AI prompts cheat sheet, and the 7-day posting plan. Everything is available immediately after purchase — no waiting, no shipping.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">What is the 30-day guarantee exactly? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">If you're not happy with the product for any reason within 30 days of purchase, email us and we'll refund you 100%. No questions asked, no need to explain yourself. We want you to feel safe trying this.</div>
-    </div>
-  </div>
+  <div class="faq-list" id="faq-container"></div>
 </section>
 
 <div class="section-divider"><hr></div>
@@ -1299,16 +1246,6 @@ footer a:hover { color: var(--lime); }
   }, { threshold: 0.07 });
   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
-  // FAQ accordion
-  document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
-      const item = q.parentElement;
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    });
-  });
-
   // Hide sticky CTA when price box is in view
   const priceBox = document.getElementById('buy');
   const stickyCta = document.querySelector('.sticky-mobile');
@@ -1322,6 +1259,97 @@ footer a:hover { color: var(--lime); }
   document.getElementById('videoBtn')?.addEventListener('click', () => {
     alert("In a live version, a short walkthrough video would play here (YouTube or Vimeo embed).");
   });
+
+  // ==================== CMS CONTENT LOADER ====================
+  async function loadCMSContent() {
+    try {
+      // 1. Load hero.md (front matter)
+      const heroRes = await fetch('content/hero.md?t=' + Date.now());
+      if (heroRes.ok) {
+        const heroText = await heroRes.text();
+        const frontMatter = {};
+        const lines = heroText.split('\n');
+        let inFrontMatter = false;
+        for (let line of lines) {
+          if (line.trim() === '---') {
+            inFrontMatter = !inFrontMatter;
+            continue;
+          }
+          if (inFrontMatter && line.includes(':')) {
+            const [key, ...val] = line.split(':');
+            frontMatter[key.trim()] = val.join(':').trim().replace(/^["']|["']$/g, '');
+          }
+          if (!inFrontMatter && line.trim() !== '') break;
+        }
+        
+        if (frontMatter.headline) document.getElementById('hero-headline').innerHTML = frontMatter.headline;
+        if (frontMatter.subhead) document.getElementById('hero-subhead').innerHTML = frontMatter.subhead;
+        if (frontMatter.price) {
+          document.getElementById('big-price').innerHTML = `$${frontMatter.price}`;
+          document.getElementById('final-new').innerHTML = `$${frontMatter.price}`;
+        }
+        if (frontMatter.oldPrice) {
+          document.getElementById('old-price').innerHTML = `Regular Price: ${frontMatter.oldPrice}`;
+          document.getElementById('final-old').innerHTML = `Total Value: ${frontMatter.oldPrice === "$27" ? "$57" : frontMatter.oldPrice}`;
+        }
+        if (frontMatter.badge) document.getElementById('hero-badge').innerHTML = `<span class="hero-badge-dot"></span>${frontMatter.badge}`;
+        if (frontMatter.videoUrl) {
+          const videoBtn = document.getElementById('videoBtn');
+          if (videoBtn) {
+            videoBtn.onclick = () => window.open(frontMatter.videoUrl, '_blank');
+          }
+        }
+      }
+
+      // 2. Load testimonials.json
+      const testiRes = await fetch('content/testimonials.json?t=' + Date.now());
+      if (testiRes.ok) {
+        const testiData = await testiRes.json();
+        const container = document.getElementById('testimonials-container');
+        if (container && testiData.testimonials && testiData.testimonials.length) {
+          container.innerHTML = testiData.testimonials.map(t => `
+            <div class="testi-card">
+              <div class="stars">${'★'.repeat(t.rating)}${'☆'.repeat(5-t.rating)}</div>
+              <blockquote>“${t.quote}”</blockquote>
+              <div class="testi-author">
+                <div class="testi-av">${t.name.split(' ').map(n=>n[0]).join('')}</div>
+                <div><div class="testi-name">${t.name}</div><div class="testi-role">${t.role}</div></div>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+
+      // 3. Load faq.json
+      const faqRes = await fetch('content/faq.json?t=' + Date.now());
+      if (faqRes.ok) {
+        const faqData = await faqRes.json();
+        const container = document.getElementById('faq-container');
+        if (container && faqData.faq && faqData.faq.length) {
+          container.innerHTML = faqData.faq.map(item => `
+            <div class="faq-item">
+              <div class="faq-q">${item.question} <span class="faq-arrow">+</span></div>
+              <div class="faq-a">${item.answer}</div>
+            </div>
+          `).join('');
+          // Reattach FAQ click handlers
+          document.querySelectorAll('.faq-q').forEach(q => {
+            q.addEventListener('click', () => {
+              const item = q.parentElement;
+              const isOpen = item.classList.contains('open');
+              document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+              if (!isOpen) item.classList.add('open');
+            });
+          });
+        }
+      }
+    } catch (err) {
+      console.warn('CMS content not loaded – using static fallback', err);
+    }
+  }
+
+  // Execute after page loads
+  loadCMSContent();
 </script>
 </body>
 </html>
