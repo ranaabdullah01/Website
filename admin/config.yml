@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: ranaabdullah01/Website   # e.g., "john/ai-affiliate-site"
+  repo: ranaabdullah01/Website
   branch: main
 
 media_folder: "assets/images"
