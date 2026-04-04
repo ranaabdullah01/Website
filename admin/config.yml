@@ -1,55 +1,38 @@
 backend:
   name: github
-  repo: YOUR_GITHUB_USERNAME/YOUR_REPO_NAME   # e.g. "john/ai-affiliate-site"
-  branch: main                                # or "master"
-  base_url: https://api.netlify.com           # Netlify OAuth proxy (free)
-  auth_endpoint: auth
+  repo: ranaabdullah01/Website   # e.g., "john/ai-affiliate-site"
+  branch: main
 
-local_backend: true   # optional, for local testing
-
-media_folder: "assets/images"   # where uploaded images go
+media_folder: "assets/images"
 public_folder: "/assets/images"
 
 collections:
-  - name: "homepage"
+  - name: "home"
     label: "Homepage Content"
     files:
       - name: "hero"
         label: "Hero Section"
-        file: "content/hero.json"
+        file: "content/hero.md"
         fields:
           - { label: "Headline", name: "headline", widget: "string" }
           - { label: "Subheadline", name: "subhead", widget: "text" }
-          - { label: "Hero Badge Text", name: "badge", widget: "string" }
-          - { label: "Price", name: "price", widget: "number", valueType: "int", default: 9 }
+          - { label: "Price", name: "price", widget: "number", default: 9 }
           - { label: "Old Price", name: "oldPrice", widget: "string", default: "$27" }
           - { label: "Video URL (walkthrough)", name: "videoUrl", widget: "string", required: false }
-
-      - name: "modules"
-        label: "4‑Step System Modules"
-        file: "content/modules.json"
-        fields:
-          - label: "Modules"
-            name: "modules"
-            widget: "list"
-            fields:
-              - { label: "Step Number", name: "step", widget: "number" }
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Description", name: "desc", widget: "text" }
-              - { label: "Tag (e.g. Module 1)", name: "tag", widget: "string" }
+          - { label: "Body (main content)", name: "body", widget: "markdown" }
 
       - name: "testimonials"
         label: "Testimonials"
         file: "content/testimonials.json"
         fields:
-          - label: "Testimonials"
+          - label: "Testimonials List"
             name: "testimonials"
             widget: "list"
             fields:
               - { label: "Name", name: "name", widget: "string" }
-              - { label: "Role & Location", name: "role", widget: "string" }
+              - { label: "Role", name: "role", widget: "string" }
               - { label: "Quote", name: "quote", widget: "text" }
-              - { label: "Rating (1-5)", name: "rating", widget: "number", default: 5 }
+              - { label: "Rating", name: "rating", widget: "number", default: 5 }
 
       - name: "faq"
         label: "FAQ"
@@ -61,10 +44,3 @@ collections:
             fields:
               - { label: "Question", name: "question", widget: "string" }
               - { label: "Answer", name: "answer", widget: "markdown" }
-
-      - name: "bonus"
-        label: "Bonus Section"
-        file: "content/bonus.json"
-        fields:
-          - { label: "Bonus Title", name: "title", widget: "string", default: "Bonus: 17 Income Methods" }
-          - { label: "Bonus List", name: "items", widget: "list", field: { label: "Item", name: "item", widget: "string" } }
