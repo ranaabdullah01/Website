@@ -3,18 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>17 Proven Ways to Make Money Online — PLR Bundle</title>
+<title>Get Your First Affiliate Sale Using AI in 7 Days</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
 /* ===================== RESET & BASE ===================== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; font-size: 16px; }
 body {
-  font-family: 'Inter', sans-serif;
-  background: #0C0C12;
-  color: #E0E0EC;
+  font-family: 'DM Sans', sans-serif;
+  background: #0A0A0F;
+  color: #D8D8E8;
   overflow-x: hidden;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
@@ -22,405 +23,684 @@ body {
 
 /* ===================== VARIABLES ===================== */
 :root {
-  --gold: #F0A500;
-  --gold-dim: rgba(240,165,0,0.15);
-  --gold-border: rgba(240,165,0,0.22);
-  --bg: #0C0C12;
-  --bg2: #13131C;
-  --bg3: #1A1A25;
-  --text: #E0E0EC;
-  --muted: #8888A0;
-  --green: #22C55E;
-  --red-soft: rgba(239,68,68,0.12);
-  --red-border: rgba(239,68,68,0.25);
-  --white: #ffffff;
-  --radius-sm: 10px;
-  --radius: 14px;
-  --radius-lg: 20px;
-  --max: 880px;
-  --pad-x: clamp(16px, 5vw, 40px);
+  --lime: #C8F135;
+  --lime-dim: rgba(200,241,53,0.1);
+  --lime-border: rgba(200,241,53,0.2);
+  --bg: #0A0A0F;
+  --bg2: #111118;
+  --bg3: #17171F;
+  --bg4: #1E1E28;
+  --text: #D8D8E8;
+  --muted: #7070888;
+  --muted: #70708A;
+  --green: #4ADE80;
+  --white: #F8F8FF;
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --max: 860px;
+  --pad-x: clamp(18px, 5vw, 44px);
 }
 
-/* Display font for headings */
-h1, h2, h3, .nav-logo, .cta-btn, .cta-btn-large, .current-price, .stat-num, .method-num {
-  font-family: 'Manrope', sans-serif;
-}
+/* ===================== TYPOGRAPHY ===================== */
+h1, h2, h3 { font-family: 'DM Serif Display', serif; line-height: 1.15; color: var(--white); }
+h1 { font-size: clamp(30px, 5.5vw, 56px); letter-spacing: -0.5px; }
+h2 { font-size: clamp(24px, 4vw, 40px); letter-spacing: -0.3px; }
+h3 { font-size: clamp(18px, 2.5vw, 24px); }
+
+em { font-style: normal; color: var(--lime); }
 
 /* ===================== ANNOUNCEMENT ===================== */
 .announcement {
-  background: linear-gradient(90deg, #B87800, var(--gold), #B87800);
-  background-size: 200% 100%;
-  animation: shimmer 4s linear infinite;
+  background: var(--lime);
   text-align: center;
-  padding: 9px 16px;
+  padding: 10px 16px;
   font-size: 13px;
   font-weight: 600;
-  color: #0C0C12;
-  position: relative;
-  z-index: 20;
-  line-height: 1.4;
+  color: #0A0A0F;
+  letter-spacing: 0.1px;
 }
-@keyframes shimmer { 0%{background-position:0%} 100%{background-position:200%} }
 
 /* ===================== NAV ===================== */
 nav {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(12,12,18,0.96);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--gold-border);
-  padding: 12px var(--pad-x);
+  background: rgba(10,10,15,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 14px var(--pad-x);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
 }
 .nav-logo {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--gold);
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px;
+  color: var(--white);
   letter-spacing: -0.2px;
-  white-space: nowrap;
 }
+.nav-logo span { color: var(--lime); }
 .nav-cta {
-  background: var(--gold);
-  color: #0C0C12;
+  background: var(--lime);
+  color: #0A0A0F;
   font-weight: 700;
   font-size: 13px;
-  padding: 8px 16px;
+  padding: 9px 18px;
   border-radius: var(--radius-sm);
   text-decoration: none;
-  white-space: nowrap;
-  transition: opacity 0.2s, transform 0.2s;
-  flex-shrink: 0;
+  transition: opacity 0.2s, transform 0.15s;
 }
 .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
 
 /* ===================== HERO ===================== */
+.hero-wrap {
+  position: relative;
+  background: var(--bg2);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  overflow: hidden;
+}
+.hero-noise {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; opacity: 0.4;
+}
+.hero-glow {
+  position: absolute; top: -100px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(200,241,53,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
 .hero {
   position: relative; z-index: 1;
-  padding: 56px var(--pad-x) 40px;
   max-width: var(--max);
   margin: 0 auto;
+  padding: 64px var(--pad-x) 52px;
   text-align: center;
 }
-.badge {
+.hero-badge {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  background: var(--gold-dim);
-  border: 1px solid var(--gold-border);
+  gap: 8px;
+  background: var(--lime-dim);
+  border: 1px solid var(--lime-border);
   border-radius: 100px;
-  padding: 5px 14px;
+  padding: 6px 16px 6px 10px;
   font-size: 12px;
-  color: var(--gold);
+  color: var(--lime);
   font-weight: 600;
-  margin-bottom: 22px;
-  letter-spacing: 0.2px;
+  margin-bottom: 24px;
+  letter-spacing: 0.3px;
 }
-.badge-dot {
-  width: 7px; height: 7px;
-  background: var(--gold);
+.hero-badge-dot {
+  width: 8px; height: 8px;
+  background: var(--lime);
   border-radius: 50%;
-  animation: dot-pulse 1.8s ease-in-out infinite;
+  animation: pulse 2s ease-in-out infinite;
   flex-shrink: 0;
 }
-@keyframes dot-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.5)} }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.6)} }
 
-h1 {
-  font-size: clamp(26px, 5.5vw, 52px);
-  font-weight: 800;
-  line-height: 1.14;
-  letter-spacing: -0.5px;
-  margin-bottom: 18px;
-  color: var(--white);
-}
-h1 em { font-style: normal; color: var(--gold); }
+.hero h1 { margin-bottom: 20px; }
 
 .hero-sub {
-  font-size: clamp(14px, 2vw, 17px);
-  color: #9898B4;
-  line-height: 1.8;
-  max-width: 580px;
-  margin: 0 auto 32px;
-  font-weight: 400;
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 540px;
+  margin: 0 auto 36px;
 }
 
 /* ===================== PRICE BOX ===================== */
 .price-box {
   background: var(--bg3);
-  border: 1px solid var(--gold-border);
-  border-radius: var(--radius-lg);
-  padding: clamp(20px, 5vw, 32px);
-  max-width: 440px;
-  margin: 0 auto 28px;
+  border: 1px solid var(--lime-border);
+  border-radius: var(--radius-xl);
+  padding: clamp(24px, 5vw, 36px);
+  max-width: 420px;
+  margin: 0 auto 32px;
   position: relative;
   overflow: hidden;
 }
-.price-box::before {
+.price-box::after {
   content: '';
-  position: absolute; top: -50px; right: -50px;
-  width: 140px; height: 140px;
-  background: radial-gradient(circle, rgba(240,165,0,0.12), transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--lime), transparent);
+  opacity: 0.5;
 }
-.original-price { font-size: 14px; color: var(--muted); text-decoration: line-through; margin-bottom: 2px; }
-.current-price {
-  font-size: clamp(42px, 9vw, 58px);
-  font-weight: 800;
-  color: var(--gold);
+.old-price { font-size: 13px; color: var(--muted); text-decoration: line-through; margin-bottom: 4px; }
+.big-price {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(48px, 10vw, 64px);
+  color: var(--lime);
   line-height: 1;
-  margin-bottom: 5px;
-  letter-spacing: -1.5px;
+  margin-bottom: 6px;
+  letter-spacing: -2px;
 }
-.price-note { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+.price-sub { font-size: 12px; color: var(--muted); margin-bottom: 22px; }
 
-.cta-btn {
+.cta-main {
   display: block; width: 100%;
-  background: linear-gradient(135deg, var(--gold), #C88A00);
-  color: #0C0C12;
-  font-family: 'Manrope', sans-serif;
+  background: var(--lime);
+  color: #0A0A0F;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 700;
   font-size: clamp(14px, 3.5vw, 16px);
-  padding: 15px 20px;
-  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  border-radius: var(--radius);
   text-decoration: none;
   text-align: center;
   letter-spacing: -0.1px;
-  position: relative; overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
 }
-.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(240,165,0,0.32); }
-.cta-shine {
-  position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.16), transparent);
-  transform: translateX(-100%); transition: transform 0.5s ease;
-  pointer-events: none;
-}
-.cta-btn:hover .cta-shine { transform: translateX(100%); }
+.cta-main:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(200,241,53,0.28); opacity: 0.92; }
 
 .trust-row {
-  margin-top: 12px;
+  margin-top: 14px;
   display: flex; align-items: center; justify-content: center;
-  gap: 5px; flex-wrap: wrap;
+  gap: 6px; flex-wrap: wrap;
   font-size: 11px; color: var(--muted);
 }
-.trust-row .dot { width: 3px; height: 3px; background: var(--muted); border-radius: 50%; flex-shrink: 0; }
+.trust-dot { width: 3px; height: 3px; background: var(--muted); border-radius: 50%; }
 
 /* ===================== STATS ===================== */
-.stats {
+.hero-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
-  max-width: 500px;
-  margin: 0 auto 52px;
+  max-width: 480px;
+  margin: 0 auto;
 }
-.stat {
+.hstat {
   background: var(--bg3);
-  border: 1px solid var(--gold-border);
-  border-radius: var(--radius-sm);
-  padding: 13px 6px;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius);
+  padding: 14px 8px;
   text-align: center;
 }
-.stat-num { font-size: 22px; font-weight: 800; color: var(--gold); letter-spacing: -0.5px; line-height: 1; }
-.stat-label { font-size: 10px; color: var(--muted); margin-top: 3px; line-height: 1.3; }
+.hstat-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--lime);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.hstat-label { font-size: 10px; color: var(--muted); line-height: 1.4; }
 
 /* ===================== DIVIDER ===================== */
-.divider { border: none; border-top: 1px solid rgba(255,255,255,0.05); }
+.section-divider {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+.section-divider hr {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
 
 /* ===================== SECTIONS ===================== */
 section {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 60px var(--pad-x);
+  padding: 64px var(--pad-x);
 }
 
-.section-label {
+.section-eyebrow {
   font-size: 11px;
   font-weight: 700;
-  color: var(--gold);
+  color: var(--lime);
   text-transform: uppercase;
-  letter-spacing: 2.5px;
-  margin-bottom: 10px;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
-h2 {
-  font-size: clamp(22px, 4vw, 38px);
-  font-weight: 800;
-  line-height: 1.18;
-  letter-spacing: -0.4px;
-  margin-bottom: 14px;
-  color: var(--white);
+.section-eyebrow::after {
+  content: '';
+  flex: 1;
+  max-width: 40px;
+  height: 1px;
+  background: var(--lime-border);
 }
-h2 em { font-style: normal; color: var(--gold); }
-.section-sub { font-size: 15px; color: var(--muted); line-height: 1.7; max-width: 580px; }
 
-/* ===================== PROBLEM GRID ===================== */
-.problem-grid {
+/* ===================== PROBLEM ===================== */
+.pain-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 14px;
-  margin-top: 28px;
+  margin-top: 32px;
 }
-.problem-card {
+.pain-card {
   background: var(--bg3);
-  border: 1px solid rgba(239,68,68,0.18);
-  border-radius: var(--radius);
-  padding: 22px 20px;
-}
-.problem-icon { font-size: 26px; margin-bottom: 10px; }
-.problem-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--white); font-family: 'Manrope', sans-serif; }
-.problem-card p { font-size: 13px; color: var(--muted); line-height: 1.65; }
-
-/* ===================== TWO COL ===================== */
-.two-col {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 36px;
-  align-items: start;
-}
-@media (max-width: 640px) { .two-col { grid-template-columns: 1fr; gap: 24px; } }
-
-.highlight-box {
-  background: linear-gradient(135deg, rgba(240,165,0,0.07), transparent);
-  border: 1px solid var(--gold-border);
+  border: 1px solid rgba(255,80,80,0.12);
   border-radius: var(--radius-lg);
-  padding: clamp(20px,4vw,28px);
+  padding: 24px 20px;
+  position: relative;
+  overflow: hidden;
 }
-.highlight-box h3 {
-  font-family: 'Manrope', sans-serif;
-  font-size: 17px;
-  font-weight: 800;
-  margin-bottom: 14px;
+.pain-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255,80,80,0.4), transparent);
+}
+.pain-icon { font-size: 28px; margin-bottom: 12px; display: block; }
+.pain-card h4 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 16px;
+  margin-bottom: 8px;
   color: var(--white);
 }
+.pain-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
-.check-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.emotional-line {
+  background: var(--bg3);
+  border-left: 3px solid var(--lime);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 18px 22px;
+  margin-top: 28px;
+  font-size: 15px;
+  color: #B0B0C8;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+/* ===================== SOLUTION ===================== */
+.steps-flow {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.step-row {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 20px;
+  align-items: flex-start;
+  position: relative;
+}
+.step-row:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 25px;
+  top: 52px;
+  bottom: -20px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--lime-border), transparent);
+}
+.step-icon-col { padding-top: 4px; }
+.step-circle {
+  width: 52px; height: 52px;
+  background: var(--lime-dim);
+  border: 2px solid var(--lime-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: var(--lime);
+  flex-shrink: 0;
+}
+.step-content {
+  background: var(--bg3);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  margin-bottom: 20px;
+}
+.step-content h4 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+.step-content p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.step-tag {
+  display: inline-block;
+  background: var(--lime-dim);
+  border: 1px solid var(--lime-border);
+  border-radius: 100px;
+  font-size: 10px; font-weight: 700;
+  color: var(--lime); letter-spacing: 0.5px;
+  padding: 3px 10px; margin-top: 10px;
+  text-transform: uppercase;
+}
+
+/* ===================== MODULES ===================== */
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 36px;
+}
+.module-card {
+  background: var(--bg3);
+  border: 1px solid var(--lime-border);
+  border-radius: var(--radius-lg);
+  padding: 26px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.module-card:hover { transform: translateY(-3px); border-color: rgba(200,241,53,0.45); }
+.module-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--lime), transparent);
+  opacity: 0.6;
+}
+.mod-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 11px;
+  color: var(--lime);
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.mod-icon { font-size: 30px; margin-bottom: 12px; display: block; }
+.module-card h4 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px;
+  margin-bottom: 8px;
+  color: var(--white);
+}
+.module-card p { font-size: 12px; color: var(--muted); line-height: 1.65; }
+
+.module-details {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.mod-detail {
+  background: var(--bg3);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.mod-detail-num {
+  width: 36px; height: 36px;
+  background: var(--lime-dim);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: 16px; color: var(--lime);
+  flex-shrink: 0;
+}
+.mod-detail h5 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 15px; color: var(--white); margin-bottom: 4px;
+}
+.mod-detail p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+.check-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
 .check-list li {
   display: flex; align-items: flex-start; gap: 9px;
-  font-size: 14px; color: #C0C0D8; line-height: 1.55;
+  font-size: 13px; color: #B0B0C4; line-height: 1.55;
 }
 .check-list li::before {
-  content: '✓';
-  color: var(--green);
-  font-weight: 700; font-size: 14px;
+  content: '✓'; color: var(--green);
+  font-weight: 700; font-size: 13px;
   margin-top: 1px; flex-shrink: 0;
 }
 
-/* ===================== METHODS ===================== */
-.methods-intro { font-size: 14px; color: var(--muted); margin-top: 6px; margin-bottom: 4px; }
-
-.methods-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 12px;
-  margin-top: 28px;
+/* ===================== BONUS ===================== */
+.bonus-wrap {
+  background: linear-gradient(135deg, rgba(200,241,53,0.05), transparent);
+  border: 1px solid var(--lime-border);
+  border-radius: var(--radius-xl);
+  padding: clamp(24px, 5vw, 36px);
+  margin-top: 8px;
 }
-.method-card {
-  background: var(--bg3);
-  border: 1px solid var(--gold-border);
-  border-radius: var(--radius);
-  padding: 18px;
-  display: flex;
-  align-items: flex-start;
-  gap: 13px;
-  transition: border-color 0.2s, transform 0.2s;
+.bonus-header {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
-.method-card:hover { border-color: rgba(240,165,0,0.5); transform: translateY(-2px); }
-.method-num {
-  min-width: 30px; height: 30px;
-  background: var(--gold-dim);
-  border: 1px solid var(--gold-border);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 11px; font-weight: 800; color: var(--gold);
-  flex-shrink: 0;
-}
-.method-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--white); font-family: 'Manrope', sans-serif; }
-.method-card p { font-size: 12px; color: var(--muted); line-height: 1.6; }
-.method-tag {
+.bonus-icon-big { font-size: 36px; }
+.bonus-header h3 { margin-bottom: 4px; }
+.bonus-header p { font-size: 13px; color: var(--muted); }
+.bonus-tag {
   display: inline-block;
-  font-size: 10px; font-weight: 600;
-  padding: 2px 8px; border-radius: 100px; margin-top: 7px;
+  background: var(--lime);
+  color: #0A0A0F;
+  font-size: 10px; font-weight: 700;
+  padding: 3px 10px; border-radius: 100px;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  margin-left: auto;
+  flex-shrink: 0;
+  align-self: flex-start;
 }
-.tag-beginner { background: rgba(34,197,94,0.1); color: #22C55E; }
-.tag-passive   { background: rgba(139,92,246,0.12); color: #A78BFA; }
-.tag-hot       { background: var(--gold-dim); color: var(--gold); }
-
-/* ===================== INCLUDES ===================== */
-.includes-grid {
+.bonus-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-  margin-top: 28px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
 }
-.include-card {
+.bonus-item {
   background: var(--bg3);
-  border: 1px solid var(--gold-border);
-  border-radius: var(--radius);
-  padding: 22px 18px;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  font-size: 12px; color: #A0A0B8;
+  display: flex; align-items: center; gap: 8px;
+}
+.bonus-item::before { content: '→'; color: var(--lime); font-size: 13px; flex-shrink: 0; }
+
+/* ===================== PROOF / DEMO ===================== */
+.proof-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 32px;
+}
+@media (max-width: 580px) { .proof-grid { grid-template-columns: 1fr; } }
+.proof-card {
+  background: var(--bg3);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
   text-align: center;
 }
-.include-icon { font-size: 28px; margin-bottom: 10px; }
-.include-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: var(--white); font-family: 'Manrope', sans-serif; }
-.include-card p { font-size: 12px; color: var(--muted); line-height: 1.55; }
+.proof-card .proof-icon { font-size: 40px; margin-bottom: 16px; display: block; }
+.proof-card h4 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 16px; color: var(--white); margin-bottom: 8px;
+}
+.proof-card p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+.result-stat {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px; color: var(--lime);
+  display: block; margin: 12px 0 4px;
+}
+.result-label { font-size: 12px; color: var(--muted); }
+
+/* ===================== OFFER STACK ===================== */
+.offer-table {
+  background: var(--bg3);
+  border: 1px solid var(--lime-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-top: 28px;
+}
+.offer-row {
+  display: flex;
+  align-items: center;
+  padding: 15px 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  gap: 16px;
+}
+.offer-row:last-child { border-bottom: none; }
+.offer-row.total-row {
+  background: var(--lime-dim);
+  border-top: 1px solid var(--lime-border);
+}
+.offer-item-name { flex: 1; font-size: 14px; color: var(--text); font-weight: 500; }
+.offer-item-name small { display: block; font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+.offer-value {
+  font-size: 14px; color: var(--muted);
+  text-decoration: line-through;
+}
+.total-row .offer-item-name { font-weight: 700; color: var(--white); }
+.total-row .offer-value { text-decoration: none; color: var(--lime); font-size: 18px; font-family: 'DM Serif Display', serif; }
+
+.final-price-box {
+  background: var(--bg3);
+  border: 1px solid var(--lime-border);
+  border-radius: var(--radius-xl);
+  padding: clamp(28px, 6vw, 44px);
+  text-align: center;
+  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.final-price-box::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(200,241,53,0.1), transparent 70%);
+  border-radius: 50%;
+}
+.final-old { font-size: 15px; color: var(--muted); text-decoration: line-through; margin-bottom: 6px; }
+.final-new {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(52px, 12vw, 72px);
+  color: var(--lime);
+  line-height: 1; letter-spacing: -2px;
+  margin-bottom: 8px;
+}
+.final-note { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+
+.cta-large {
+  display: inline-block;
+  background: var(--lime);
+  color: #0A0A0F;
+  font-weight: 700;
+  font-size: clamp(15px, 3.5vw, 18px);
+  padding: clamp(15px, 3vw, 19px) clamp(32px, 7vw, 56px);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+  letter-spacing: -0.1px;
+}
+.cta-large:hover { transform: translateY(-3px); box-shadow: 0 16px 44px rgba(200,241,53,0.3); opacity: 0.92; }
+
+.urgency-pill {
+  display: inline-flex;
+  align-items: center; gap: 8px;
+  background: rgba(255,80,80,0.1);
+  border: 1px solid rgba(255,80,80,0.2);
+  border-radius: var(--radius-sm);
+  padding: 10px 20px;
+  margin-top: 20px;
+  font-size: 13px; color: #FCA5A5; font-weight: 500;
+}
+
+.trust-badges {
+  display: flex; flex-wrap: wrap;
+  justify-content: center; gap: 16px;
+  margin-top: 20px;
+  font-size: 12px; color: var(--muted);
+}
+
+/* ===================== GUARANTEE ===================== */
+.guarantee-card {
+  background: linear-gradient(135deg, rgba(74,222,128,0.06), transparent);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: var(--radius-xl);
+  padding: clamp(28px, 6vw, 44px);
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.guarantee-card .g-icon { font-size: 52px; display: block; margin-bottom: 16px; }
+.guarantee-card h3 { margin-bottom: 12px; }
+.guarantee-card p { font-size: 14px; color: var(--muted); line-height: 1.75; }
 
 /* ===================== TESTIMONIALS ===================== */
-.testimonials-grid {
+.testi-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 14px;
-  margin-top: 28px;
+  margin-top: 32px;
 }
 .testi-card {
   background: var(--bg3);
-  border: 1px solid var(--gold-border);
+  border: 1px solid rgba(255,255,255,0.07);
   border-radius: var(--radius-lg);
-  padding: 24px 22px;
+  padding: 26px 22px;
 }
-.stars { color: var(--gold); font-size: 16px; letter-spacing: 2px; margin-bottom: 12px; }
-.testi-card p { font-size: 14px; line-height: 1.75; color: #C0C0D8; margin-bottom: 16px; font-style: italic; }
-.testi-author { display: flex; align-items: center; gap: 10px; }
-.testi-avatar {
-  width: 38px; height: 38px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), #C88A00);
+.stars { color: var(--lime); font-size: 15px; letter-spacing: 2px; margin-bottom: 14px; }
+.testi-card blockquote {
+  font-size: 14px; color: #C0C0D8;
+  line-height: 1.75; margin-bottom: 18px;
+  font-style: italic; quotes: none;
+}
+.testi-author { display: flex; align-items: center; gap: 12px; }
+.testi-av {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--lime), #8AA800);
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 13px; color: #0C0C12;
-  flex-shrink: 0;
+  font-family: 'DM Serif Display', serif;
+  font-size: 14px; color: #0A0A0F; flex-shrink: 0;
 }
-.testi-name { font-size: 13px; font-weight: 700; color: var(--white); font-family: 'Manrope', sans-serif; }
+.testi-name { font-size: 13px; font-weight: 700; color: var(--white); }
 .testi-role { font-size: 11px; color: var(--muted); }
 
-/* ===================== GUARANTEE ===================== */
-.guarantee-box {
-  background: linear-gradient(135deg, rgba(34,197,94,0.07), transparent);
-  border: 1px solid rgba(34,197,94,0.22);
+/* ===================== FOR AFFILIATES ===================== */
+.affiliate-box {
+  background: var(--bg3);
+  border: 1px solid var(--lime-border);
   border-radius: var(--radius-lg);
-  padding: clamp(28px, 6vw, 44px);
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto;
+  padding: 28px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: center;
 }
-.guarantee-icon { font-size: 48px; margin-bottom: 14px; }
-.guarantee-box h3 {
-  font-family: 'Manrope', sans-serif;
-  font-size: clamp(18px, 3vw, 24px);
-  font-weight: 800;
-  margin-bottom: 10px;
-  color: var(--white);
+@media (max-width: 580px) { .affiliate-box { grid-template-columns: 1fr; } }
+.aff-label {
+  display: inline-block;
+  background: var(--lime);
+  color: #0A0A0F;
+  font-size: 10px; font-weight: 700;
+  padding: 3px 10px; border-radius: 100px;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  margin-bottom: 12px;
 }
-.guarantee-box p { font-size: 14px; color: #A0A0B8; line-height: 1.75; }
+.affiliate-box h3 { margin-bottom: 10px; }
+.affiliate-box p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+.aff-stats { display: flex; flex-direction: column; gap: 12px; }
+.aff-stat {
+  background: var(--bg2);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.aff-stat-label { font-size: 12px; color: var(--muted); }
+.aff-stat-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px; color: var(--lime);
+}
 
 /* ===================== FAQ ===================== */
 .faq-list { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
 .faq-item {
   background: var(--bg3);
-  border: 1px solid var(--gold-border);
+  border: 1px solid rgba(255,255,255,0.06);
   border-radius: var(--radius);
   overflow: hidden;
 }
 .faq-q {
-  padding: 17px 20px;
+  padding: 18px 22px;
   font-size: 14px; font-weight: 600;
   color: var(--text);
   cursor: pointer;
@@ -428,71 +708,52 @@ h2 em { font-style: normal; color: var(--gold); }
   user-select: none; gap: 12px;
   transition: color 0.2s;
 }
-.faq-q:hover { color: var(--gold); }
+.faq-q:hover { color: var(--lime); }
 .faq-arrow {
-  font-size: 20px; color: var(--gold);
+  font-size: 22px; color: var(--lime);
   transition: transform 0.3s; flex-shrink: 0; line-height: 1;
 }
 .faq-a {
-  padding: 0 20px;
+  padding: 0 22px;
   max-height: 0; overflow: hidden;
   transition: max-height 0.35s ease, padding 0.3s;
-  font-size: 13px; color: var(--muted); line-height: 1.75;
+  font-size: 13px; color: var(--muted); line-height: 1.8;
 }
-.faq-item.open .faq-a { max-height: 220px; padding: 0 20px 18px; }
+.faq-item.open .faq-a { max-height: 260px; padding: 0 22px 20px; }
 .faq-item.open .faq-arrow { transform: rotate(45deg); }
 
-/* ===================== FINAL CTA ===================== */
-.final-cta {
+/* ===================== CTA SECTIONS ===================== */
+.cta-interlude {
+  background: var(--bg2);
+  border-top: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  padding: 48px var(--pad-x);
   text-align: center;
+}
+.cta-interlude p { font-size: 15px; color: var(--muted); margin-bottom: 20px; }
+
+/* ===================== FINAL CTA ===================== */
+.final-cta-wrap {
   background: var(--bg2);
   border-top: 1px solid rgba(255,255,255,0.05);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  padding: 70px var(--pad-x);
   position: relative; overflow: hidden;
 }
-.final-cta::before {
-  content: '';
+.final-cta-glow {
   position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(240,165,0,0.06), transparent 60%);
-  border-radius: 50%; pointer-events: none;
+  transform: translate(-50%,-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(200,241,53,0.06), transparent 60%);
+  pointer-events: none;
 }
-.final-cta .inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
-.final-cta h2 { font-size: clamp(22px, 4.5vw, 40px); margin-bottom: 14px; }
-.final-cta p { font-size: clamp(14px, 1.8vw, 16px); color: #9898B4; max-width: 500px; margin: 0 auto 32px; line-height: 1.75; }
-
-.cta-btn-large {
-  display: inline-block;
-  background: linear-gradient(135deg, var(--gold), #C88A00);
-  color: #0C0C12;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 700;
-  font-size: clamp(15px, 3vw, 18px);
-  padding: clamp(14px, 3vw, 18px) clamp(28px, 6vw, 48px);
-  border-radius: var(--radius);
-  text-decoration: none;
-  transition: transform 0.2s, box-shadow 0.2s;
-  letter-spacing: -0.1px;
+.final-cta-inner {
+  position: relative; z-index: 1;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 72px var(--pad-x);
+  text-align: center;
 }
-.cta-btn-large:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(240,165,0,0.35); }
-
-.urgency-bar {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--red-soft);
-  border: 1px solid var(--red-border);
-  border-radius: var(--radius-sm);
-  padding: 10px 20px;
-  margin-top: 22px;
-  font-size: 13px; color: #FCA5A5; font-weight: 500;
-}
-.trust-badges {
-  display: flex; flex-wrap: wrap;
-  justify-content: center; gap: 14px;
-  margin-top: 22px;
-  font-size: 12px; color: var(--muted);
-}
+.final-cta-inner h2 { margin-bottom: 14px; }
+.final-cta-inner p { font-size: clamp(14px, 2vw, 16px); color: var(--muted); max-width: 480px; margin: 0 auto 32px; line-height: 1.75; }
 
 /* ===================== FOOTER ===================== */
 footer {
@@ -504,672 +765,538 @@ footer {
   line-height: 1.7;
 }
 footer a { color: var(--muted); text-decoration: none; }
-footer a:hover { color: var(--gold); }
+footer a:hover { color: var(--lime); }
 
-/* ===================== STICKY MOBILE CTA ===================== */
+/* ===================== STICKY MOBILE ===================== */
 .sticky-mobile {
   display: none;
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
-  background: linear-gradient(135deg, var(--gold), #C88A00);
-  padding: 15px var(--pad-x);
+  background: var(--lime);
+  padding: 16px var(--pad-x);
   text-align: center;
-  font-family: 'Manrope', sans-serif; font-weight: 700;
-  font-size: 14px; color: #0C0C12;
+  font-weight: 700; font-size: 14px; color: #0A0A0F;
   text-decoration: none;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.5);
 }
 
-/* ===================== SCROLL ANIMATION ===================== */
+/* ===================== ANIMATIONS ===================== */
 .fade-up {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(24px);
   transition: opacity 0.55s ease, transform 0.55s ease;
 }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
 
 /* ===================== RESPONSIVE ===================== */
-@media (max-width: 768px) {
-  section { padding: 48px var(--pad-x); }
-  .stats { grid-template-columns: repeat(2, 1fr); max-width: 300px; }
-  .methods-grid { grid-template-columns: 1fr; }
-  .problem-grid { grid-template-columns: 1fr; }
-  .includes-grid { grid-template-columns: repeat(2, 1fr); }
-  .testimonials-grid { grid-template-columns: 1fr; }
+@media (max-width: 640px) {
+  section { padding: 52px var(--pad-x); }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); max-width: 280px; }
+  .modules-grid { grid-template-columns: 1fr 1fr; }
+  .pain-grid { grid-template-columns: 1fr; }
+  .bonus-list { grid-template-columns: 1fr; }
+  .testi-grid { grid-template-columns: 1fr; }
   .sticky-mobile { display: block; }
-  body { padding-bottom: 60px; }
+  body { padding-bottom: 62px; }
 }
-
-@media (max-width: 480px) {
-  .announcement { font-size: 12px; padding: 8px 12px; }
-  .badge { font-size: 11px; }
-  h1 { letter-spacing: -0.3px; }
-  .includes-grid { grid-template-columns: 1fr; }
-  .trust-badges { gap: 10px; font-size: 11px; }
-  .methods-grid { gap: 10px; }
-  .stats { gap: 8px; }
-  .final-cta { padding: 52px var(--pad-x); }
-}
-
-@media (min-width: 769px) {
-  .methods-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (min-width: 1000px) {
-  .methods-grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-/* NEW STYLES */
-.creator-box {
-  background: var(--bg3);
-  border: 1px solid var(--gold-border);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-  display: flex;
-  gap: 24px;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
-  text-align: left;
-  margin-top: 20px;
-}
-.creator-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), #C88A00);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  font-weight: 800;
-  color: #0C0C12;
-  flex-shrink: 0;
-}
-.creator-text {
-  flex: 1;
-  min-width: 200px;
-}
-.creator-text h3 {
-  font-family: 'Manrope', sans-serif;
-  font-size: 20px;
-  font-weight: 800;
-  margin-bottom: 6px;
-  color: var(--white);
-}
-.creator-text p {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-.who-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-  margin-top: 28px;
-}
-.who-card {
-  background: var(--bg3);
-  border: 1px solid var(--gold-border);
-  border-radius: var(--radius);
-  padding: 18px;
-  text-align: center;
-}
-.who-card .who-icon {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
-.who-card h4 {
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 4px;
-  font-family: 'Manrope', sans-serif;
-}
-.who-card p {
-  font-size: 12px;
-  color: var(--muted);
-}
-.comparison-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 28px;
-  background: var(--bg3);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.comparison-table th,
-.comparison-table td {
-  padding: 12px 16px;
-  text-align: left;
-  border-bottom: 1px solid var(--gold-border);
-  font-size: 13px;
-}
-.comparison-table th {
-  background: rgba(240,165,0,0.1);
-  font-weight: 700;
-  color: var(--gold);
-}
-.comparison-table tr:last-child td {
-  border-bottom: none;
-}
-.comparison-table td:first-child {
-  font-weight: 600;
-}
-.three-steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 32px;
-}
-.step-card {
-  background: var(--bg3);
-  border: 1px solid var(--gold-border);
-  border-radius: var(--radius);
-  padding: 28px 20px;
-  text-align: center;
-}
-.step-num {
-  font-size: 36px;
-  font-weight: 800;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 12px;
-  font-family: 'Manrope', sans-serif;
-}
-.step-card h4 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-.step-card p {
-  font-size: 13px;
-  color: var(--muted);
-}
-.video-placeholder {
-  background: var(--bg3);
-  border: 1px solid var(--gold-border);
-  border-radius: var(--radius-lg);
-  padding: 40px 20px;
-  text-align: center;
-  margin-top: 28px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.video-placeholder:hover {
-  border-color: var(--gold);
-}
-.video-placeholder .play-icon {
-  font-size: 48px;
-  margin-bottom: 12px;
-}
-.video-placeholder p {
-  font-size: 14px;
-  color: var(--gold);
-  font-weight: 600;
-}
-.realistic-box {
-  background: var(--bg3);
-  border: 1px solid var(--gold-border);
-  border-radius: var(--radius);
-  padding: 24px;
-  margin-top: 28px;
-}
-.realistic-box h3 {
-  font-size: 18px;
-  font-weight: 800;
-  margin-bottom: 12px;
-}
-.realistic-box p {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 12px;
-}
-.realistic-stats {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 12px;
-}
-.realistic-stat {
-  background: var(--bg2);
-  border-radius: var(--radius-sm);
-  padding: 12px;
-  flex: 1;
-  text-align: center;
-}
-.realistic-stat span {
-  display: block;
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--gold);
-}
-.realistic-stat small {
-  font-size: 11px;
-  color: var(--muted);
-}
-.plr-license {
-  background: var(--bg3);
-  border: 1px solid var(--gold-border);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-top: 20px;
-}
-.plr-license h4 {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.plr-license ul {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 8px;
-}
-.plr-license li {
-  font-size: 12px;
-  background: var(--bg2);
-  padding: 4px 12px;
-  border-radius: 30px;
-  color: var(--muted);
-}
-.plr-license li.yes {
-  color: var(--green);
-}
-.plr-license li.no {
-  color: #F87171;
+@media (max-width: 400px) {
+  .modules-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- ANNOUNCEMENT BAR with countdown feel -->
+<!-- ANNOUNCEMENT -->
 <div class="announcement">
-  🔥 Launch Special: 70% OFF Today Only — Only $17 (Regular Price $57) · <span id="countdown">02d 14h 32m</span> left
+  🔥 Launch Price: Only $9 Today — Price Increases to $27 on Friday &nbsp;·&nbsp; <strong>Instant Access</strong>
 </div>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">MoneyMethods PLR</div>
+  <div class="nav-logo">AI<span>Affiliate</span>Start</div>
   <a href="#buy" class="nav-cta">Get Instant Access →</a>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="badge">
-    <span class="badge-dot"></span>
-    Complete PLR Bundle — Ready to Sell in Minutes
-  </div>
+<!-- ==================== HERO ==================== -->
+<div class="hero-wrap">
+  <div class="hero-noise"></div>
+  <div class="hero-glow"></div>
+  <div class="hero">
 
-  <h1>The Only PLR Bundle Covering <em>17 Real Ways</em> to Make Money Online in 2025</h1>
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Step-by-Step · Beginner Friendly · No Budget Needed
+    </div>
 
-  <p class="hero-sub">
-    Done-for-you content your audience actually wants. Put your name on it, sell it, give it away — 100% editable, 100% yours. No fluff. No outdated methods. Just proven income strategies that work right now.
-  </p>
+    <h1>Get Your First Affiliate Sale Using AI in <em>7 Days</em></h1>
+    <p class="hero-sub">A simple 4-step system built for complete beginners. No experience. No paid ads. No technical skills. Just follow the steps.</p>
 
-  <!-- PRICE BOX -->
-  <div class="price-box" id="buy">
-    <div class="original-price">Regular Price: $57</div>
-    <div class="current-price">$17</div>
-    <div class="price-note">Full PLR License Included · Instant Download</div>
-    <a href="#" class="cta-btn">
-      <span class="cta-shine"></span>
-      ⚡ Yes! Give Me Instant Access Now
-    </a>
-    <div class="trust-row">
-      <span>🔒 Secure Checkout</span>
-      <span class="dot"></span>
-      <span>✅ 30-Day Guarantee</span>
-      <span class="dot"></span>
-      <span>⚡ Instant Download</span>
+    <!-- PRICE BOX -->
+    <div class="price-box" id="buy">
+      <div class="old-price">Regular Price: $27</div>
+      <div class="big-price">$9</div>
+      <div class="price-sub">One-time payment · Instant access · 30-day guarantee</div>
+      <a href="#" class="cta-main">⚡ Get Instant Access Now</a>
+      <div class="trust-row">
+        <span>🔒 Secure Checkout</span>
+        <span class="trust-dot"></span>
+        <span>✅ 30-Day Guarantee</span>
+        <span class="trust-dot"></span>
+        <span>⚡ Instant Download</span>
+      </div>
     </div>
-  </div>
 
-  <!-- STATS -->
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-num">17</div>
-      <div class="stat-label">Income Methods</div>
+    <!-- STATS -->
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num">4</div><div class="hstat-label">Step System</div></div>
+      <div class="hstat"><div class="hstat-num">7</div><div class="hstat-label">Days to First Sale</div></div>
+      <div class="hstat"><div class="hstat-num">$0</div><div class="hstat-label">Budget Needed</div></div>
+      <div class="hstat"><div class="hstat-num">100%</div><div class="hstat-label">Beginner Safe</div></div>
     </div>
-    <div class="stat">
-      <div class="stat-num">100%</div>
-      <div class="stat-label">Editable</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">$0</div>
-      <div class="stat-label">Royalties Ever</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">5min</div>
-      <div class="stat-label">Setup Time</div>
-    </div>
+
   </div>
 </div>
 
-<hr class="divider">
+<div class="section-divider"><hr></div>
 
-<!-- PROBLEM -->
+<!-- ==================== PROBLEM ==================== -->
 <section class="fade-up">
-  <div class="section-label">The Problem</div>
-  <h2>Why Most "Make Money Online" Content <em>Fails</em> Your Audience</h2>
-  <p class="section-sub">Your buyers are tired of the same recycled advice. Here's what they keep running into:</p>
-  <div class="problem-grid">
-    <div class="problem-card">
-      <div class="problem-icon">😩</div>
-      <h4>Outdated Methods</h4>
-      <p>Most PLR still talks about survey sites and link shorteners. Your audience deserves content that works in 2025.</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">🤦</div>
-      <h4>Only 1–2 Methods</h4>
-      <p>Most bundles cover affiliate marketing and blogging only. Your buyers want variety and real options.</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">💸</div>
-      <h4>Overpriced Rubbish</h4>
-      <p>Paying $97+ for watered-down PDFs you can't even edit. That's not PLR — that's fancy branding on nothing.</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">😴</div>
-      <h4>Boring, Generic Writing</h4>
-      <p>Content so bland readers fall asleep. PLR should engage, educate, and convert — not put people to sleep.</p>
-    </div>
-  </div>
-</section>
+  <div class="section-eyebrow">The Problem</div>
+  <h2>You've Tried Before. It <em>Didn't Work.</em> Here's Why.</h2>
 
-<hr class="divider">
-
-<!-- PERSONAL CREATOR SECTION (NEW) -->
-<section class="fade-up">
-  <div class="creator-box">
-    <div class="creator-avatar">👩‍💻</div>
-    <div class="creator-text">
-      <h3>Hi, I'm Alex — Creator of This PLR Bundle</h3>
-      <p>I spent 6 months researching the most profitable online income methods that actually work in 2025. I was tired of seeing beginners waste money on outdated, uneditable PLR. So I created this bundle: 17 practical strategies, fully editable, and designed to help you build a real digital product business.</p>
+  <div class="pain-grid">
+    <div class="pain-card">
+      <span class="pain-icon">😵</span>
+      <h4>Too Much Information</h4>
+      <p>YouTube, blogs, forums — everyone says something different. You spend hours learning and end up more confused than when you started.</p>
+    </div>
+    <div class="pain-card">
+      <span class="pain-icon">💸</span>
+      <h4>Most Systems Need Money</h4>
+      <p>Paid ads, expensive tools, courses with upsells. If you're starting with no budget, most "beginner" guides quietly assume you have money to spend.</p>
+    </div>
+    <div class="pain-card">
+      <span class="pain-icon">⏳</span>
+      <h4>No Results After Weeks</h4>
+      <p>You do everything right — or you think you do — and still see zero. No clicks, no sales, no sign that anything is actually working.</p>
+    </div>
+    <div class="pain-card">
+      <span class="pain-icon">🔀</span>
+      <h4>No Clear Starting Point</h4>
+      <p>Affiliate marketing, dropshipping, freelancing — it's impossible to know which one to focus on when you're just getting started.</p>
     </div>
   </div>
+
+  <div class="emotional-line">
+    "I'm not lazy. I'm not giving up. I just need someone to show me exactly what to do — in order — without assuming I already know things."
+  </div>
 </section>
 
-<hr class="divider">
+<div class="section-divider"><hr></div>
 
-<!-- SOLUTION (existing) -->
+<!-- ==================== SOLUTION ==================== -->
 <section class="fade-up">
-  <div class="two-col">
-    <div>
-      <div class="section-label">The Solution</div>
-      <h2>17 Methods. One Powerful Bundle. <em>Unlimited Use.</em></h2>
-      <p style="color:var(--muted);font-size:14px;line-height:1.75;margin-bottom:18px;">
-        This PLR bundle covers 17 of the most relevant and beginner-friendly ways to earn online today — from AI-powered services to passive income streams. Practical, current, and written to convert.
-      </p>
-      <ul class="check-list">
-        <li>Covers both <strong>AI-powered</strong> and traditional income methods</li>
-        <li>Beginner-friendly language — no tech jargon</li>
-        <li>Each method explained with steps and realistic income potential</li>
-        <li>Edit, rebrand, and resell however you like</li>
-        <li>Word &amp; PDF formats included</li>
-        <li>Full commercial PLR license inside</li>
-      </ul>
+  <div class="section-eyebrow">The Solution</div>
+  <h2>One Method. Four Steps. <em>Your First Sale.</em></h2>
+  <p style="font-size:15px;color:var(--muted);line-height:1.75;max-width:560px;margin-bottom:36px;">This system focuses on one thing only: using AI tools and free traffic to get your first affiliate commission. No guessing. No overwhelm. Just a clear path.</p>
+
+  <div class="steps-flow">
+    <div class="step-row">
+      <div class="step-icon-col"><div class="step-circle">1</div></div>
+      <div class="step-content">
+        <h4>Setup — Be Ready in One Hour</h4>
+        <p>Choose a beginner-friendly affiliate program, create your free account, and get your affiliate link. No website needed at the start. We walk you through every click.</p>
+        <span class="step-tag">Module 1</span>
+      </div>
     </div>
-    <div class="highlight-box">
-      <h3>💡 Perfect for You If...</h3>
-      <ul class="check-list">
-        <li>You run a blog or newsletter about making money</li>
-        <li>You sell digital products on Gumroad, Etsy, or Payhip</li>
-        <li>You need a lead magnet — fast</li>
-        <li>You coach people on online income</li>
-        <li>You want content for YouTube, TikTok, or email sequences</li>
-        <li>You're building a course or ebook to sell</li>
-      </ul>
+    <div class="step-row">
+      <div class="step-icon-col"><div class="step-circle">2</div></div>
+      <div class="step-content">
+        <h4>AI Content — Create Without Writing</h4>
+        <p>Use free AI tools to write your first piece of content — an honest review, a comparison, or a short guide. We give you the exact prompts to use. No writing experience needed.</p>
+        <span class="step-tag">Module 2</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-icon-col"><div class="step-circle">3</div></div>
+      <div class="step-content">
+        <h4>Free Traffic — Get Real Visitors</h4>
+        <p>Post your content to free platforms where buyers already search. We show you exactly where to post, when to post, and what to say to get clicks on your link.</p>
+        <span class="step-tag">Module 3</span>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-icon-col"><div class="step-circle">4</div></div>
+      <div class="step-content">
+        <h4>Earnings — Collect Your Commission</h4>
+        <p>When someone clicks your link and buys, you earn a commission. We show you how to track sales, scale what works, and keep going after your first win.</p>
+        <span class="step-tag">Module 4</span>
+      </div>
     </div>
   </div>
 </section>
 
-<hr class="divider">
+<!-- CTA INTERLUDE -->
+<div class="cta-interlude fade-up">
+  <p>Ready to follow a clear, step-by-step path to your first affiliate sale?</p>
+  <a href="#buy" class="cta-large">⚡ Get Started for $9</a>
+</div>
 
-<!-- WHO IS THIS FOR (NEW) -->
+<!-- ==================== WHAT'S INSIDE ==================== -->
 <section class="fade-up">
-  <div class="section-label">Who Is This For</div>
-  <h2>Designed for <em>Creators Like You</em></h2>
-  <div class="who-grid">
-    <div class="who-card"><div class="who-icon">📝</div><h4>Bloggers</h4><p>Repurpose as lead magnets or blog posts</p></div>
-    <div class="who-card"><div class="who-icon">🛍️</div><h4>Gumroad/Etsy Sellers</h4><p>Ready-to-sell digital product</p></div>
-    <div class="who-card"><div class="who-icon">🎓</div><h4>Coaches</h4><p>Use as course content or freebie</p></div>
-    <div class="who-card"><div class="who-icon">🎥</div><h4>YouTube Creators</h4><p>Script ideas & faceless channel content</p></div>
-    <div class="who-card"><div class="who-icon">📧</div><h4>Email Marketers</h4><p>Create high-value email sequences</p></div>
-  </div>
-</section>
+  <div class="section-eyebrow">What's Inside</div>
+  <h2>Four Modules. One <em>Simple Path.</em></h2>
 
-<hr class="divider">
-
-<!-- 17 METHODS -->
-<section class="fade-up">
-  <div class="section-label">What's Inside</div>
-  <h2>All <em>17 Income Methods</em> Covered</h2>
-  <p class="methods-intro">Each method includes a full breakdown, step-by-step approach, and realistic income expectations.</p>
-  <div class="methods-grid">
-    <div class="method-card"><div class="method-num">01</div><div><h4>Affiliate Marketing</h4><p>Promote others' products and earn commissions without creating anything from scratch.</p><span class="method-tag tag-beginner">Beginner Friendly</span></div></div>
-    <div class="method-card"><div class="method-num">02</div><div><h4>AI Prompt Services</h4><p>Sell custom prompts or AI-powered services — one of the hottest niches of 2025.</p><span class="method-tag tag-hot">🔥 Hot Right Now</span></div></div>
-    <div class="method-card"><div class="method-num">03</div><div><h4>Micro-Freelancing</h4><p>Small gigs, fast money. Fiverr and PeoplePerHour make this super easy to start.</p><span class="method-tag tag-beginner">Beginner Friendly</span></div></div>
-    <div class="method-card"><div class="method-num">04</div><div><h4>Selling Digital Templates</h4><p>Design once, sell forever. Canva templates, resume kits, social media packs.</p><span class="method-tag tag-passive">💜 Passive Income</span></div></div>
-    <div class="method-card"><div class="method-num">05</div><div><h4>YouTube Shorts Automation</h4><p>Build faceless channels with AI tools and monetize with ads and sponsorships.</p><span class="method-tag tag-hot">🔥 Hot Right Now</span></div></div>
-    <div class="method-card"><div class="method-num">06</div><div><h4>Print-on-Demand (POD)</h4><p>Sell custom merch with zero inventory. Upload design, Printful handles the rest.</p><span class="method-tag tag-passive">💜 Passive Income</span></div></div>
-    <div class="method-card"><div class="method-num">07</div><div><h4>Blogging with AI Assistance</h4><p>Build a niche blog fast using AI to speed up content creation by 10x.</p><span class="method-tag tag-passive">💜 Passive Income</span></div></div>
-    <div class="method-card"><div class="method-num">08</div><div><h4>Website Testing &amp; Feedback</h4><p>Get paid to browse websites and share feedback. No skills needed at all.</p><span class="method-tag tag-beginner">Beginner Friendly</span></div></div>
-    <div class="method-card"><div class="method-num">09</div><div><h4>Social Media for Local Biz</h4><p>Manage pages for local businesses and charge $300–$1,000/month easily.</p><span class="method-tag tag-hot">🔥 Hot Right Now</span></div></div>
-    <div class="method-card"><div class="method-num">10</div><div><h4>Selling PLR (Properly Branded)</h4><p>Buy PLR, rebrand it, and sell it as your own product — meta and profitable.</p><span class="method-tag tag-beginner">Beginner Friendly</span></div></div>
-    <div class="method-card"><div class="method-num">11</div><div><h4>Niche Lead-Gen Websites</h4><p>Simple sites that collect leads for local businesses and earn you monthly fees.</p><span class="method-tag tag-passive">💜 Passive Income</span></div></div>
-    <div class="method-card"><div class="method-num">12</div><div><h4>Online Surveys (Realistic)</h4><p>Honest guide — where to go, what pays, and how to maximize your time.</p><span class="method-tag tag-beginner">Beginner Friendly</span></div></div>
-    <div class="method-card"><div class="method-num">13</div><div><h4>Selling Stock Photos / AI Art</h4><p>Upload once to Shutterstock or Adobe Stock and earn royalties forever.</p><span class="method-tag tag-passive">💜 Passive Income</span></div></div>
-    <div class="method-card"><div class="method-num">14</div><div><h4>Voice-Over with AI</h4><p>Use AI voice tools to offer professional voice-overs without any studio setup.</p><span class="method-tag tag-hot">🔥 Hot Right Now</span></div></div>
-    <div class="method-card"><div class="method-num">15</div><div><h4>Flipping Domains</h4><p>Buy low, sell high. Find undervalued domains and flip them for real profit.</p><span class="method-tag tag-passive">💜 Passive Income</span></div></div>
-    <div class="method-card"><div class="method-num">16</div><div><h4>Selling Notion Templates</h4><p>Notion is exploding. Sell aesthetic templates for $10–$50 each on Gumroad.</p><span class="method-tag tag-hot">🔥 Hot Right Now</span></div></div>
-    <div class="method-card"><div class="method-num">17</div><div><h4>Online Coaching</h4><p>Monetize what you already know. Charge $50–$500/hr teaching your skills.</p><span class="method-tag tag-hot">🔥 Hot Right Now</span></div></div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- WHAT YOU GET (enhanced with bonuses) -->
-<section class="fade-up">
-  <div class="section-label">Everything Included</div>
-  <h2>What You Get for Just <em>$17</em></h2>
-  <div class="includes-grid">
-    <div class="include-card"><div class="include-icon">📘</div><h4>Main Guide</h4><p>Full editable guide (PDF + Word + TXT)</p></div>
-    <div class="include-card"><div class="include-icon">✏️</div><h4>100% Editable</h4><p>Add your name, change anything you want</p></div>
-    <div class="include-card"><div class="include-icon">🏷️</div><h4>Full PLR License</h4><p>Sell it, use as lead magnet, or in courses</p></div>
-    <div class="include-card"><div class="include-icon">⚡</div><h4>Instant Download</h4><p>Access everything immediately after purchase</p></div>
-    <div class="include-card"><div class="include-icon">📧</div><h4>Bonus #1: Email Swipe Copy</h4><p>5 ready-to-send promotional emails</p></div>
-    <div class="include-card"><div class="include-icon">🎨</div><h4>Bonus #2: Cover Graphics</h4><p>Professional cover image + Canva template</p></div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- 3-STEP USAGE (NEW) -->
-<section class="fade-up">
-  <div class="section-label">Simple Workflow</div>
-  <h2>Turn This PLR Into Profit in <em>3 Steps</em></h2>
-  <div class="three-steps">
-    <div class="step-card"><div class="step-num">1</div><h4>Download</h4><p>Get instant access to the editable Word, PDF, and bonus files.</p></div>
-    <div class="step-card"><div class="step-num">2</div><h4>Edit & Brand</h4><p>Add your name, tweak the content, and customize the cover.</p></div>
-    <div class="step-card"><div class="step-num">3</div><h4>Profit</h4><p>Sell it, give it away, or use it in your marketing — keep 100% of the income.</p></div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<!-- COMPARISON TABLE (NEW) -->
-<section class="fade-up">
-  <div class="section-label">Why We're Different</div>
-  <h2>Compare <em>Us vs. Other PLR Bundles</em></h2>
-  <table class="comparison-table">
-    <thead>
-      <tr><th>Feature</th><th>Other PLR Bundles</th><th><span style="color:var(--gold)">Your Bundle</span></th></tr>
-    </thead>
-    <tbody>
-      <tr><td>Number of methods</td><td>2–5</td><td><strong>17</strong></td></tr>
-      <tr><td>Editable formats</td><td>PDF only</td><td><strong>PDF + Word + TXT</strong></td></tr>
-      <tr><td>Covers AI methods?</td><td>Rarely</td><td><strong>✅ (AI prompts, voice‑over, etc.)</strong></td></tr>
-      <tr><td>Realistic income expectations</td><td>Hype</td><td><strong>✅ (honest ranges)</strong></td></tr>
-      <tr><td>Email swipes</td><td>❌</td><td><strong>✅</strong></td></tr>
-      <tr><td>Money‑back guarantee</td><td>7 days</td><td><strong>30 days</strong></td></tr>
-    </tbody>
-  </table>
-</section>
-
-<hr class="divider">
-
-<!-- VIDEO PLACEHOLDER (NEW) -->
-<section class="fade-up">
-  <div class="section-label">See It In Action</div>
-  <h2>Watch How Easy It Is to <em>Edit & Sell</em></h2>
-  <div class="video-placeholder" id="videoTrigger">
-    <div class="play-icon">▶️</div>
-    <p>Click to watch quick walkthrough (2 min)</p>
-  </div>
-  <!-- In a real implementation, you'd embed a video here or open a modal. This is a placeholder. -->
-</section>
-
-<hr class="divider">
-
-<!-- REALISTIC RESULTS (NEW) -->
-<section class="fade-up">
-  <div class="section-label">Realistic Expectations</div>
-  <h2>What Results Look Like (No Hype)</h2>
-  <div class="realistic-box">
-    <p>Many beginners expect big results quickly, but real progress is usually slow at the start. Here's a typical timeline:</p>
-    <div class="realistic-stats">
-      <div class="realistic-stat"><span>First month</span><small>$0 – $50</small></div>
-      <div class="realistic-stat"><span>2–3 months</span><small>$50 – $300</small></div>
-      <div class="realistic-stat"><span>Long-term</span><small>$500 – $2,000+ / month</small></div>
+  <div class="modules-grid">
+    <div class="module-card">
+      <div class="mod-num">Module 01</div>
+      <span class="mod-icon">⚙️</span>
+      <h4>Setup</h4>
+      <p>Pick a program, grab your link, and prepare your free tools. Done in under an hour.</p>
     </div>
-    <p style="font-size:12px; margin-top:12px;">These are realistic outcomes based on consistent action. Individual results vary, but this is what honest progress looks like.</p>
+    <div class="module-card">
+      <div class="mod-num">Module 02</div>
+      <span class="mod-icon">🤖</span>
+      <h4>AI Content</h4>
+      <p>Copy-paste AI prompts to create helpful content that actually gets people to click.</p>
+    </div>
+    <div class="module-card">
+      <div class="mod-num">Module 03</div>
+      <span class="mod-icon">📣</span>
+      <h4>Free Traffic</h4>
+      <p>Where and how to post. Pinterest, Reddit, Quora, Medium — no paid ads, ever.</p>
+    </div>
+    <div class="module-card">
+      <div class="mod-num">Module 04</div>
+      <span class="mod-icon">💰</span>
+      <h4>Monetization</h4>
+      <p>Track your results, identify what works, and make more sales by repeating it.</p>
+    </div>
+  </div>
+
+  <div class="module-details">
+    <div class="mod-detail">
+      <div class="mod-detail-num">1</div>
+      <div>
+        <h5>Setup — Choose Your Program & Get Your Link</h5>
+        <p>We recommend four beginner-friendly affiliate programs with no approval requirements, high commissions, and fast payouts. You pick one and we walk you through registering and getting your tracking link step by step.</p>
+        <ul class="check-list">
+          <li>Recommended affiliate programs for beginners</li>
+          <li>How to read your affiliate dashboard</li>
+          <li>Free tools to track your clicks and conversions</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mod-detail">
+      <div class="mod-detail-num">2</div>
+      <div>
+        <h5>AI Content — Write Reviews & Guides in Minutes</h5>
+        <p>You don't need to be a writer. We give you word-for-word AI prompts that produce helpful, honest content people actually want to read — and click through.</p>
+        <ul class="check-list">
+          <li>5 ready-to-use AI prompts (copy and paste)</li>
+          <li>How to edit AI content so it sounds natural</li>
+          <li>Where to put your affiliate link for the most clicks</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mod-detail">
+      <div class="mod-detail-num">3</div>
+      <div>
+        <h5>Free Traffic — Get Visitors Without Paying a Penny</h5>
+        <p>We cover six free platforms where buyers are already looking for recommendations. You'll know exactly what to post, how to write the title, and when to publish for the best results.</p>
+        <ul class="check-list">
+          <li>Platform-by-platform posting guide</li>
+          <li>Title formulas that attract buyers</li>
+          <li>A simple 7-day posting plan</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mod-detail">
+      <div class="mod-detail-num">4</div>
+      <div>
+        <h5>Monetization — Understand Your Results & Scale Up</h5>
+        <p>After your first sale, the question is: what happened? We teach you how to read your numbers, identify your best-performing content, and repeat the process to grow consistently.</p>
+        <ul class="check-list">
+          <li>How to read affiliate stats (simple explanation)</li>
+          <li>The "double down" method to scale free traffic</li>
+          <li>Realistic next steps after your first commission</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
-<hr class="divider">
+<div class="section-divider"><hr></div>
 
-<!-- TESTIMONIALS (improved) -->
+<!-- ==================== BONUS ==================== -->
 <section class="fade-up">
-  <div class="section-label">Social Proof</div>
-  <h2>Real People. <em>Real Results.</em></h2>
-  <div class="testimonials-grid">
+  <div class="section-eyebrow">Bonus Included</div>
+  <h2>Plus: 17 Additional Income Methods <em>(Bonus Section)</em></h2>
+  <p style="font-size:14px;color:var(--muted);line-height:1.75;max-width:540px;margin-bottom:20px;">Once you've made your first sale with the core system, you might want to explore other income streams. This bonus section gives you a clear overview of 17 other methods — what they are, how they work, and whether they're a good fit for you.</p>
+
+  <div class="bonus-wrap">
+    <div class="bonus-header">
+      <span class="bonus-icon-big">🎁</span>
+      <div>
+        <h3>Bonus: 17 Income Methods Overview</h3>
+        <p>A reference guide to explore after you've completed the core 4-step system.</p>
+      </div>
+      <span class="bonus-tag">Free Bonus</span>
+    </div>
+    <div class="bonus-list">
+      <div class="bonus-item">Freelance writing with AI</div>
+      <div class="bonus-item">Selling digital templates</div>
+      <div class="bonus-item">YouTube Shorts automation</div>
+      <div class="bonus-item">Print-on-demand basics</div>
+      <div class="bonus-item">Niche blogging overview</div>
+      <div class="bonus-item">Selling Notion templates</div>
+      <div class="bonus-item">Social media for local biz</div>
+      <div class="bonus-item">AI voice-over services</div>
+      <div class="bonus-item">Stock photo income</div>
+      <div class="bonus-item">Website testing gigs</div>
+      <div class="bonus-item">Online coaching basics</div>
+      <div class="bonus-item">Domain flipping intro</div>
+      <div class="bonus-item">AI prompt services</div>
+      <div class="bonus-item">Lead-gen websites</div>
+      <div class="bonus-item">Online surveys (honest guide)</div>
+      <div class="bonus-item">Micro-freelancing</div>
+      <div class="bonus-item">Niche email newsletters</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><hr></div>
+
+<!-- ==================== PROOF / DEMO ==================== -->
+<section class="fade-up">
+  <div class="section-eyebrow">See It In Action</div>
+  <h2>Simple Proof That the <em>System Works</em></h2>
+
+  <div class="proof-grid">
+    <div class="proof-card">
+      <span class="proof-icon">📊</span>
+      <h4>Example Result</h4>
+      <p>A beginner followed the 4-step system and posted content on two free platforms.</p>
+      <span class="result-stat">$34</span>
+      <span class="result-label">First commission — 9 days after starting</span>
+    </div>
+    <div class="proof-card">
+      <span class="proof-icon">▶️</span>
+      <h4>Quick Walkthrough</h4>
+      <p>Watch a 3-minute screen recording showing exactly how to complete Step 1 and Step 2 of the system.</p>
+      <div style="margin-top:16px;background:var(--bg2);border:1px solid var(--lime-border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:all 0.2s;" id="videoBtn">
+        <span style="font-size:28px;display:block;margin-bottom:8px;">▶</span>
+        <span style="font-size:12px;color:var(--lime);font-weight:600;">Click to watch walkthrough</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="testi-grid" style="margin-top:14px;">
     <div class="testi-card">
       <div class="stars">★★★★★</div>
-      <p>"I sold this bundle on Gumroad for $12 and made $340 in the first week. The content is solid – no fluff. I'm using it as a lead magnet now and getting 50+ emails/day."</p>
+      <blockquote>"I followed Module 1 and 2 on day one. By day 6 I had my first $12 commission. Never thought it would actually work this fast."</blockquote>
       <div class="testi-author">
-        <div class="testi-avatar">SA</div>
-        <div><div class="testi-name">Sara A.</div><div class="testi-role">Digital Product Creator</div></div>
+        <div class="testi-av">JM</div>
+        <div><div class="testi-name">James M.</div><div class="testi-role">Student, UK</div></div>
       </div>
     </div>
     <div class="testi-card">
       <div class="stars">★★★★★</div>
-      <p>"Turned the AI prompt services chapter into a standalone ebook. Made $280 in 2 weeks. This bundle paid for itself 20x over."</p>
+      <blockquote>"No tech skills, no money, no idea what I was doing. The AI prompts in Module 2 made content creation actually easy. Got a sale in week two."</blockquote>
       <div class="testi-author">
-        <div class="testi-avatar">MK</div>
-        <div><div class="testi-name">Marcus K.</div><div class="testi-role">Blogger &amp; Affiliate Marketer</div></div>
+        <div class="testi-av">PL</div>
+        <div><div class="testi-name">Priya L.</div><div class="testi-role">Stay-at-home parent, Canada</div></div>
       </div>
     </div>
     <div class="testi-card">
       <div class="stars">★★★★★</div>
-      <p>"Used 5 methods as individual blog posts and saw a 300% traffic increase. The realistic income section built instant trust with my audience."</p>
+      <blockquote>"I wasted months on other stuff before finding this. The free traffic strategy in Module 3 actually drives real visitors. Simple and it works."</blockquote>
       <div class="testi-author">
-        <div class="testi-avatar">NR</div>
-        <div><div class="testi-name">Nadia R.</div><div class="testi-role">Content Creator, YouTube</div></div>
+        <div class="testi-av">AO</div>
+        <div><div class="testi-name">Ahmed O.</div><div class="testi-role">First-time affiliate, Nigeria</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<hr class="divider">
+<!-- CTA INTERLUDE 2 -->
+<div class="cta-interlude fade-up">
+  <p>Everything you need to get started is inside. No experience required.</p>
+  <a href="#offer" class="cta-large">⚡ Grab Your Copy for $9</a>
+</div>
 
-<!-- GUARANTEE (unchanged) -->
-<section class="fade-up" style="text-align:center;">
-  <div class="guarantee-box">
-    <div class="guarantee-icon">🛡️</div>
-    <h3>30-Day Money-Back Guarantee</h3>
-    <p>Try the entire bundle risk-free for 30 days. If you're not completely satisfied — for <strong>any reason</strong> — just email us and we'll refund you 100%. No questions, no hoops, no hassle.</p>
-  </div>
-</section>
+<!-- ==================== OFFER STACK ==================== -->
+<section class="fade-up" id="offer">
+  <div class="section-eyebrow">The Offer</div>
+  <h2>Everything You Get for <em>Just $9</em></h2>
 
-<hr class="divider">
-
-<!-- FAQ (expanded with PLR license) -->
-<section class="fade-up">
-  <div class="section-label">Questions</div>
-  <h2>Frequently Asked <em>Questions</em></h2>
-  <div class="faq-list">
-    <div class="faq-item">
-      <div class="faq-q">Can I put my name on this and sell it? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">Yes — that's the whole point! You can edit the content, add your name as the author, change the title, and sell it as your own product. The only restriction: you cannot sell the PLR rights themselves to others.</div>
+  <div class="offer-table">
+    <div class="offer-row">
+      <div class="offer-item-name">Core System — 4-Step AI Affiliate Guide<small>Modules 1–4 with step-by-step instructions</small></div>
+      <div class="offer-value">$27</div>
     </div>
-    <div class="faq-item">
-      <div class="faq-q">What formats do I get? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">You get a Word document (for easy editing), a PDF version, and a TXT file. All three are included in your instant download after purchase.</div>
+    <div class="offer-row">
+      <div class="offer-item-name">AI Prompts Cheat Sheet<small>5 ready-to-use prompts for writing affiliate content</small></div>
+      <div class="offer-value">$12</div>
     </div>
-    <div class="faq-item">
-      <div class="faq-q">Is this suitable for complete beginners? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">Absolutely. The content is written in plain English with realistic, beginner-friendly strategies. Your audience will appreciate that it's not filled with hype or unrealistic promises.</div>
+    <div class="offer-row">
+      <div class="offer-item-name">7-Day Posting Plan<small>Exact daily actions for your first week</small></div>
+      <div class="offer-value">$9</div>
     </div>
-    <div class="faq-item">
-      <div class="faq-q">Can I use this on Blogger or as a free giveaway? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">Yes! Break it into blog posts, use it as a freebie to grow your email list, include it in a paid course, or turn it into a full ebook to sell. It's extremely versatile.</div>
+    <div class="offer-row">
+      <div class="offer-item-name">Free Traffic Platform Guide<small>Where to post, how to write titles, when to publish</small></div>
+      <div class="offer-value">$9</div>
     </div>
-    <div class="faq-item">
-      <div class="faq-q">Is the content AI-generated? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">The content is AI-assisted and human-directed — researched, structured, and reviewed to ensure quality and readability, not just raw AI output.</div>
+    <div class="offer-row">
+      <div class="offer-item-name">Bonus: 17 Income Methods Overview<small>Explore other income streams once you've made your first sale</small></div>
+      <div class="offer-value">$0</div>
     </div>
-    <div class="faq-item">
-      <div class="faq-q">What exactly does the PLR license allow? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">
-        <div class="plr-license">
-          <h4>✅ You CAN:</h4>
-          <ul><li class="yes">Sell the ebook as your own</li><li class="yes">Give it away as a lead magnet</li><li class="yes">Break it into blog posts or videos</li><li class="yes">Edit and rebrand completely</li></ul>
-          <h4>❌ You CANNOT:</h4>
-          <ul><li class="no">Resell the PLR rights to others</li><li class="no">Claim copyright of the original text (but you own your edited version)</li></ul>
-        </div>
-      </div>
+    <div class="offer-row total-row">
+      <div class="offer-item-name">Total Value</div>
+      <div class="offer-value">$9 <span style="font-size:13px;color:var(--muted);text-decoration:line-through;margin-left:6px;">$57</span></div>
     </div>
   </div>
-</section>
 
-<hr class="divider">
-
-<!-- FINAL CTA with stronger urgency -->
-<div class="final-cta">
-  <div class="inner">
-    <div class="section-label">Last Chance</div>
-    <h2>Ready to Put <em>17 Income Methods</em> in Your Customers' Hands?</h2>
-    <p>Get the full bundle for just $17 — fully editable, fully licensed, instantly downloadable. Launch your product today.</p>
-    <a href="#buy" class="cta-btn-large">⚡ Get Instant Access — Only $17</a>
-    <div><div class="urgency-bar">🔴 Only 87 copies left at $17 — price increases to $57 when sold out</div></div>
+  <div class="final-price-box">
+    <div class="final-old">Total Value: $57</div>
+    <div class="final-new">$9</div>
+    <div class="final-note">One-time payment · Instant download · 30-day money-back guarantee</div>
+    <a href="#" class="cta-large">⚡ Get Instant Access for $9</a>
+    <div><div class="urgency-pill">🔴 Price increases to $27 on Friday</div></div>
     <div class="trust-badges">
       <span>🔒 Secure Checkout</span>
       <span>✅ 30-Day Guarantee</span>
       <span>⚡ Instant Download</span>
-      <span>📄 Full PLR License</span>
+      <span>🌍 Works Worldwide</span>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><hr></div>
+
+<!-- ==================== GUARANTEE ==================== -->
+<section class="fade-up" style="text-align:center;">
+  <div class="guarantee-card">
+    <span class="g-icon">🛡️</span>
+    <h3>30-Day Money-Back Guarantee</h3>
+    <p>Try the full system for 30 days. Follow the steps. If you're not satisfied for any reason, email us and we'll refund you completely. No questions. No forms. No waiting.</p>
+  </div>
+</section>
+
+<div class="section-divider"><hr></div>
+
+<!-- ==================== FOR AFFILIATES ==================== -->
+<section class="fade-up">
+  <div class="section-eyebrow">For Affiliates & Promoters</div>
+  <h2>Perfect to Promote to <em>Your Audience</em></h2>
+
+  <div class="affiliate-box">
+    <div>
+      <span class="aff-label">Affiliate Friendly</span>
+      <h3>A Simple Offer That Converts</h3>
+      <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-top:8px;">This product is built for complete beginners worldwide. The $9 price point removes all buying hesitation. The promise is specific, the system is simple, and the 30-day guarantee reduces risk for your audience. Easy to recommend. Easy to sell.</p>
+      <ul class="check-list" style="margin-top:16px;">
+        <li>Low price = high conversion rate</li>
+        <li>Broad beginner audience worldwide</li>
+        <li>Clear, specific promise — easy to explain</li>
+        <li>No budget required = accessible to everyone</li>
+      </ul>
+    </div>
+    <div class="aff-stats">
+      <div class="aff-stat">
+        <span class="aff-stat-label">Price Point</span>
+        <span class="aff-stat-val">$9</span>
+      </div>
+      <div class="aff-stat">
+        <span class="aff-stat-label">Target Audience</span>
+        <span class="aff-stat-val">Beginners</span>
+      </div>
+      <div class="aff-stat">
+        <span class="aff-stat-label">Guarantee</span>
+        <span class="aff-stat-val">30 Days</span>
+      </div>
+      <div class="aff-stat">
+        <span class="aff-stat-label">Niche</span>
+        <span class="aff-stat-val">Make Money</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><hr></div>
+
+<!-- ==================== FAQ ==================== -->
+<section class="fade-up">
+  <div class="section-eyebrow">Questions</div>
+  <h2>Frequently Asked <em>Questions</em></h2>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Do I need any experience to start? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">No. This system is designed from the ground up for people who have never done affiliate marketing before. Every step is explained in plain language with no assumed knowledge. If you can follow instructions, you can do this.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do I need to spend money on ads or tools? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">No paid advertising. No premium tools. The entire system uses free platforms and free AI tools. The only thing you spend is your time — and the $9 for this guide.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How long does it take to get a first sale? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">The system is designed around a 7-day timeline. Most people who follow all four steps see their first click within 3–5 days. A first sale typically happens within 7–14 days. Some people are faster, some slower — it depends on how consistently you post.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Does this work outside the US? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">Yes. The affiliate programs we recommend accept members from most countries worldwide. The free traffic platforms are also global. We note any country-specific restrictions inside the guide.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if the AI tools I'm using are bad? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">We only recommend free AI tools that are reliable and consistently available. We also give you the exact prompts to use — so even if the output isn't perfect, you'll know how to guide it to get usable content quickly.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What format does the guide come in? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">You get a PDF guide with all four modules, the AI prompts cheat sheet, and the 7-day posting plan. Everything is available immediately after purchase — no waiting, no shipping.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is the 30-day guarantee exactly? <span class="faq-arrow">+</span></div>
+      <div class="faq-a">If you're not happy with the product for any reason within 30 days of purchase, email us and we'll refund you 100%. No questions asked, no need to explain yourself. We want you to feel safe trying this.</div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><hr></div>
+
+<!-- ==================== FINAL CTA ==================== -->
+<div class="final-cta-wrap">
+  <div class="final-cta-glow"></div>
+  <div class="final-cta-inner">
+    <div class="section-eyebrow" style="justify-content:center;margin-bottom:16px;">Your Starting Point</div>
+    <h2>Stop Researching. <em>Start Earning.</em></h2>
+    <p>You now know exactly what this is, how it works, and what it costs. The only thing left is to start. Follow four steps. Get your first sale. Everything else comes after that.</p>
+    <a href="#" class="cta-large">⚡ Get Instant Access for $9</a>
+    <div><div class="urgency-pill">🔴 Price increases to $27 on Friday — grab it now</div></div>
+    <div class="trust-badges">
+      <span>🔒 Secure Checkout</span>
+      <span>✅ 30-Day Guarantee</span>
+      <span>⚡ Instant Download</span>
+      <span>🌍 Works Worldwide</span>
     </div>
   </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2025 MoneyMethods PLR &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Service</a> &nbsp;·&nbsp; <a href="#">Contact</a></p>
-  <p style="margin-top:6px;font-size:11px;">Results mentioned are not typical. Individual results will vary based on effort, experience, and market conditions.</p>
+  <p>© 2025 AIAffiliateStart &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Service</a> &nbsp;·&nbsp; <a href="#">Contact Support</a></p>
+  <p style="margin-top:6px;font-size:11px;">Results are not guaranteed. Individual results vary based on effort, consistency, and market conditions. This is not a get-rich-quick scheme.</p>
 </footer>
 
 <!-- STICKY MOBILE CTA -->
-<a href="#buy" class="sticky-mobile">⚡ Get All 17 Methods — Only $17</a>
+<a href="#buy" class="sticky-mobile">⚡ Get Instant Access — Only $9</a>
 
 <script>
-  // Scroll fade-in animation
+  // Scroll fade animations
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
     });
-  }, { threshold: 0.08 });
+  }, { threshold: 0.07 });
   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
   // FAQ accordion
@@ -1182,7 +1309,7 @@ footer a:hover { color: var(--gold); }
     });
   });
 
-  // Hide sticky mobile CTA when price box is visible
+  // Hide sticky CTA when price box is in view
   const priceBox = document.getElementById('buy');
   const stickyCta = document.querySelector('.sticky-mobile');
   if (priceBox && stickyCta) {
@@ -1191,26 +1318,9 @@ footer a:hover { color: var(--gold); }
     }).observe(priceBox);
   }
 
-  // Countdown timer (static for demo – set to 2 days from now)
-  function updateCountdown() {
-    const now = new Date();
-    const target = new Date(now.getTime() + (2 * 24 * 60 * 60 * 1000) + (14 * 60 * 60 * 1000) + (32 * 60 * 1000)); // 2d 14h 32m
-    const diff = target - now;
-    if (diff <= 0) {
-      document.getElementById('countdown').innerText = "Offer ended";
-      return;
-    }
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    document.getElementById('countdown').innerText = `${days}d ${hours}h ${mins}m`;
-  }
-  updateCountdown();
-  setInterval(updateCountdown, 60000);
-
-  // Video placeholder click alert (replace with actual embed)
-  document.getElementById('videoTrigger')?.addEventListener('click', () => {
-    alert("In a real implementation, a video walkthrough would play here. You can embed a YouTube or Vimeo video.");
+  // Video placeholder
+  document.getElementById('videoBtn')?.addEventListener('click', () => {
+    alert("In a live version, a short walkthrough video would play here (YouTube or Vimeo embed).");
   });
 </script>
 </body>
