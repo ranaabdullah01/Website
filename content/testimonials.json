@@ -1,9 +1,27 @@
 {
   "testimonials": [
     {
-      "name": "MR Rana.",
-      "role": "Student, UK",
-      "quote": "I followed the system and got my first sale in 6 days!",
+      "name": "Sarah Mitchell",
+      "role": "First-time affiliate",
+      "quote": "I made my first $27 commission in 6 days. I've never done this before and the AI prompts made it so easy.",
+      "rating": 5
+    },
+    {
+      "name": "James Rodriguez",
+      "role": "Beginner from Philippines",
+      "quote": "No money needed to start. I used free platforms exactly as shown and got my first click on day 3.",
+      "rating": 5
+    },
+    {
+      "name": "Emily Chen",
+      "role": "College student",
+      "quote": "The step-by-step approach removed all confusion. I knew exactly what to do next.",
+      "rating": 5
+    },
+    {
+      "name": "David Thompson",
+      "role": "Retired teacher",
+      "quote": "At 58, I thought AI was too complicated. The copy-paste prompts proved me wrong.",
       "rating": 5
     }
   ]
