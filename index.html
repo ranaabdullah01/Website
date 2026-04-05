@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Get Your First Affiliate Sale Using AI in 7 Days - No Budget Needed</title>
+<title>Get Your First Affiliate Sale Using AI in 7 Days - Limited Time $17</title>
 <meta name="description" content="A simple 4-step system to make your first affiliate commission using AI and free traffic. Built for complete beginners. No experience, no paid ads, no technical skills required.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,6 +36,7 @@ body {
   --green: #4ADE80;
   --white: #F8F8FF;
   --red: #FF5050;
+  --orange: #FF8C42;
   --radius-sm: 8px;
   --radius: 12px;
   --radius-lg: 18px;
@@ -152,6 +153,60 @@ nav {
   margin: 0 auto 38px;
 }
 
+/* ===================== COUNTDOWN TIMER ===================== */
+.countdown-wrapper {
+  background: linear-gradient(135deg, rgba(255,80,80,0.15), rgba(255,140,66,0.1));
+  border: 2px solid rgba(255,80,80,0.3);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  max-width: 440px;
+  margin: 0 auto 24px;
+  box-shadow: 0 4px 20px rgba(255,80,80,0.2);
+}
+.countdown-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #FCA5A5;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.countdown-label::before {
+  content: '⚡';
+  font-size: 16px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+.countdown-timer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.countdown-block {
+  background: var(--bg3);
+  border: 1px solid rgba(255,80,80,0.3);
+  border-radius: var(--radius-sm);
+  padding: 12px 8px;
+  text-align: center;
+}
+.countdown-number {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(24px, 5vw, 32px);
+  color: var(--red);
+  line-height: 1;
+  margin-bottom: 4px;
+  font-weight: 400;
+}
+.countdown-text {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 /* ===================== PRICE BOX ===================== */
 .price-box {
   background: linear-gradient(135deg, var(--bg3), var(--bg4));
@@ -171,7 +226,27 @@ nav {
   background: linear-gradient(90deg, transparent, var(--lime), transparent);
   opacity: 0.6;
 }
-.old-price { font-size: 14px; color: var(--muted); text-decoration: line-through; margin-bottom: 6px; }
+.old-price { 
+  font-size: 18px; 
+  color: var(--muted); 
+  text-decoration: line-through; 
+  margin-bottom: 8px;
+  position: relative;
+}
+.old-price::after {
+  content: '65% OFF';
+  position: absolute;
+  right: -80px;
+  top: -2px;
+  background: var(--red);
+  color: #FFF;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 100px;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
 .big-price {
   font-family: 'DM Serif Display', serif;
   font-size: clamp(54px, 11vw, 72px);
@@ -732,7 +807,12 @@ section {
   background: radial-gradient(circle, rgba(200,241,53,0.12), transparent 70%);
   border-radius: 50%;
 }
-.final-old { font-size: 16px; color: var(--muted); text-decoration: line-through; margin-bottom: 8px; }
+.final-old { 
+  font-size: 20px; 
+  color: var(--muted); 
+  text-decoration: line-through; 
+  margin-bottom: 8px; 
+}
 .final-new {
   font-family: 'DM Serif Display', serif;
   font-size: clamp(58px, 13vw, 80px);
@@ -886,6 +966,14 @@ footer a:hover { color: var(--lime); }
 }
 .fade-up.visible { opacity: 1; transform: translateY(0); }
 
+@keyframes timerBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.countdown-number.blink {
+  animation: timerBlink 1s ease-in-out infinite;
+}
+
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 640px) {
   section { padding: 56px var(--pad-x); }
@@ -897,10 +985,13 @@ footer a:hover { color: var(--lime); }
   .sticky-mobile { display: block; }
   body { padding-bottom: 66px; }
   .demo-steps { grid-template-columns: 1fr; }
+  .old-price::after { right: -60px; font-size: 9px; padding: 3px 8px; }
 }
 @media (max-width: 420px) {
   .modules-grid { grid-template-columns: 1fr; }
   .hero-stats { grid-template-columns: 1fr; }
+  .countdown-timer { gap: 6px; }
+  .countdown-block { padding: 10px 6px; }
 }
 </style>
 </head>
@@ -908,13 +999,13 @@ footer a:hover { color: var(--lime); }
 
 <!-- ANNOUNCEMENT -->
 <div class="announcement">
-  🔥 LIMITED TIME: Get the Full System for Only $9 — Price Increases to $27 This Friday &nbsp;·&nbsp; <strong>Instant Access</strong>
+  🔥 FLASH SALE: Limited Time $17 Launch Price — Returns to $49 When Timer Ends &nbsp;·&nbsp; <strong>Lock In Your Discount Now</strong>
 </div>
 
 <!-- NAV -->
 <nav>
   <div class="nav-logo">First<span>Sale</span>AI</div>
-  <a href="#buy" class="nav-cta">Get Started Now →</a>
+  <a href="#buy" class="nav-cta">Claim Your Discount →</a>
 </nav>
 
 <!-- ==================== HERO ==================== -->
@@ -931,12 +1022,35 @@ footer a:hover { color: var(--lime); }
     <h1>Get Your First Affiliate Sale Using AI in <em>7 Days</em></h1>
     <p class="hero-sub">A simple 4-step system that uses free AI tools and free traffic to make your first commission. No experience needed. No paid ads. No technical skills. Just follow the steps.</p>
 
+    <!-- COUNTDOWN TIMER -->
+    <div class="countdown-wrapper">
+      <div class="countdown-label">⏰ Special Launch Price Ends In:</div>
+      <div class="countdown-timer">
+        <div class="countdown-block">
+          <div class="countdown-number" id="hours">00</div>
+          <div class="countdown-text">Hours</div>
+        </div>
+        <div class="countdown-block">
+          <div class="countdown-number" id="minutes">00</div>
+          <div class="countdown-text">Minutes</div>
+        </div>
+        <div class="countdown-block">
+          <div class="countdown-number" id="seconds">00</div>
+          <div class="countdown-text">Seconds</div>
+        </div>
+        <div class="countdown-block">
+          <div class="countdown-number blink">💰</div>
+          <div class="countdown-text">Save $32</div>
+        </div>
+      </div>
+    </div>
+
     <!-- PRICE BOX -->
     <div class="price-box" id="buy">
-      <div class="old-price">Regular Price: $27</div>
-      <div class="big-price">$9</div>
+      <div class="old-price">Regular Price: $49</div>
+      <div class="big-price">$17</div>
       <div class="price-sub">One-time payment · Instant access · 30-day money-back guarantee</div>
-      <a href="https://warriorplus.com/o2/buy/your-product-id" class="cta-main">⚡ Get Instant Access for $9</a>
+      <a href="https://warriorplus.com/o2/buy/your-product-id" class="cta-main">⚡ Get Instant Access for $17</a>
       <div class="trust-row">
         <span>🔒 Secure Checkout</span>
         <span class="trust-dot"></span>
@@ -1075,7 +1189,7 @@ footer a:hover { color: var(--lime); }
 <!-- CTA INTERLUDE -->
 <div class="cta-interlude fade-up">
   <p>Ready to follow the exact same 4-step system and get your first sale?</p>
-  <a href="#buy" class="cta-large">⚡ Get Started for Just $9</a>
+  <a href="#buy" class="cta-large">⚡ Get Started for Just $17</a>
 </div>
 
 <!-- ==================== WHAT'S INSIDE ==================== -->
@@ -1271,30 +1385,30 @@ footer a:hover { color: var(--lime); }
 <!-- CTA INTERLUDE 2 -->
 <div class="cta-interlude fade-up">
   <p>Everything you need is inside. No tricks. No upsells. Just a clear path to your first sale.</p>
-  <a href="#offer" class="cta-large">⚡ Get Full Access for $9</a>
+  <a href="#offer" class="cta-large">⚡ Lock In $17 Price Now</a>
 </div>
 
 <!-- ==================== OFFER STACK ==================== -->
 <section class="fade-up" id="offer">
   <div class="section-eyebrow">The Complete Package</div>
-  <h2>Here's Everything You Get for <em>Just $9</em></h2>
+  <h2>Here's Everything You Get for <em>Just $17</em></h2>
 
   <div class="offer-table">
     <div class="offer-row">
       <div class="offer-item-name">Core 4-Step AI Affiliate System<small>Modules 1–4 with complete step-by-step instructions</small></div>
-      <div class="offer-value">$27</div>
+      <div class="offer-value">$47</div>
     </div>
     <div class="offer-row">
       <div class="offer-item-name">AI Content Prompts Cheat Sheet<small>5 ready-to-use prompts for creating affiliate reviews and guides</small></div>
-      <div class="offer-value">$12</div>
+      <div class="offer-value">$27</div>
     </div>
     <div class="offer-row">
       <div class="offer-item-name">7-Day Action Plan<small>Exact daily tasks for your first week (what to do each day)</small></div>
-      <div class="offer-value">$9</div>
+      <div class="offer-value">$19</div>
     </div>
     <div class="offer-row">
       <div class="offer-item-name">Free Traffic Platform Guide<small>Where to post, how to write titles, when to publish for best results</small></div>
-      <div class="offer-value">$9</div>
+      <div class="offer-value">$17</div>
     </div>
     <div class="offer-row">
       <div class="offer-item-name">Bonus: 17 Income Methods Overview<small>Explore other beginner-friendly income streams after your first sale</small></div>
@@ -1302,16 +1416,16 @@ footer a:hover { color: var(--lime); }
     </div>
     <div class="offer-row total-row">
       <div class="offer-item-name">Total Value</div>
-      <div class="offer-value">$9 <span style="font-size:13px;color:var(--muted);text-decoration:line-through;margin-left:6px;">$57</span></div>
+      <div class="offer-value">$17 <span style="font-size:14px;color:var(--muted);text-decoration:line-through;margin-left:8px;">$110</span></div>
     </div>
   </div>
 
   <div class="final-price-box">
-    <div class="final-old">Total Value: $57</div>
-    <div class="final-new">$9</div>
-    <div class="final-note">One-time payment · Instant digital download · 30-day money-back guarantee</div>
-    <a href="https://warriorplus.com/o2/buy/your-product-id" class="cta-large">⚡ Get Instant Access for $9</a>
-    <div><div class="urgency-pill">🔴 Price increases to $27 this Friday — grab it now</div></div>
+    <div class="final-old">Total Value: $110</div>
+    <div class="final-new">$17</div>
+    <div class="final-note">One-time payment · Instant digital download · 30-day money-back guarantee · Limited time launch price</div>
+    <a href="https://warriorplus.com/o2/buy/your-product-id" class="cta-large">⚡ Get Instant Access for $17</a>
+    <div><div class="urgency-pill">🔴 Timer ends soon — price increases to $49 automatically</div></div>
     <div class="trust-badges">
       <span>🔒 Secure Checkout</span>
       <span>✅ 30-Day Guarantee</span>
@@ -1392,8 +1506,8 @@ footer a:hover { color: var(--lime); }
     <div class="section-eyebrow" style="justify-content:center;margin-bottom:18px;">Your Starting Point</div>
     <h2>Stop Researching. <em>Start Earning.</em></h2>
     <p>You now know exactly what this is, how it works, and what it costs. The only thing left to do is start. Follow the 4 steps. Get your first sale. Everything else comes after that.</p>
-    <a href="https://warriorplus.com/o2/buy/your-product-id" class="cta-large">⚡ Get Instant Access for $9</a>
-    <div><div class="urgency-pill">🔴 Price increases to $27 this Friday — secure your spot now</div></div>
+    <a href="https://warriorplus.com/o2/buy/your-product-id" class="cta-large">⚡ Get Instant Access for $17</a>
+    <div><div class="urgency-pill">🔴 Launch price ends when timer hits zero — lock in $17 now</div></div>
     <div class="trust-badges">
       <span>🔒 Secure Checkout</span>
       <span>✅ 30-Day Guarantee</span>
@@ -1410,10 +1524,62 @@ footer a:hover { color: var(--lime); }
 </footer>
 
 <!-- STICKY MOBILE CTA -->
-<a href="#buy" class="sticky-mobile">⚡ Get Instant Access — Only $9</a>
+<a href="#buy" class="sticky-mobile">⚡ Get Instant Access — Only $17</a>
 
 <script>
-  // Scroll fade animations
+  // ==================== COUNTDOWN TIMER ====================
+  function startCountdown() {
+    // Set countdown duration (24 hours from now)
+    const countdownDuration = 24 * 60 * 60; // 24 hours in seconds
+    
+    // Check if there's a saved end time in localStorage
+    let endTime = localStorage.getItem('countdownEndTime');
+    
+    if (!endTime) {
+      // If no saved time, create new end time
+      endTime = new Date().getTime() + (countdownDuration * 1000);
+      localStorage.setItem('countdownEndTime', endTime);
+    } else {
+      endTime = parseInt(endTime);
+    }
+    
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    
+    function updateTimer() {
+      const now = new Date().getTime();
+      const distance = endTime - now;
+      
+      if (distance < 0) {
+        // Timer expired - reset to 24 hours
+        endTime = new Date().getTime() + (countdownDuration * 1000);
+        localStorage.setItem('countdownEndTime', endTime);
+      }
+      
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      hoursEl.textContent = hours.toString().padStart(2, '0');
+      minutesEl.textContent = minutes.toString().padStart(2, '0');
+      secondsEl.textContent = seconds.toString().padStart(2, '0');
+      
+      // Add blink class to seconds when under 1 minute
+      if (hours === 0 && minutes === 0) {
+        secondsEl.classList.add('blink');
+      } else {
+        secondsEl.classList.remove('blink');
+      }
+    }
+    
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  }
+  
+  startCountdown();
+  
+  // ==================== SCROLL ANIMATIONS ====================
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
@@ -1421,7 +1587,7 @@ footer a:hover { color: var(--lime); }
   }, { threshold: 0.08 });
   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
-  // Hide sticky CTA when price box is in view
+  // ==================== STICKY CTA ====================
   const priceBox = document.getElementById('buy');
   const stickyCta = document.querySelector('.sticky-mobile');
   if (priceBox && stickyCta) {
@@ -1430,7 +1596,7 @@ footer a:hover { color: var(--lime); }
     }).observe(priceBox);
   }
 
-  // FAQ accordion
+  // ==================== FAQ ACCORDION ====================
   document.querySelectorAll('.faq-q').forEach(q => {
     q.addEventListener('click', () => {
       const item = q.parentElement;
@@ -1440,7 +1606,7 @@ footer a:hover { color: var(--lime); }
     });
   });
 
-  // Demo video placeholder
+  // ==================== VIDEO PLACEHOLDERS ====================
   document.getElementById('demoVideo')?.addEventListener('click', () => {
     window.open('https://youtube.com/watch?v=YOUR_VIDEO_ID', '_blank');
   });
