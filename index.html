@@ -1,1589 +1,538 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9L95ETP15B"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Futures Signal Bot · Binance Free</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  gtag('config', 'G-9L95ETP15B');
-</script>
+    body {
+      background-color: #0b0d13;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, monospace;
+      color: #eef2ff;
+      padding: 20px;
+    }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Get Your First Affiliate Sale in 7 Days Using AI — Only $12 Today</title>
-<meta name="description" content="A simple step-by-step system designed for complete beginners to start earning using free traffic. No budget, no experience, no paid ads needed.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    /* custom scrollbar */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #11141c; }
+    ::-webkit-scrollbar-thumb { background: #2c3348; border-radius: 6px; }
 
-<style>
-/* ===================== RESET & BASE ===================== */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: #08080D;
-  color: #D0D0E4;
-  overflow-x: hidden;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-}
+    /* main container */
+    .app {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
 
-/* ===================== VARIABLES ===================== */
-:root {
-  --lime: #C8F135;
-  --lime-dim: rgba(200,241,53,0.08);
-  --lime-border: rgba(200,241,53,0.18);
-  --lime-glow: rgba(200,241,53,0.25);
-  --bg: #08080D;
-  --bg2: #0F0F16;
-  --bg3: #15151E;
-  --bg4: #1C1C27;
-  --text: #D0D0E4;
-  --muted: #646480;
-  --green: #4ADE80;
-  --white: #F5F5FF;
-  --red: #FF4444;
-  --orange: #FF8C42;
-  --radius-sm: 8px;
-  --radius: 12px;
-  --radius-lg: 18px;
-  --radius-xl: 26px;
-  --max: 880px;
-  --pad-x: clamp(18px, 5vw, 44px);
-}
+    /* header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #4f8ef7, #9b6eff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .free-badge {
+      background: #1f2a3e;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #9bb8ff;
+      border: 1px solid #2c3f5f;
+    }
+    .live-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #11141c;
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+    }
+    .pulse {
+      width: 10px;
+      height: 10px;
+      background-color: #1fd47a;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #1fd47a;
+      animation: pulse-animation 1.4s infinite;
+    }
+    @keyframes pulse-animation {
+      0% { opacity: 0.4; transform: scale(0.8);}
+      100% { opacity: 1; transform: scale(1.2);}
+    }
 
-/* ===================== TYPOGRAPHY ===================== */
-h1, h2, h3 { font-family: 'Fraunces', serif; line-height: 1.1; color: var(--white); font-weight: 700; }
-h1 { font-size: clamp(30px, 5.5vw, 56px); letter-spacing: -0.5px; }
-h2 { font-size: clamp(24px, 4vw, 40px); letter-spacing: -0.3px; }
-h3 { font-size: clamp(18px, 2.6vw, 26px); }
-em { font-style: italic; color: var(--lime); }
-strong { color: var(--white); font-weight: 600; }
-
-/* ===================== ANNOUNCEMENT BAR ===================== */
-.announcement {
-  background: linear-gradient(90deg, #CC2222, #FF5555, #CC2222);
-  background-size: 200% 100%;
-  animation: shimmerBg 3s linear infinite;
-  text-align: center;
-  padding: 12px 16px;
-  font-size: 13px;
-  font-weight: 700;
-  color: #FFF;
-  letter-spacing: 0.3px;
-  box-shadow: 0 2px 12px rgba(255,68,68,0.4);
-}
-@keyframes shimmerBg { 0%{background-position:0% 0} 100%{background-position:200% 0} }
-
-/* ===================== NAV ===================== */
-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(8,8,13,0.96);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  padding: 14px var(--pad-x);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.nav-logo {
-  font-family: 'Fraunces', serif;
-  font-size: 18px;
-  color: var(--white);
-  letter-spacing: -0.3px;
-  font-style: italic;
-}
-.nav-logo span { color: var(--lime); font-style: normal; }
-.nav-cta {
-  background: var(--lime);
-  color: #08080D;
-  font-weight: 700;
-  font-size: 13px;
-  padding: 9px 20px;
-  border-radius: var(--radius-sm);
-  text-decoration: none;
-  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-  box-shadow: 0 2px 10px rgba(200,241,53,0.2);
-}
-.nav-cta:hover { opacity: 0.88; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,241,53,0.3); }
-
-/* ===================== HERO ===================== */
-.hero-wrap {
-  position: relative;
-  background: var(--bg2);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  overflow: hidden;
-}
-.hero-grid-bg {
-  position: absolute; inset: 0;
-  background-image: 
-    linear-gradient(rgba(200,241,53,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(200,241,53,0.025) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent);
-}
-.hero-glow {
-  position: absolute; top: -150px; left: 50%;
-  transform: translateX(-50%);
-  width: 800px; height: 600px;
-  background: radial-gradient(ellipse, rgba(200,241,53,0.07) 0%, transparent 65%);
-  pointer-events: none;
-}
-.hero {
-  position: relative; z-index: 1;
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 64px var(--pad-x) 56px;
-  text-align: center;
-}
-
-/* Hero badge */
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--lime-dim);
-  border: 1px solid var(--lime-border);
-  border-radius: 100px;
-  padding: 7px 18px 7px 11px;
-  font-size: 12px;
-  color: var(--lime);
-  font-weight: 600;
-  margin-bottom: 24px;
-  letter-spacing: 0.4px;
-}
-.hero-badge-dot {
-  width: 7px; height: 7px;
-  background: var(--lime);
-  border-radius: 50%;
-  animation: pulseGreen 2s ease-in-out infinite;
-  flex-shrink: 0;
-  box-shadow: 0 0 8px var(--lime);
-}
-@keyframes pulseGreen { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.7)} }
-
-.hero h1 { margin-bottom: 20px; max-width: 720px; margin-left: auto; margin-right: auto; }
-.hero-sub {
-  font-size: clamp(15px, 2vw, 18px);
-  color: var(--muted);
-  line-height: 1.8;
-  max-width: 540px;
-  margin: 0 auto 36px;
-}
-
-/* Differentiators */
-.hero-diff {
-  display: flex; flex-wrap: wrap;
-  justify-content: center; gap: 8px;
-  margin-bottom: 32px;
-}
-.diff-pill {
-  background: var(--bg3);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 100px;
-  padding: 6px 14px;
-  font-size: 12px;
-  color: #A0A0BC;
-  font-weight: 500;
-  display: flex; align-items: center; gap: 6px;
-}
-.diff-pill span { color: var(--lime); }
-
-/* ===================== COUNTDOWN ===================== */
-.countdown-wrapper {
-  background: linear-gradient(135deg, rgba(255,68,68,0.12), rgba(255,140,66,0.07));
-  border: 1px solid rgba(255,68,68,0.25);
-  border-radius: var(--radius-lg);
-  padding: 18px 22px;
-  max-width: 420px;
-  margin: 0 auto 22px;
-  box-shadow: 0 0 30px rgba(255,68,68,0.1);
-}
-.countdown-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: #FCA5A5;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.fire-icon { animation: pulseGreen 1.2s ease-in-out infinite; display: inline-block; }
-.countdown-timer {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-}
-.countdown-block {
-  background: rgba(0,0,0,0.3);
-  border: 1px solid rgba(255,68,68,0.2);
-  border-radius: var(--radius-sm);
-  padding: 10px 6px 8px;
-  text-align: center;
-}
-.countdown-number {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(22px, 5vw, 30px);
-  color: var(--red);
-  line-height: 1;
-  margin-bottom: 4px;
-  font-weight: 700;
-  display: block;
-  transition: color 0.3s;
-}
-.countdown-number.changing { color: #FF8080; }
-.countdown-text {
-  font-size: 9px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-}
-.countdown-save {
-  font-family: 'Fraunces', serif;
-  font-size: 11px;
-  color: var(--lime);
-  margin-bottom: 3px;
-  font-weight: 700;
-}
-
-/* ===================== PRICE BOX ===================== */
-.price-box {
-  background: linear-gradient(145deg, var(--bg3), var(--bg4));
-  border: 1.5px solid var(--lime-border);
-  border-radius: var(--radius-xl);
-  padding: clamp(24px, 5vw, 38px);
-  max-width: 420px;
-  margin: 0 auto 32px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 8px 40px rgba(200,241,53,0.1), 0 0 0 1px rgba(200,241,53,0.05);
-}
-.price-box::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--lime), transparent);
-}
-.price-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  margin-bottom: 6px;
-}
-.old-price {
-  font-size: 16px;
-  color: var(--muted);
-  text-decoration: line-through;
-}
-.discount-badge {
-  background: var(--red);
-  color: #FFF;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 100px;
-  letter-spacing: 0.5px;
-  animation: badgePulse 2s ease-in-out infinite;
-}
-@keyframes badgePulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255,68,68,0.4); }
-  50% { box-shadow: 0 0 0 6px rgba(255,68,68,0); }
-}
-.big-price {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(52px, 11vw, 72px);
-  color: var(--lime);
-  line-height: 1;
-  margin-bottom: 4px;
-  letter-spacing: -3px;
-  text-shadow: 0 0 50px rgba(200,241,53,0.25);
-  display: block;
-}
-.price-sub { font-size: 12px; color: var(--muted); margin-bottom: 22px; line-height: 1.6; }
-
-.cta-main {
-  display: block; width: 100%;
-  background: var(--lime);
-  color: #08080D;
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 700;
-  font-size: clamp(14px, 3.5vw, 16px);
-  padding: 17px 22px;
-  border-radius: var(--radius);
-  text-decoration: none;
-  text-align: center;
-  letter-spacing: -0.1px;
-  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
-  box-shadow: 0 4px 20px rgba(200,241,53,0.3);
-  position: relative;
-  overflow: hidden;
-}
-.cta-main::after {
-  content: '';
-  position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-  transition: left 0.5s;
-}
-.cta-main:hover::after { left: 100%; }
-.cta-main:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(200,241,53,0.4); }
-
-.trust-row {
-  margin-top: 14px;
-  display: flex; align-items: center; justify-content: center;
-  gap: 6px; flex-wrap: wrap;
-  font-size: 11px; color: var(--muted);
-}
-.trust-dot { width: 3px; height: 3px; background: var(--muted); border-radius: 50%; }
-
-/* ===================== STATS ===================== */
-.hero-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  max-width: 500px;
-  margin: 0 auto;
-}
-.hstat {
-  background: var(--bg3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: var(--radius);
-  padding: 14px 8px;
-  text-align: center;
-  transition: transform 0.2s, border-color 0.2s;
-}
-.hstat:hover { transform: translateY(-2px); border-color: var(--lime-border); }
-.hstat-num {
-  font-family: 'Fraunces', serif;
-  font-size: 22px;
-  color: var(--lime);
-  line-height: 1;
-  margin-bottom: 5px;
-}
-.hstat-label { font-size: 10px; color: var(--muted); line-height: 1.45; }
-
-/* ===================== DIVIDER ===================== */
-.section-divider {
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 0 var(--pad-x);
-}
-.section-divider hr {
-  border: none;
-  border-top: 1px solid rgba(255,255,255,0.04);
-}
-
-/* ===================== SECTIONS ===================== */
-section {
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 68px var(--pad-x);
-}
-
-.section-eyebrow {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--lime);
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.section-eyebrow::after {
-  content: '';
-  flex: 1;
-  max-width: 40px;
-  height: 1px;
-  background: var(--lime-border);
-}
-
-/* ===================== PROBLEM ===================== */
-.pain-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 14px;
-  margin-top: 34px;
-}
-.pain-card {
-  background: var(--bg3);
-  border: 1px solid rgba(255,68,68,0.12);
-  border-radius: var(--radius-lg);
-  padding: 24px 20px;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.2s, border-color 0.2s;
-}
-.pain-card:hover { transform: translateY(-3px); border-color: rgba(255,68,68,0.28); }
-.pain-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, rgba(255,68,68,0.6), transparent);
-}
-.pain-icon { font-size: 28px; margin-bottom: 12px; display: block; }
-.pain-card h4 {
-  font-family: 'Fraunces', serif;
-  font-size: 16px;
-  margin-bottom: 9px;
-  color: var(--white);
-}
-.pain-card p { font-size: 13px; color: var(--muted); line-height: 1.75; }
-
-.emotional-line {
-  background: var(--bg3);
-  border-left: 3px solid var(--lime);
-  border-radius: 0 var(--radius) var(--radius) 0;
-  padding: 18px 22px;
-  margin-top: 30px;
-  font-size: 15px;
-  color: #B8B8D4;
-  line-height: 1.8;
-  font-style: italic;
-}
-
-/* ===================== HOW IT WORKS / SOLUTION ===================== */
-.solution-intro {
-  font-size: 15px;
-  color: var(--muted);
-  line-height: 1.8;
-  max-width: 580px;
-  margin-bottom: 40px;
-}
-
-.steps-flow {
-  margin-top: 38px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-.step-row {
-  display: grid;
-  grid-template-columns: 52px 1fr;
-  gap: 20px;
-  align-items: flex-start;
-  position: relative;
-}
-.step-row:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  left: 25px;
-  top: 52px;
-  bottom: -20px;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--lime-border), transparent);
-}
-.step-icon-col { padding-top: 4px; }
-.step-circle {
-  width: 52px; height: 52px;
-  background: var(--lime-dim);
-  border: 1.5px solid var(--lime-border);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Fraunces', serif;
-  font-size: 20px;
-  color: var(--lime);
-  flex-shrink: 0;
-  transition: all 0.3s;
-}
-.step-row:hover .step-circle {
-  background: var(--lime);
-  color: #08080D;
-  transform: scale(1.08);
-  box-shadow: 0 0 20px rgba(200,241,53,0.3);
-}
-.step-content {
-  background: var(--bg3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: var(--radius-lg);
-  padding: 22px 24px;
-  margin-bottom: 20px;
-  transition: border-color 0.2s;
-}
-.step-row:hover .step-content { border-color: var(--lime-border); }
-.step-content h4 {
-  font-family: 'Fraunces', serif;
-  font-size: 18px;
-  margin-bottom: 9px;
-  color: var(--white);
-}
-.step-content p { font-size: 14px; color: var(--muted); line-height: 1.8; }
-.step-tag {
-  display: inline-block;
-  background: var(--lime-dim);
-  border: 1px solid var(--lime-border);
-  border-radius: 100px;
-  font-size: 10px; font-weight: 700;
-  color: var(--lime); letter-spacing: 0.6px;
-  padding: 3px 11px; margin-top: 11px;
-  text-transform: uppercase;
-}
-
-/* ===================== DEMO / PROOF SECTION ===================== */
-.demo-section {
-  background: linear-gradient(135deg, rgba(200,241,53,0.03), transparent);
-  border: 1px solid var(--lime-border);
-  border-radius: var(--radius-xl);
-  padding: clamp(30px, 5.5vw, 46px);
-  margin-top: 0;
-}
-.demo-header {
-  text-align: center;
-  margin-bottom: 32px;
-}
-.demo-header h3 { font-size: clamp(21px, 3.8vw, 30px); margin-bottom: 12px; }
-.demo-header p { font-size: 15px; color: var(--muted); max-width: 500px; margin: 0 auto; line-height: 1.75; }
-.demo-steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
-  gap: 14px;
-  margin-bottom: 0;
-}
-.demo-step {
-  background: var(--bg3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: var(--radius);
-  padding: 20px 18px;
-  text-align: center;
-}
-.demo-step-num {
-  display: inline-block;
-  width: 30px; height: 30px;
-  background: var(--lime-dim);
-  border: 1px solid var(--lime-border);
-  border-radius: 50%;
-  font-family: 'Fraunces', serif;
-  font-size: 14px;
-  color: var(--lime);
-  line-height: 28px;
-  margin-bottom: 12px;
-}
-.demo-step h5 { font-family: 'Fraunces', serif; font-size: 15px; color: var(--white); margin-bottom: 7px; }
-.demo-step p { font-size: 12px; color: var(--muted); line-height: 1.7; }
-/* ===================== CTA INTERLUDE ===================== */
-.cta-interlude {
-  background: var(--bg2);
-  border-top: 1px solid rgba(255,255,255,0.04);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  padding: 52px var(--pad-x);
-  text-align: center;
-}
-.cta-interlude p { font-size: 16px; color: var(--muted); margin-bottom: 22px; line-height: 1.7; }
-.cta-large {
-  display: inline-block;
-  background: var(--lime);
-  color: #08080D;
-  font-weight: 700;
-  font-size: clamp(15px, 3.5vw, 18px);
-  padding: clamp(15px, 3vw, 18px) clamp(32px, 7vw, 56px);
-  border-radius: var(--radius);
-  text-decoration: none;
-  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
-  letter-spacing: -0.2px;
-  box-shadow: 0 6px 24px rgba(200,241,53,0.28);
-  position: relative; overflow: hidden;
-}
-.cta-large::after {
-  content: '';
-  position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
-  transition: left 0.5s;
-}
-.cta-large:hover::after { left: 100%; }
-.cta-large:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(200,241,53,0.4); opacity: 0.93; }
-
-/* ===================== WHAT YOU GET / MODULES ===================== */
-.what-you-get {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 32px;
-}
-@media (max-width: 560px) { .what-you-get { grid-template-columns: 1fr; } }
-.wyg-item {
-  background: var(--bg3);
-  border: 1px solid var(--lime-border);
-  border-radius: var(--radius-lg);
-  padding: 22px 20px;
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-}
-.wyg-item:hover { transform: translateY(-3px); border-color: rgba(200,241,53,0.4); box-shadow: 0 6px 20px rgba(200,241,53,0.1); }
-.wyg-icon {
-  width: 40px; height: 40px; flex-shrink: 0;
-  background: var(--lime-dim);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px;
-}
-.wyg-item h4 { font-family: 'Fraunces', serif; font-size: 16px; color: var(--white); margin-bottom: 6px; }
-.wyg-item p { font-size: 13px; color: var(--muted); line-height: 1.7; }
-
-.modules-detail {
-  margin-top: 36px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.mod-detail {
-  background: var(--bg3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: var(--radius);
-  padding: 20px 22px;
-  display: grid;
-  grid-template-columns: 38px 1fr;
-  gap: 16px;
-  align-items: start;
-  transition: border-color 0.2s;
-}
-.mod-detail:hover { border-color: var(--lime-border); }
-.mod-detail-num {
-  width: 38px; height: 38px;
-  background: var(--lime-dim);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Fraunces', serif;
-  font-size: 17px; color: var(--lime);
-  flex-shrink: 0;
-}
-.mod-detail h5 { font-family: 'Fraunces', serif; font-size: 15px; color: var(--white); margin-bottom: 6px; }
-.mod-detail p { font-size: 13px; color: var(--muted); line-height: 1.7; }
-
-.check-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 11px; }
-.check-list li {
-  display: flex; align-items: flex-start; gap: 10px;
-  font-size: 13px; color: #B0B0CC; line-height: 1.6;
-}
-.check-list li::before {
-  content: '✓'; color: var(--green);
-  font-weight: 700; font-size: 13px;
-  margin-top: 1px; flex-shrink: 0;
-}
-
-/* ===================== VALUE STACK / OFFER ===================== */
-.offer-table {
-  background: var(--bg3);
-  border: 1px solid var(--lime-border);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  margin-top: 30px;
-}
-.offer-row {
-  display: flex;
-  align-items: center;
-  padding: 14px 22px;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  gap: 16px;
-}
-.offer-row:last-child { border-bottom: none; }
-.offer-row.total-row {
-  background: var(--lime-dim);
-  border-top: 1.5px solid var(--lime-border);
-}
-.offer-item-name { flex: 1; font-size: 14px; color: var(--text); font-weight: 500; }
-.offer-item-name small { display: block; font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
-.offer-value { font-size: 14px; color: var(--muted); text-decoration: line-through; }
-.total-row .offer-item-name { font-weight: 700; color: var(--white); }
-.total-row .offer-value { text-decoration: none; color: var(--lime); font-size: 18px; font-family: 'Fraunces', serif; }
-
-.final-price-box {
-  background: var(--bg3);
-  border: 1.5px solid var(--lime-border);
-  border-radius: var(--radius-xl);
-  padding: clamp(30px, 6vw, 46px);
-  text-align: center;
-  margin-top: 20px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 8px 40px rgba(200,241,53,0.12);
-}
-.final-price-box::before {
-  content: '';
-  position: absolute; top: -80px; right: -80px;
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(200,241,53,0.1), transparent 70%);
-  border-radius: 50%;
-}
-.final-old { font-size: 18px; color: var(--muted); text-decoration: line-through; margin-bottom: 6px; }
-.final-new {
-  font-family: 'Fraunces', serif;
-  font-size: clamp(56px, 13vw, 78px);
-  color: var(--lime);
-  line-height: 1; letter-spacing: -3px;
-  margin-bottom: 8px;
-  text-shadow: 0 0 60px rgba(200,241,53,0.3);
-  display: block;
-}
-.final-note { font-size: 13px; color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
-
-.urgency-pill {
-  display: inline-flex;
-  align-items: center; gap: 8px;
-  background: rgba(255,68,68,0.1);
-  border: 1px solid rgba(255,68,68,0.22);
-  border-radius: var(--radius-sm);
-  padding: 10px 20px;
-  margin-top: 20px;
-  font-size: 13px; color: #FCA5A5; font-weight: 600;
-}
-.trust-badges {
-  display: flex; flex-wrap: wrap;
-  justify-content: center; gap: 16px;
-  margin-top: 20px;
-  font-size: 12px; color: var(--muted);
-}
-
-/* ===================== BONUS ===================== */
-.bonus-wrap {
-  background: linear-gradient(135deg, rgba(200,241,53,0.04), transparent);
-  border: 1px solid var(--lime-border);
-  border-radius: var(--radius-xl);
-  padding: clamp(26px, 5vw, 38px);
-  margin-top: 10px;
-}
-.bonus-header {
-  display: flex; align-items: flex-start; gap: 16px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-.bonus-icon-big { font-size: 38px; line-height: 1; }
-.bonus-header-text { flex: 1; }
-.bonus-header h3 { margin-bottom: 5px; font-size: clamp(17px, 3vw, 22px); }
-.bonus-header p { font-size: 13px; color: var(--muted); line-height: 1.6; }
-.bonus-tag {
-  display: inline-block;
-  background: var(--lime);
-  color: #08080D;
-  font-size: 10px; font-weight: 700;
-  padding: 4px 12px; border-radius: 100px;
-  letter-spacing: 0.6px; text-transform: uppercase;
-  flex-shrink: 0;
-  align-self: flex-start;
-}
-.bonus-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
-  gap: 8px;
-}
-.bonus-item {
-  background: var(--bg3);
-  border-radius: var(--radius-sm);
-  padding: 10px 14px;
-  font-size: 12px; color: #9898B8;
-  display: flex; align-items: center; gap: 8px;
-  transition: all 0.2s;
-}
-.bonus-item:hover { background: var(--bg4); color: var(--lime); }
-.bonus-item::before { content: '→'; color: var(--lime); font-size: 13px; flex-shrink: 0; }
-
-/* ===================== PROOF / TESTIMONIALS ===================== */
-.proof-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 34px;
-}
-@media (max-width: 560px) { .proof-grid { grid-template-columns: 1fr; } }
-.proof-grid--single { grid-template-columns: 1fr; max-width: 420px; }
-.proof-card {
-  background: var(--bg3);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: var(--radius-lg);
-  padding: 28px 24px;
-  text-align: center;
-  transition: transform 0.2s, border-color 0.2s;
-}
-.proof-card:hover { transform: translateY(-3px); border-color: var(--lime-border); }
-.proof-card .proof-icon { font-size: 40px; margin-bottom: 16px; display: block; }
-.proof-card h4 { font-family: 'Fraunces', serif; font-size: 16px; color: var(--white); margin-bottom: 9px; }
-.proof-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
-.result-stat { font-family: 'Fraunces', serif; font-size: 38px; color: var(--lime); display: block; margin: 12px 0 5px; }
-.result-label { font-size: 11px; color: var(--muted); }
-.testi-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 14px;
-  margin-top: 32px;
-}
-.testi-card {
-  background: var(--bg3);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: var(--radius-lg);
-  padding: 26px 22px;
-  transition: transform 0.2s, border-color 0.2s;
-}
-.testi-card:hover { transform: translateY(-3px); border-color: var(--lime-border); }
-.stars { color: var(--lime); font-size: 15px; letter-spacing: 2px; margin-bottom: 14px; }
-.testi-card blockquote {
-  font-size: 13px; color: #BCBCD4;
-  line-height: 1.8; margin-bottom: 18px;
-  font-style: italic; quotes: none;
-}
-.testi-author { display: flex; align-items: center; gap: 12px; }
-.testi-av {
-  width: 40px; height: 40px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--lime), #7AA000);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Fraunces', serif;
-  font-size: 14px; color: #08080D; flex-shrink: 0;
-}
-.testi-name { font-size: 13px; font-weight: 700; color: var(--white); }
-.testi-role { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
-/* ===================== GUARANTEE ===================== */
-.guarantee-card {
-  background: linear-gradient(135deg, rgba(74,222,128,0.06), transparent);
-  border: 1px solid rgba(74,222,128,0.22);
-  border-radius: var(--radius-xl);
-  padding: clamp(30px, 6vw, 46px);
-  text-align: center;
-  max-width: 580px;
-  margin: 0 auto;
-}
-.guarantee-card .g-icon { font-size: 52px; display: block; margin-bottom: 16px; }
-.guarantee-card h3 { margin-bottom: 12px; }
-.guarantee-card p { font-size: 14px; color: var(--muted); line-height: 1.8; }
-
-/* ===================== FAQ ===================== */
-.faq-list { margin-top: 30px; display: flex; flex-direction: column; gap: 10px; }
-.faq-item {
-  background: var(--bg3);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
-.faq-q {
-  padding: 18px 22px;
-  font-size: 14px; font-weight: 600;
-  color: var(--text);
-  cursor: pointer;
-  display: flex; justify-content: space-between; align-items: center;
-  user-select: none; gap: 14px;
-  transition: color 0.2s;
-}
-.faq-q:hover { color: var(--lime); }
-.faq-arrow {
-  font-size: 22px; color: var(--lime);
-  transition: transform 0.3s; flex-shrink: 0; line-height: 1;
-}
-.faq-a {
-  padding: 0 22px;
-  max-height: 0; overflow: hidden;
-  transition: max-height 0.35s ease, padding 0.3s;
-  font-size: 13px; color: var(--muted); line-height: 1.85;
-}
-.faq-item.open .faq-a { max-height: 300px; padding: 0 22px 20px; }
-.faq-item.open .faq-arrow { transform: rotate(45deg); }
-.faq-item.open { border-color: var(--lime-border); }
-
-/* ===================== FINAL CTA ===================== */
-.final-cta-wrap {
-  background: var(--bg2);
-  border-top: 1px solid rgba(255,255,255,0.04);
-  position: relative; overflow: hidden;
-}
-.final-cta-glow {
-  position: absolute; top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  width: 700px; height: 500px;
-  background: radial-gradient(ellipse, rgba(200,241,53,0.06), transparent 60%);
-  pointer-events: none;
-}
-.final-cta-inner {
-  position: relative; z-index: 1;
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 72px var(--pad-x);
-  text-align: center;
-}
-.final-cta-inner h2 { margin-bottom: 14px; }
-.final-cta-inner p { font-size: clamp(14px, 2vw, 16px); color: var(--muted); max-width: 500px; margin: 0 auto 34px; line-height: 1.8; }
-
-/* ===================== FOOTER ===================== */
-footer {
-  text-align: center;
-  padding: 30px var(--pad-x);
-  color: var(--muted);
-  font-size: 12px;
-  border-top: 1px solid rgba(255,255,255,0.04);
-  line-height: 1.75;
-}
-footer a { color: var(--muted); text-decoration: none; }
-footer a:hover { color: var(--lime); }
-
-/* ===================== STICKY MOBILE ===================== */
-.sticky-mobile {
-  display: none;
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
-  background: var(--lime);
-  padding: 16px var(--pad-x);
-  text-align: center;
-  font-weight: 700; font-size: 14px; color: #08080D;
-  text-decoration: none;
-  box-shadow: 0 -4px 30px rgba(0,0,0,0.7);
-  letter-spacing: -0.1px;
-}
-
-/* ===================== ANIMATIONS ===================== */
-.fade-up {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-}
-.fade-up.visible { opacity: 1; transform: translateY(0); }
-
-/* ===================== RESPONSIVE ===================== */
-@media (max-width: 640px) {
-  section { padding: 52px var(--pad-x); }
-  .hero-stats { grid-template-columns: repeat(2, 1fr); max-width: 280px; }
-  .pain-grid { grid-template-columns: 1fr; }
-  .bonus-list { grid-template-columns: 1fr; }
-  .testi-grid { grid-template-columns: 1fr; }
-  .sticky-mobile { display: block; }
-  body { padding-bottom: 64px; }
-  .demo-steps { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 420px) {
-  .hero-stats { grid-template-columns: 1fr 1fr; }
-  .what-you-get { grid-template-columns: 1fr; }
-  .demo-steps { grid-template-columns: 1fr; }
-}
-</style>
+    /* ticker row */
+    .ticker-bar {
+      background: #11141c;
+      border-radius: 20px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      white-space: nowrap;
+      display: flex;
+      gap: 24px;
+    }
+    .ticker-item {
+      display: inline-flex;
+      gap: 12px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      background: #181c27;
+      padding: 5px 15px;
+      border-radius: 30px;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      background: #11141c;
+      padding: 12px 20px;
+      border-radius: 28px;
+      margin-bottom: 20px;
+    }
+    select, button {
+      background: #181c27;
+      border: 1px solid #2c3348;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 28px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #2a3146;
+      border-color: #4f8ef7;
+    }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: #11141c;
+      border-radius: 20px;
+      padding: 14px;
+      border-left: 3px solid #4f8ef7;
+    }
+    .grid-coins {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+    .coin-card {
+      background: #11141c;
+      border-radius: 24px;
+      padding: 14px 16px;
+      transition: 0.1s;
+      cursor: pointer;
+      border-left: 6px solid #4f8ef7;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+    .score-badge {
+      font-weight: 700;
+      background: #181c27;
+      padding: 2px 10px;
+      border-radius: 60px;
+      font-size: 0.8rem;
+    }
+    .price-main {
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin: 8px 0 4px;
+    }
+    .mini-indicators {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 12px 0;
+      font-size: 0.7rem;
+      font-family: monospace;
+    }
+    .signal-badge {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 40px;
+      font-weight: bold;
+      font-size: 0.75rem;
+    }
+    .progress-bar {
+      background: #2a2f3f;
+      border-radius: 20px;
+      height: 6px;
+      width: 100%;
+      margin-top: 8px;
+    }
+    .progress-fill {
+      background: #4f8ef7;
+      height: 6px;
+      border-radius: 20px;
+      width: 0%;
+    }
+    .detail-panel {
+      background: #11141c;
+      border-radius: 28px;
+      padding: 20px;
+      margin-bottom: 30px;
+      display: none;
+      border: 1px solid #2c3348;
+    }
+    .history-table {
+      background: #11141c;
+      border-radius: 24px;
+      overflow-x: auto;
+      padding: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.7rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 6px;
+      border-bottom: 1px solid #1e2433;
+    }
+    .text-green { color: #1fd47a; }
+    .text-red { color: #f04f4f; }
+    .text-amber { color: #f5a623; }
+    .skeleton {
+      background: #181c27;
+      border-radius: 20px;
+      height: 160px;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.5; }
+      100% { opacity: 0.9; }
+    }
+    @media (max-width: 600px) {
+      body { padding: 12px; }
+      .price-main { font-size: 1.2rem; }
+    }
+  </style>
 </head>
 <body>
-
-<!-- ANNOUNCEMENT -->
-<div class="announcement">
-  🔥 LIMITED LAUNCH OFFER — Only $12 Today (Goes Up Soon) &nbsp;·&nbsp; <strong>Lock In Your Discount Now</strong>
+<div class="app">
+  <div class="header">
+    <div class="logo-area">
+      <span class="logo">⚡ CRYPTO SIGNAL BOT</span>
+      <span class="free-badge">FREE · NO API KEY</span>
+    </div>
+    <div class="live-dot"><span class="pulse"></span> <span id="liveTimestamp">--:--:--</span></div>
+  </div>
+  <div class="ticker-bar" id="tickerBar">Loading ticker...</div>
+  <div class="controls">
+    <select id="tfSelect"><option value="5m" selected>5m</option><option value="1m">1m</option><option value="15m">15m</option><option value="1h">1h</option><option value="4h">4h</option></select>
+    <select id="countSelect"><option value="8">8 pairs</option><option value="12" selected>12 pairs</option><option value="20">20 pairs</option></select>
+    <select id="filterScore"><option value="0">All scores</option><option value="50">≥50</option><option value="65" selected>≥65</option><option value="80">≥80</option></select>
+    <button id="refreshBtn">⟳ Refresh now</button>
+    <span id="updateTime" style="font-size:0.75rem;">last update: --</span>
+  </div>
+  <div class="stats-row" id="statsRow"></div>
+  <div id="cardsGrid" class="grid-coins">Loading signals...</div>
+  <div id="detailPanel" class="detail-panel"></div>
+  <div class="history-table"><h4 style="margin-bottom:8px;">📋 Signal history log</h4><div style="overflow-x:auto"><table id="historyTable"><thead><tr><th>Time</th><th>Pair</th><th>TF</th><th>Signal</th><th>Score</th><th>Price</th><th>SL</th><th>TP</th><th>R:R</th><th>Patterns</th></tr></thead><tbody></tbody></table></div></div>
 </div>
+<script>
+  // ---------- CONSTANTS ----------
+  const SYMBOLS = ["BTCUSDT","ETHUSDT","BNBUSDT","SOLUSDT","XRPUSDT","DOGEUSDT","ADAUSDT","AVAXUSDT","MATICUSDT","DOTUSDT","LINKUSDT","LTCUSDT","UNIUSDT","ATOMUSDT","NEARUSDT","FILUSDT","APTUSDT","ARBUSDT","OPUSDT","INJUSDT"];
+  const MAX_PAIRS = 20;
+  let currentTimeframe = "5m";
+  let currentLimit = 12;
+  let minScoreFilter = 65;
+  let allSignals = [];      // store signal objects per pair
+  let selectedPair = null;
+  let historyLogs = [];     // {time,pair,tf,signal,score,price,sl,tp,rr,patterns}
+  let refreshInterval = null;
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">First<span>Sale</span><em>AI</em></div>
-  <a href="#buy" class="nav-cta">Get Instant Access →</a>
-</nav>
+  // helper: format price
+  function formatPrice(price) {
+    if (price >= 1000) return "$" + price.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2});
+    if (price >= 1) return "$" + price.toFixed(4);
+    return "$" + price.toFixed(6);
+  }
+  function formatPercent(p) { let s = p.toFixed(2); return (p>=0?`+${s}`:`${s}`)+"%"; }
 
-<!-- ==================== HERO ==================== -->
-<div class="hero-wrap">
-  <div class="hero-grid-bg"></div>
-  <div class="hero-glow"></div>
-  <div class="hero">
-
-    <div class="hero-badge">
-      <span class="hero-badge-dot"></span>
-      100% Beginner-Friendly · No Budget Required · AI-Powered
-    </div>
-
-    <h1>Struggling to Make Money Online? Get Your First Affiliate Sale in <em>7 Days</em> Using AI (No Budget Needed)</h1>
-    <p class="hero-sub">A simple step-by-step system designed for complete beginners to start earning using free traffic. No experience. No paid ads. No technical skills.</p>
-
-    <!-- DIFFERENTIATORS -->
-    <div class="hero-diff">
-      <div class="diff-pill"><span>✓</span> No social media following needed</div>
-      <div class="diff-pill"><span>✓</span> Works without paid ads</div>
-      <div class="diff-pill"><span>✓</span> Designed for complete beginners</div>
-      <div class="diff-pill"><span>✓</span> Works worldwide</div>
-    </div>
-
-    <!-- COUNTDOWN -->
-    <div class="countdown-wrapper">
-      <div class="countdown-label"><span class="fire-icon">🔥</span> Limited Time Offer – Price May Increase Soon</div>
-      <div class="countdown-timer">
-        <div class="countdown-block">
-          <span class="countdown-number" id="hours">00</span>
-          <div class="countdown-text">Hours</div>
-        </div>
-        <div class="countdown-block">
-          <span class="countdown-number" id="minutes">00</span>
-          <div class="countdown-text">Minutes</div>
-        </div>
-        <div class="countdown-block">
-          <span class="countdown-number" id="seconds">00</span>
-          <div class="countdown-text">Seconds</div>
-        </div>
-        <div class="countdown-block">
-          <div class="countdown-save">Save $36</div>
-          <div class="countdown-text">$48 → $12</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PRICE BOX -->
-    <div class="price-box" id="buy">
-      <div class="price-row">
-        <span class="old-price">Regular: $48</span>
-        <span class="discount-badge">75% OFF</span>
-      </div>
-      <span class="big-price">$12</span>
-      <div class="price-sub">One-time payment · Instant access · 30-day money-back guarantee</div>
-      <a href="https://warriorplus.com/o2/buy/your-product-id" class="cta-main">⚡ Get Instant Access Now</a>
-      <div class="trust-row">
-        <span>🔒 Secure Checkout</span>
-        <span class="trust-dot"></span>
-        <span>✅ 30-Day Guarantee</span>
-        <span class="trust-dot"></span>
-        <span>⚡ Instant Download</span>
-      </div>
-    </div>
-
-    <!-- STATS -->
-    <div class="hero-stats">
-      <div class="hstat"><div class="hstat-num">4</div><div class="hstat-label">Simple Steps</div></div>
-      <div class="hstat"><div class="hstat-num">7</div><div class="hstat-label">Days to First Sale</div></div>
-      <div class="hstat"><div class="hstat-num">$0</div><div class="hstat-label">Budget Needed</div></div>
-      <div class="hstat"><div class="hstat-num">100%</div><div class="hstat-label">Beginner Safe</div></div>
-    </div>
-
-  </div>
-</div>
-
-<div class="section-divider"><hr></div>
-
-<!-- ==================== PROBLEM ==================== -->
-<section class="fade-up">
-  <div class="section-eyebrow">The Real Problem</div>
-  <h2>You've Tried Before. Nothing Worked. <em>Here's Why.</em></h2>
-
-  <div class="pain-grid">
-    <div class="pain-card">
-      <span class="pain-icon">😵</span>
-      <h4>Information Overload</h4>
-      <p>YouTube gurus, Facebook groups, Reddit threads — everyone says something different. You spend hours "learning" and end up more confused than when you started.</p>
-    </div>
-    <div class="pain-card">
-      <span class="pain-icon">💸</span>
-      <h4>Hidden Costs Everywhere</h4>
-      <p>Every "beginner" course quietly assumes you have money for paid ads, premium tools, or hosting. If you're starting with $0, you're stuck before you even begin.</p>
-    </div>
-    <div class="pain-card">
-      <span class="pain-icon">⏳</span>
-      <h4>Zero Results After Weeks</h4>
-      <p>You follow the steps. You post content. You wait. Days turn into weeks. Still zero clicks, zero sales, zero proof that any of this actually works.</p>
-    </div>
-    <div class="pain-card">
-      <span class="pain-icon">🔀</span>
-      <h4>No Clear Starting Point</h4>
-      <p>Too many methods, too many choices. No one gives you a single, focused path from zero to your first result. Until now.</p>
-    </div>
-  </div>
-
-  <div class="emotional-line">
-    "I'm not lazy. I'm not giving up. I just need someone to show me <strong>exactly what to do</strong> — in order — without assuming I already know things I don't."
-  </div>
-</section>
-
-<div class="section-divider"><hr></div>
-
-<!-- ==================== HOW IT WORKS ==================== -->
-<section class="fade-up">
-  <div class="section-eyebrow">The Solution</div>
-  <h2>How This System Works — <em>4 Simple Steps</em></h2>
-  <p class="solution-intro">A simple, focused system based on one proven method. No guessing. No overwhelm. No wasted time. Just a clear path from zero to your first $10–$50 commission using free AI tools and free traffic.</p>
-
-  <div class="steps-flow">
-    <div class="step-row">
-      <div class="step-icon-col"><div class="step-circle">1</div></div>
-      <div class="step-content">
-        <h4>Choose a Profitable Affiliate Offer</h4>
-        <p>Pick a beginner-friendly product from a free affiliate marketplace. We tell you exactly which 4 programs to use and how to pick a winner in under 10 minutes.</p>
-        <span class="step-tag">Step 1 · 20 min</span>
-      </div>
-    </div>
-    <div class="step-row">
-      <div class="step-icon-col"><div class="step-circle">2</div></div>
-      <div class="step-content">
-        <h4>Use AI to Create Simple Content</h4>
-        <p>Use our copy-paste prompts with free AI tools (ChatGPT, Claude, or Gemini) to write a helpful review or guide. No writing skills needed. Done in 15 minutes.</p>
-        <span class="step-tag">Step 2 · 25 min</span>
-      </div>
-    </div>
-    <div class="step-row">
-      <div class="step-icon-col"><div class="step-circle">3</div></div>
-      <div class="step-content">
-        <h4>Post on Free Traffic Platforms</h4>
-        <p>Publish your content to 6 free platforms where buyers are already searching. Medium, Quora, Reddit, Pinterest — we show you exactly where, how, and when.</p>
-        <span class="step-tag">Step 3 · 30 min</span>
-      </div>
-    </div>
-    <div class="step-row">
-      <div class="step-icon-col"><div class="step-circle">4</div></div>
-      <div class="step-content">
-        <h4>Get Clicks and Earn Commissions</h4>
-        <p>When someone clicks your link and buys, you earn a commission. We show you how to read your stats, find what's working, and scale to $100+/week.</p>
-        <span class="step-tag">Step 4 · 20 min</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ==================== DEMO / PROOF ==================== -->
-<section class="fade-up">
-  <div class="demo-section">
-    <div class="demo-header">
-      <h3>See This System <em>In Action</em></h3>
-      <p>This system shows how AI creates content, how it gets posted on free platforms, and how it starts generating real clicks and commissions — from scratch.</p>
-    </div>
-    <div class="demo-steps">
-      <div class="demo-step">
-        <div class="demo-step-num">1</div>
-        <h5>Pick a Product</h5>
-        <p>We chose a $47 productivity tool on ClickBank with a 50% commission rate.</p>
-      </div>
-      <div class="demo-step">
-        <div class="demo-step-num">2</div>
-        <h5>AI Creates Content</h5>
-        <p>Used ChatGPT with our prompt to write a 600-word review in 8 minutes.</p>
-      </div>
-      <div class="demo-step">
-        <div class="demo-step-num">3</div>
-        <h5>Posted Free</h5>
-        <p>Published on Medium + Reddit + Pinterest — zero ad spend required.</p>
-      </div>
-      <div class="demo-step">
-        <div class="demo-step-num">4</div>
-        <h5>First Sale: Day 9</h5>
-        <p>12 clicks in week one. First commission: $23.50. No experience needed.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA INTERLUDE 1 -->
-<div class="cta-interlude fade-up">
-  <p>Ready to follow the exact same 4-step system and get your first sale?</p>
-  <a href="#buy" class="cta-large">⚡ Get Instant Access Now</a>
-</div>
-
-<!-- ==================== WHAT YOU GET ==================== -->
-<section class="fade-up">
-  <div class="section-eyebrow">What You Get</div>
-  <h2>Everything You Need to <em>Get Your First Result</em></h2>
-  <p style="font-size:15px;color:var(--muted);line-height:1.8;max-width:560px;margin-bottom:0;">A simple, focused system based on one proven method. Nothing you don't need. Everything you do.</p>
-
-  <div class="what-you-get">
-    <div class="wyg-item">
-      <div class="wyg-icon">📋</div>
-      <div>
-        <h4>Step-by-Step System</h4>
-        <p>Get your first result following a clear, ordered process. No guessing what to do next.</p>
-      </div>
-    </div>
-    <div class="wyg-item">
-      <div class="wyg-icon">🤖</div>
-      <div>
-        <h4>Copy-Paste AI Prompts</h4>
-        <p>No thinking required. Just paste the prompt, get content, and post it. Done in minutes.</p>
-      </div>
-    </div>
-    <div class="wyg-item">
-      <div class="wyg-icon">📄</div>
-      <div>
-        <h4>Done-for-You Templates</h4>
-        <p>Start instantly with templates for content, titles, and posting — all ready to use.</p>
-      </div>
-    </div>
-    <div class="wyg-item">
-      <div class="wyg-icon">🎯</div>
-      <div>
-        <h4>Real Example Workflow</h4>
-        <p>See a complete real example from product selection to first click — follow it exactly.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="modules-detail">
-    <div class="mod-detail">
-      <div class="mod-detail-num">1</div>
-      <div>
-        <h5>Module 1: Setup — Choose Your Offer & Get Your Link</h5>
-        <p>We walk you through 4 beginner-friendly affiliate programs. You'll register, navigate the dashboard, and grab your tracking link — all in under 60 minutes.</p>
-        <ul class="check-list">
-          <li>4 recommended programs for beginners (no approval wait)</li>
-          <li>How to read your affiliate dashboard easily</li>
-          <li>Simple 3-question framework to pick your first product</li>
-          <li>Free tools to track your clicks and conversions</li>
-        </ul>
-      </div>
-    </div>
-    <div class="mod-detail">
-      <div class="mod-detail-num">2</div>
-      <div>
-        <h5>Module 2: AI Content — Create Reviews Without Writing</h5>
-        <p>5 word-for-word AI prompts that generate honest, helpful content people actually want to read — and click through. No writing experience needed.</p>
-        <ul class="check-list">
-          <li>5 ready-to-use copy-paste prompts</li>
-          <li>How to edit AI content to sound natural and trustworthy</li>
-          <li>Where to place your affiliate link for maximum clicks</li>
-          <li>3 full example reviews you can model immediately</li>
-        </ul>
-      </div>
-    </div>
-    <div class="mod-detail">
-      <div class="mod-detail-num">3</div>
-      <div>
-        <h5>Module 3: Free Traffic — Visitors Without Spending a Penny</h5>
-        <p>6 free platforms where buyers are already searching. You'll know exactly what to post, how to write the title, and when to publish for the best results.</p>
-        <ul class="check-list">
-          <li>Platform-by-platform posting guide (Medium, Pinterest, Reddit, Quora)</li>
-          <li>Title formulas that attract buyers, not just readers</li>
-          <li>A simple 7-day posting calendar — one task per day</li>
-          <li>How to avoid getting flagged or banned</li>
-        </ul>
-      </div>
-    </div>
-    <div class="mod-detail">
-      <div class="mod-detail-num">4</div>
-      <div>
-        <h5>Module 4: Track & Scale — Understand Results & Grow</h5>
-        <p>After your first sale, find what worked and repeat it. Scale from $10/week to $100+/week using the same simple system.</p>
-        <ul class="check-list">
-          <li>Simple explanation of affiliate stats for beginners</li>
-          <li>The "double down" method to scale free traffic</li>
-          <li>Realistic next steps after your first commission</li>
-          <li>How to add more income streams without starting over</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider"><hr></div>
-
-<!-- ==================== BONUS ==================== -->
-<section class="fade-up">
-  <div class="section-eyebrow">Optional Bonus</div>
-  <h2>Bonus: 17 Additional Income Ideas <em>(Optional Learning)</em></h2>
-  <p style="font-size:15px;color:var(--muted);line-height:1.8;max-width:580px;margin-bottom:24px;">Once you've made your first commission with the core 4-step system, you may want to explore other ways to earn online. This bonus gives you a simple overview of 17 other beginner-friendly methods — clearly positioned as extra, not the main product.</p>
-
-  <div class="bonus-wrap">
-    <div class="bonus-header">
-      <span class="bonus-icon-big">🎁</span>
-      <div class="bonus-header-text">
-        <h3>Bonus: 17 Income Streams Overview</h3>
-        <p>A quick-reference guide to explore <em>after</em> completing the 4-step system. Not required — just extra options to explore at your own pace.</p>
-      </div>
-      <span class="bonus-tag">Free Bonus</span>
-    </div>
-    <div class="bonus-list">
-      <div class="bonus-item">Freelance writing with AI</div>
-      <div class="bonus-item">Selling digital templates</div>
-      <div class="bonus-item">YouTube Shorts automation</div>
-      <div class="bonus-item">Print-on-demand basics</div>
-      <div class="bonus-item">Niche blogging for ad revenue</div>
-      <div class="bonus-item">Selling productivity templates</div>
-      <div class="bonus-item">Social media management</div>
-      <div class="bonus-item">AI voice-over services</div>
-      <div class="bonus-item">Stock photo income</div>
-      <div class="bonus-item">Website user testing gigs</div>
-      <div class="bonus-item">Online coaching & consulting</div>
-      <div class="bonus-item">Domain flipping intro</div>
-      <div class="bonus-item">AI prompt engineering services</div>
-      <div class="bonus-item">Lead-gen websites (local SEO)</div>
-      <div class="bonus-item">Online surveys (honest guide)</div>
-      <div class="bonus-item">Micro-freelancing (small gigs)</div>
-      <div class="bonus-item">Niche email newsletters</div>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider"><hr></div>
-
-<!-- ==================== PROOF & TESTIMONIALS ==================== -->
-<section class="fade-up">
-  <div class="section-eyebrow">Real Results</div>
-  <h2>Simple Proof That This <em>Actually Works</em></h2>
-
-  <div class="proof-grid proof-grid--single">
-    <div class="proof-card">
-      <span class="proof-icon">📊</span>
-      <h4>Beginner Result Example</h4>
-      <p>A complete beginner with zero prior experience followed the 4-step system and posted content on Medium and Pinterest.</p>
-      <span class="result-stat">$34</span>
-      <span class="result-label">First commission earned in 9 days</span>
-    </div>
-  </div>
-
-  <div class="testi-grid">
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <blockquote>"I made my first $27 commission in 6 days. I've never done affiliate marketing before and the AI prompts made it so easy to create content."</blockquote>
-      <div class="testi-author">
-        <div class="testi-av">SM</div>
-        <div><div class="testi-name">Sarah Mitchell</div><div class="testi-role">First-time affiliate marketer</div></div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <blockquote>"No money needed to start. I used the free platforms exactly as shown and got my first click on day 3. Simple, clear, and it works."</blockquote>
-      <div class="testi-author">
-        <div class="testi-av">JR</div>
-        <div><div class="testi-name">James Rodriguez</div><div class="testi-role">Beginner from Philippines</div></div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <blockquote>"The step-by-step approach removed all confusion. I knew exactly what to do next. No more feeling lost or overwhelmed."</blockquote>
-      <div class="testi-author">
-        <div class="testi-av">EC</div>
-        <div><div class="testi-name">Emily Chen</div><div class="testi-role">College student</div></div>
-      </div>
-    </div>
-    <div class="testi-card">
-      <div class="stars">★★★★★</div>
-      <blockquote>"At 58, I thought AI was too complicated for me. The copy-paste prompts proved me completely wrong. Anyone can do this."</blockquote>
-      <div class="testi-author">
-        <div class="testi-av">DT</div>
-        <div><div class="testi-name">David Thompson</div><div class="testi-role">Retired teacher</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA INTERLUDE 2 -->
-<div class="cta-interlude fade-up">
-  <p>Everything you need is inside. One proven method. One clear path. Your first sale.</p>
-  <a href="#offer" class="cta-large">⚡ Get Instant Access Now</a>
-</div>
-
-<!-- ==================== VALUE STACK / OFFER ==================== -->
-<section class="fade-up" id="offer">
-  <div class="section-eyebrow">The Complete Package</div>
-  <h2>Here's Everything You Get for <em>Just $12</em></h2>
-
-  <div class="offer-table">
-    <div class="offer-row">
-      <div class="offer-item-name">Core 4-Step AI Affiliate System<small>Modules 1–4 with complete step-by-step instructions</small></div>
-      <div class="offer-value">$97</div>
-    </div>
-    <div class="offer-row">
-      <div class="offer-item-name">Done-for-You Templates<small>Ready-to-use content templates to start instantly</small></div>
-      <div class="offer-value">$47</div>
-    </div>
-    <div class="offer-row">
-      <div class="offer-item-name">Copy-Paste AI Prompts<small>5 ready-to-use prompts for affiliate reviews and guides</small></div>
-      <div class="offer-value">$37</div>
-    </div>
-    <div class="offer-row">
-      <div class="offer-item-name">Real Example Workflow + 7-Day Action Plan<small>Follow a real example from day 1 to your first commission</small></div>
-      <div class="offer-value">$67</div>
-    </div>
-    <div class="offer-row">
-      <div class="offer-item-name">Bonus: 17 Income Ideas Overview<small>Optional extra — explore after your first sale</small></div>
-      <div class="offer-value">FREE</div>
-    </div>
-    <div class="offer-row total-row">
-      <div class="offer-item-name">Total Value</div>
-      <div class="offer-value">$12 <span style="font-size:13px;color:var(--muted);text-decoration:line-through;margin-left:8px;">$248</span></div>
-    </div>
-  </div>
-
-  <div class="final-price-box">
-    <div class="final-old">Total Value: $248</div>
-    <span class="final-new">$12</span>
-    <div class="final-note">One-time payment · Instant digital download · 30-day money-back guarantee<br>Limited Time Offer – Price May Increase Soon</div>
-    <a href="https://warriorplus.com/o2/buy/your-product-id" class="cta-large">⚡ Get Instant Access Now</a>
-    <div><div class="urgency-pill">🔴 Limited launch offer — lock in $12 before price increases</div></div>
-    <div class="trust-badges">
-      <span>🔒 Secure Checkout</span>
-      <span>✅ 30-Day Guarantee</span>
-      <span>⚡ Instant Download</span>
-      <span>🌍 Works Worldwide</span>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider"><hr></div>
-
-<!-- ==================== GUARANTEE ==================== -->
-<section class="fade-up" style="text-align:center;">
-  <div class="guarantee-card">
-    <span class="g-icon">🛡️</span>
-    <h3>30-Day Money-Back Guarantee</h3>
-    <p>Try the entire system for 30 days. Follow the steps. Create content. Post it. If you're not satisfied for any reason — or no reason at all — just email us and we'll refund you 100%. No questions. No forms. No waiting.</p>
-  </div>
-</section>
-
-<div class="section-divider"><hr></div>
-
-<!-- ==================== FAQ ==================== -->
-<section class="fade-up">
-  <div class="section-eyebrow">Common Questions</div>
-  <h2>Frequently Asked <em>Questions</em></h2>
-
-  <div class="faq-list">
-    <div class="faq-item">
-      <div class="faq-q">Do I need any experience to start? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">No. This system is built for complete beginners. We assume you know nothing about affiliate marketing, AI tools, or online business. Everything is explained step by step.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Do I need to spend money on ads or tools? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">No. The entire system uses 100% free AI tools (ChatGPT, Claude, Gemini) and free traffic platforms (Medium, Pinterest, Reddit, Quora). You don't need a budget to get your first sale.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Do I need a social media following? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">No. This system works without any existing followers or audience. You post content on free platforms where buyers are already searching — no following required.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">How fast can I start seeing results? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">Most beginners who follow the system get their first clicks within 3–5 days. First sales typically happen within 7–14 days, depending on consistency and the product you choose.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Do I need a website? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">No. You can start without a website. We show you how to use free publishing platforms to post your content and share your affiliate links.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">What if I don't know how to write? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">That's exactly why we use AI. You'll get 5 copy-paste prompts that create high-quality content for you. You don't need to write anything yourself.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Will this work in my country? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">Yes. The system works worldwide. As long as you can access free platforms like Medium, Pinterest, or Reddit, and sign up for affiliate programs, you can use this system.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">What's your refund policy? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">30-day money-back guarantee. No questions asked. If you're not satisfied for any reason, just email us at <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bccfc9ccccd3cec8fcdad5cecfc8cfddd0d9ddd592dfd3d1">[email&#160;protected]</a> and we'll refund you immediately.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Is this a get-rich-quick scheme? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">No. This is a simple system that requires consistent action over 7–14 days. Results depend on how well you follow the steps and how consistently you post content. It's realistic, not magical.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q">Can I do this alongside my full-time job? <span class="faq-arrow">+</span></div>
-      <div class="faq-a">Yes. The system is designed for people with limited time. You can complete the daily tasks in 30–60 minutes per day. Perfect for evenings and weekends.</div>
-    </div>
-  </div>
-</section>
-
-<div class="section-divider"><hr></div>
-
-<!-- ==================== FINAL CTA ==================== -->
-<div class="final-cta-wrap">
-  <div class="final-cta-glow"></div>
-  <div class="final-cta-inner">
-    <div class="section-eyebrow" style="justify-content:center;margin-bottom:16px;">Your Starting Point</div>
-    <h2>Stop Researching. <em>Start Earning.</em></h2>
-    <p>You now know exactly what this is, how it works, and what it costs. The only thing left to do is start. Follow the 4 steps. Get your first sale. Everything else comes after that.</p>
-    <a href="https://warriorplus.com/o2/buy/your-product-id" class="cta-large">⚡ Get Instant Access Now — Only $12</a>
-    <div><div class="urgency-pill">🔴 Limited Time Offer — Price May Increase Soon. Lock In $12 Now.</div></div>
-    <div class="trust-badges">
-      <span>🔒 Secure Checkout</span>
-      <span>✅ 30-Day Guarantee</span>
-      <span>⚡ Instant Download</span>
-      <span>🌍 Works Worldwide</span>
-    </div>
-  </div>
-</div>
-
-<!-- FOOTER -->
-<footer>
-  <p>© 2025 FirstSaleAI &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms of Service</a> &nbsp;·&nbsp; <a href="#">Contact Support</a></p>
-  <p style="margin-top:8px;font-size:11px;">Results are not guaranteed. Individual results vary based on effort, consistency, niche selection, and market conditions. This is not a get-rich-quick scheme. Affiliate marketing requires work, patience, and ongoing optimization.</p>
-</footer>
-
-<!-- STICKY MOBILE CTA -->
-<a href="#buy" class="sticky-mobile">⚡ Get Instant Access — Only $12</a>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* ===================== COUNTDOWN TIMER — SMOOTH & PERSISTENT ===================== */
-(function() {
-  const DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
-  const KEY = 'fsa_timer_end';
-
-  // Get or create end time
-  let endTime = parseInt(sessionStorage.getItem(KEY) || '0', 10);
-  if (!endTime || endTime <= Date.now()) {
-    endTime = Date.now() + DURATION_MS;
-    sessionStorage.setItem(KEY, endTime);
+  // ----- Technical indicators (pure JS, no libs) -----
+  function calcEMA(prices, period) {
+    const k = 2/(period+1);
+    let ema = prices[0];
+    for(let i=1;i<prices.length;i++) ema = prices[i]*k + ema*(1-k);
+    return ema;
+  }
+  function calcRSI(closes, period=14) {
+    let gains=0,losses=0;
+    for(let i=closes.length-period;i<closes.length;i++) {
+      let delta = closes[i]-closes[i-1];
+      if(delta>=0) gains+=delta; else losses-=delta;
+    }
+    let avgGain=gains/period, avgLoss=losses/period;
+    let rs=avgGain/avgLoss; let rsi=100-(100/(1+rs));
+    return isNaN(rsi)?50:rsi;
+  }
+  function calcMACD(closes, fast=12, slow=26, signal=9) {
+    let emaFast=calcEMA(closes.slice(0,fast),fast);
+    let emaSlow=calcEMA(closes.slice(0,slow),slow);
+    let macdLine=emaFast-emaSlow;
+    let hist=0;
+    return {macdLine, histogram:hist, signalLine:0}; // reduced but we compute direction using history? simpler: using last diff
+  }
+  // full macd with array
+  function getMACDValues(closes) {
+    let emaFast = calcEMA(closes.slice(0,12),12);
+    let emaSlow = calcEMA(closes.slice(0,26),26);
+    let macdLine = emaFast-emaSlow;
+    let hist = macdLine; // mock for hist trend: real requires signal ema but we can compute hist = macd - signal (simplified but robust)
+    // we will recompute using signal ema of macd line
+    let macdArr = [];
+    for(let i=26;i<=closes.length;i++){
+      let f=calcEMA(closes.slice(0,i),12);
+      let s=calcEMA(closes.slice(0,i),26);
+      macdArr.push(f-s);
+    }
+    let signalLine = calcEMA(macdArr,9);
+    let histogram = macdArr[macdArr.length-1] - signalLine;
+    return { macdLine: macdArr[macdArr.length-1], histogram, signalLine };
+  }
+  function calcBollinger(closes, period=20, stdDev=2) {
+    let last = closes[closes.length-1];
+    let slice=closes.slice(-period);
+    let mean=slice.reduce((a,b)=>a+b,0)/period;
+    let variance=slice.map(x=>(x-mean)**2).reduce((a,b)=>a+b,0)/period;
+    let std=Math.sqrt(variance);
+    let upper=mean+stdDev*std, lower=mean-stdDev*std;
+    let pos = (last-lower)/(upper-lower)*100;
+    return {upper,lower,mid:mean, position:Math.min(100,Math.max(0,pos))};
+  }
+  function calcATR(highs, lows, closes, period=14) {
+    let tr=[]; for(let i=1;i<highs.length;i++) tr.push(Math.max(highs[i]-lows[i], Math.abs(highs[i]-closes[i-1]), Math.abs(lows[i]-closes[i-1])));
+    let atr=tr.slice(-period).reduce((a,b)=>a+b,0)/period;
+    return atr;
+  }
+  function calcStochRSI(closes, period=14) {
+    let rsiArr=[];
+    for(let i=period;i<=closes.length;i++) rsiArr.push(calcRSI(closes.slice(0,i),period));
+    let last=rsiArr[rsiArr.length-1];
+    let lowest=Math.min(...rsiArr.slice(-period)), highest=Math.max(...rsiArr.slice(-period));
+    let stoch=(last-lowest)/(highest-lowest)*100;
+    return isNaN(stoch)?50:stoch;
+  }
+  function volumeOscillator(volumes, fast=5, slow=20) {
+    if(volumes.length<slow) return 0;
+    let fastAvg=volumes.slice(-fast).reduce((a,b)=>a+b,0)/fast;
+    let slowAvg=volumes.slice(-slow).reduce((a,b)=>a+b,0)/slow;
+    return ((fastAvg-slowAvg)/slowAvg)*100;
+  }
+  // candlestick pattern detection (simplified)
+  function detectPatterns(klines) {
+    let patterns=[];
+    let len=klines.length;
+    if(len<3) return patterns;
+    let c1=klines[len-1], c2=klines[len-2], c3=klines[len-3];
+    let body1=Math.abs(c1.close-c1.open), upperShadow1=c1.high-Math.max(c1.open,c1.close), lowerShadow1=Math.min(c1.open,c1.close)-c1.low;
+    let body2=Math.abs(c2.close-c2.open);
+    // Hammer
+    if(body1>0 && lowerShadow1>=2*body1 && upperShadow1<body1*0.3) patterns.push({name:"Hammer",bullish:true});
+    // Shooting star
+    if(body1>0 && upperShadow1>=2*body1 && lowerShadow1<body1*0.3) patterns.push({name:"Shooting star",bullish:false});
+    // Doji
+    if(body1<(c1.high-c1.low)*0.1) patterns.push({name:"Doji",bullish:null});
+    // Bullish engulfing
+    if(c2.close<c2.open && c1.close>c1.open && c1.close>c2.open && c1.open<c2.close) patterns.push({name:"Bullish engulf",bullish:true});
+    // Bearish engulfing
+    if(c2.close>c2.open && c1.close<c1.open && c1.close<c2.open && c1.open>c2.close) patterns.push({name:"Bearish engulf",bullish:false});
+    return patterns;
+  }
+  // main signal calculation
+  function computeSignal(pairData, closes, highs, lows, volumes) {
+    let currentPrice=closes[closes.length-1];
+    let ema9=calcEMA(closes,9), ema21=calcEMA(closes,21), ema50=calcEMA(closes,50);
+    let bullScore=0, bearScore=0;
+    // EMA 30pts
+    if(ema9>ema21 && ema21>ema50) bullScore+=20; else if(ema9<ema21 && ema21<ema50) bearScore+=20;
+    if(currentPrice>ema50) bullScore+=10; else if(currentPrice<ema50) bearScore+=10;
+    // RSI 20pts
+    let rsi=calcRSI(closes,14);
+    if(rsi<35) bullScore+=15; else if(rsi>65) bearScore+=15;
+    if(rsi>50) bullScore+=5; else if(rsi<50) bearScore+=5;
+    // MACD 15pts
+    let macdObj=getMACDValues(closes);
+    if(macdObj.macdLine>0 && macdObj.histogram>0) bullScore+=15;
+    else if(macdObj.macdLine<0 && macdObj.histogram<0) bearScore+=15;
+    else if(macdObj.histogram>0) bullScore+=8; else if(macdObj.histogram<0) bearScore+=8;
+    // Bollinger 15pts
+    let bb=calcBollinger(closes);
+    if(currentPrice<bb.lower) bullScore+=15; else if(currentPrice>bb.upper) bearScore+=15;
+    else if(currentPrice>bb.mid) bullScore+=5; else if(currentPrice<bb.mid) bearScore+=5;
+    // Volume 10pts
+    let volRatio=volumes.slice(-5).reduce((a,b)=>a+b,0)/5 / (volumes.slice(-20,-5).reduce((a,b)=>a+b,0)/15);
+    let volOsc=volumeOscillator(volumes);
+    let dominantBull=bullScore>bearScore;
+    if(volRatio>1.5 && dominantBull) bullScore+=10; else if(volRatio>1.5 && !dominantBull) bearScore+=10;
+    if(volOsc>5 && dominantBull) bullScore+=5; else if(volOsc>5 && !dominantBull) bearScore+=5;
+    // StochRSI 5pts
+    let stoch=calcStochRSI(closes);
+    if(stoch<20) bullScore+=5; else if(stoch>80) bearScore+=5;
+    // patterns 10pts
+    let patterns=detectPatterns(closes.map((c,i)=>({open:pairData.opens?pairData.opens[i]:c, high:pairData.highs?pairData.highs[i]:c, low:pairData.lows?pairData.lows[i]:c, close:c})));
+    let pattBull=patterns.filter(p=>p.bullish===true).length*5;
+    let pattBear=patterns.filter(p=>p.bullish===false).length*5;
+    bullScore+=pattBull; bearScore+=pattBear;
+    let net=bullScore-bearScore;
+    let finalSignal="NEUTRAL", score=bullScore, bearFinal=bearScore;
+    if(net>=20){ finalSignal="LONG"; score=bullScore; } 
+    else if(net<=-20){ finalSignal="SHORT"; score=bearScore; }
+    else finalSignal="NEUTRAL";
+    let confidence = score>=80?"High":(score>=65?"Medium":"Low");
+    // ATR + SL/TP
+    let atr=calcATR(highs,lows,closes,14);
+    let entry=currentPrice;
+    let sl, tp1, tp2, rr;
+    if(finalSignal==="LONG"){
+      sl=entry-atr*1.8; tp1=entry+atr*2.5; tp2=entry+atr*4;
+      rr=((tp1-entry)/(entry-sl)).toFixed(2);
+    } else if(finalSignal==="SHORT"){
+      sl=entry+atr*1.8; tp1=entry-atr*2.5; tp2=entry-atr*4;
+      rr=((entry-tp1)/(sl-entry)).toFixed(2);
+    } else { sl=tp1=tp2=0; rr="0";}
+    return {signal:finalSignal, score, confidence, rsi, macdHist:macdObj.histogram, stoch, bbPos:bb.position, volRatio, atr, entry, sl, tp1, tp2, rr, patterns, bullScore:bullScore, bearScore:bearScore, currentPrice, netScore:net};
   }
 
-  const hoursEl   = document.getElementById('hours');
-  const minutesEl = document.getElementById('minutes');
-  const secondsEl = document.getElementById('seconds');
-
-  function pad(n) { return String(Math.max(0, n)).padStart(2, '0'); }
-
-  function setNumber(el, newVal) {
-    const current = el.textContent;
-    if (current !== newVal) {
-      el.classList.add('changing');
-      el.textContent = newVal;
-      // Remove class after micro-transition
-      clearTimeout(el._t);
-      el._t = setTimeout(() => el.classList.remove('changing'), 200);
-    }
+  // fetch klines & ticker
+  async function fetchPairData(symbol, tf){
+    let urlKlines=`https://fapi.binance.com/fapi/v1/klines?symbol=${symbol}&interval=${tf}&limit=100`;
+    let urlTicker=`https://fapi.binance.com/fapi/v1/ticker/24hr?symbol=${symbol}`;
+    let [kRes, tRes]=await Promise.all([fetch(urlKlines), fetch(urlTicker)]);
+    let kData=await kRes.json(); let tick=await tRes.json();
+    let closes=[], highs=[], lows=[], volumes=[], opens=[];
+    for(let k of kData){ opens.push(parseFloat(k[1])); highs.push(parseFloat(k[2])); lows.push(parseFloat(k[3])); closes.push(parseFloat(k[4])); volumes.push(parseFloat(k[5])); }
+    let priceChange=parseFloat(tick.priceChangePercent);
+    let lastPrice=parseFloat(tick.lastPrice);
+    return {closes,highs,lows,volumes,opens, priceChange, lastPrice, symbol};
   }
 
-  function tick() {
-    const remaining = Math.max(0, endTime - Date.now());
-
-    if (remaining === 0) {
-      // Reset timer smoothly
-      endTime = Date.now() + DURATION_MS;
-      sessionStorage.setItem(KEY, endTime);
+  async function fetchAllSignals(){
+    let symbolsToUse=SYMBOLS.slice(0,currentLimit);
+    let results=[];
+    for(let sym of symbolsToUse){
+      try{
+        let data=await fetchPairData(sym,currentTimeframe);
+        let signal=computeSignal(data, data.closes, data.highs, data.lows, data.volumes);
+        results.push({symbol:sym, price:data.lastPrice, change:data.priceChange, ...signal});
+      }catch(e){ console.warn(sym,e); results.push({symbol:sym, price:0, change:0, signal:"NEUTRAL", score:0});}
     }
-
-    const totalSec = Math.floor(remaining / 1000);
-    const h = Math.floor(totalSec / 3600);
-    const m = Math.floor((totalSec % 3600) / 60);
-    const s = totalSec % 60;
-
-    setNumber(hoursEl,   pad(h));
-    setNumber(minutesEl, pad(m));
-    setNumber(secondsEl, pad(s));
-
-    // Urgent blink when under 60 seconds
-    if (h === 0 && m === 0) {
-      secondsEl.style.color = '#FF4444';
-    } else {
-      secondsEl.style.color = '';
-    }
+    allSignals=results;
+    renderUI();
   }
 
-  tick(); // immediate first render — no 1-second delay
-  setInterval(tick, 1000);
-})();
-
-/* ===================== SCROLL ANIMATIONS ===================== */
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-  });
-}, { threshold: 0.07 });
-document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-
-/* ===================== STICKY CTA ===================== */
-const priceBox  = document.getElementById('buy');
-const stickyCta = document.querySelector('.sticky-mobile');
-if (priceBox && stickyCta) {
-  new IntersectionObserver(([e]) => {
-    stickyCta.style.display = e.isIntersecting ? 'none' : '';
-  }, { threshold: 0 }).observe(priceBox);
-}
-
-/* ===================== FAQ ACCORDION ===================== */
-document.querySelectorAll('.faq-q').forEach(q => {
-  q.addEventListener('click', () => {
-    const item   = q.parentElement;
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
-  });
-});
-
+  // UI rendering
+  function renderUI(){
+    updateTickerBar();
+    updateStatsAndGrid();
+    if(selectedPair) showDetailPanel(selectedPair);
+    else document.getElementById("detailPanel").style.display="none";
+    document.getElementById("updateTime").innerText=new Date().toLocaleTimeString();
+    document.getElementById("liveTimestamp").innerText=new Date().toLocaleTimeString();
+  }
+  function updateTickerBar(){
+    let bar=document.getElementById("tickerBar");
+    let top8=allSignals.slice(0,8);
+    bar.innerHTML=top8.map(s=>`<div class="ticker-item"><strong>${s.symbol}</strong> ${formatPrice(s.price)} <span class="${s.change>=0?'text-green':'text-red'}">${formatPercent(s.change)}</span></div>`).join('');
+  }
+  function updateStatsAndGrid(){
+    let longs=allSignals.filter(s=>s.signal==="LONG").length;
+    let shorts=allSignals.filter(s=>s.signal==="SHORT").length;
+    let neut=allSignals.filter(s=>s.signal==="NEUTRAL").length;
+    let avgScore=allSignals.reduce((a,b)=>a+(b.score||0),0)/(allSignals.length||1);
+    let best=allSignals.reduce((a,b)=>((b.score||0)>(a.score||0)?b:a),{symbol:"-",score:0,signal:""});
+    document.getElementById("statsRow").innerHTML=`<div class="stat-card">🟢 LONG: ${longs}</div><div class="stat-card">🔴 SHORT: ${shorts}</div><div class="stat-card">⚪ NEUTRAL: ${neut}</div><div class="stat-card">📊 Avg Score: ${avgScore.toFixed(0)}</div><div class="stat-card">🏆 Best: ${best.symbol} ${best.signal} (${best.score})</div>`;
+    let filtered=allSignals.filter(s=>s.score>=minScoreFilter);
+    let grid=document.getElementById("cardsGrid");
+    if(filtered.length===0 && allSignals.length>0) grid.innerHTML="<div style='padding:20px; background:#111; border-radius:32px;'>⚠️ No pairs meet min score filter. Lower filter or refresh.</div>";
+    else grid.innerHTML=filtered.map(s=>`<div class="coin-card" data-pair="${s.symbol}" style="border-left-color: ${s.signal==='LONG'?'#1fd47a':(s.signal==='SHORT'?'#f04f4f':'#f5a623')}"><div class="card-header"><strong>${s.symbol}</strong><span class="score-badge" style="color:${s.score>=80?'#1fd47a':(s.score>=65?'#f5a623':'#aaa')}">${s.score}/100</span></div><div class="price-main">${formatPrice(s.price)}</div><div><span class="${s.change>=0?'text-green':'text-red'}">${formatPercent(s.change)}</span> 24h</div><div class="mini-indicators">RSI:${s.rsi?.toFixed(0)} | MACD:${s.macdHist>0?"▲":"▼"} | Vol:${s.volRatio?.toFixed(1)}x | Stoch:${s.stoch?.toFixed(0)} | BB:${s.bbPos?.toFixed(0)}%</div><div><span class="signal-badge" style="background:${s.signal==='LONG'?'#1fd47a20':(s.signal==='SHORT'?'#f04f4f20':'#f5a62320')}; color:${s.signal==='LONG'?'#1fd47a':(s.signal==='SHORT'?'#f04f4f':'#f5a623')}">${s.signal}</span><div class="progress-bar"><div class="progress-fill" style="width:${s.score}%; background:${s.signal==='LONG'?'#1fd47a':(s.signal==='SHORT'?'#f04f4f':'#f5a623')}"></div></div></div></div>`).join('');
+    document.querySelectorAll(".coin-card").forEach(card=>card.addEventListener("click",()=>{selectedPair=card.getAttribute("data-pair"); showDetailPanel(allSignals.find(s=>s.symbol===selectedPair));}));
+  }
+  function showDetailPanel(signalObj){
+    if(!signalObj) return;
+    let panel=document.getElementById("detailPanel");
+    let patternsStr=signalObj.patterns?.map(p=>p.name).join(", ")||"none";
+    let patternsHtml=signalObj.patterns?.map(p=>`<span style="background:${p.bullish===true?'#1fd47a30':(p.bullish===false?'#f04f4f30':'#555530')}; padding:2px 8px; border-radius:20px;">${p.name}</span>`).join(" ")||"none";
+    let indicatorBreakdown=`<div class="mini-indicators" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;"><div>📈 RSI: ${signalObj.rsi?.toFixed(1)} (${signalObj.rsi<35?"oversold":signalObj.rsi>65?"overbought":"neutral"})</div><div>📊 MACD: ${signalObj.macdHist>0?"bullish":"bearish"} hist</div><div>📦 Bollinger Pos: ${signalObj.bbPos?.toFixed(0)}%</div><div>⚡ StochRSI: ${signalObj.stoch?.toFixed(0)}</div><div>📀 Volume ratio: ${signalObj.volRatio?.toFixed(2)}x</div><div>💹 ATR: $${signalObj.atr?.toFixed(4)}</div></div>`;
+    panel.style.display="block";
+    panel.innerHTML=`<div style="display:flex;justify-content:space-between;"><h3>${signalObj.symbol} · ${signalObj.signal} · score ${signalObj.score}</h3><button id="closeDetail" style="background:#2c3348;">✖</button></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:16px 0;">
+      <div>Signal: ${signalObj.signal}</div><div>Score: ${signalObj.score}</div><div>Entry: ${formatPrice(signalObj.entry)}</div><div>SL: ${formatPrice(signalObj.sl)}</div><div>TP1: ${formatPrice(signalObj.tp1)}</div><div>TP2: ${formatPrice(signalObj.tp2)}</div><div>R:R: 1:${signalObj.rr}</div><div>ATR: $${signalObj.atr?.toFixed(4)}</div>
+    </div>
+    <div>✨ Patterns: ${patternsHtml}</div>
+    ${indicatorBreakdown}
+    <div style="border-left: 3px solid #4f8ef7; background:#181c27; padding:12px; margin-top:12px;">
+      <strong>Analysis:</strong> RSI at ${signalObj.rsi?.toFixed(0)}. ${signalObj.macdHist>0?"MACD histogram positive":"MACD negative"}. Bollinger bands position ${signalObj.bbPos?.toFixed(0)}%. Volume ${signalObj.volRatio>1.2?"increasing":"stable"}. Pattern signals: ${patternsStr}. <span style="color:#f5a623;">⚠️ Risk: Crypto futures are highly volatile. DYOR.</span>
+    </div>`;
+    document.getElementById("closeDetail")?.addEventListener("click",()=>{selectedPair=null; panel.style.display="none";});
+    // add history log when card clicked
+    let now=new Date().toLocaleTimeString();
+    let lastLog=historyLogs[0];
+    if(!lastLog || lastLog.pair!==signalObj.symbol || (Date.now()-lastLog.ts)>60000){
+      historyLogs.unshift({time:now,pair:signalObj.symbol,tf:currentTimeframe,signal:signalObj.signal,score:signalObj.score,price:formatPrice(signalObj.price),sl:formatPrice(signalObj.sl),tp:formatPrice(signalObj.tp1),rr:`1:${signalObj.rr}`,patterns:patternsStr,ts:Date.now()});
+      if(historyLogs.length>30) historyLogs.pop();
+      renderHistory();
+    }
+  }
+  function renderHistory(){
+    let tbody=document.querySelector("#historyTable tbody");
+    tbody.innerHTML=historyLogs.map(h=>`<tr><td>${h.time}</td><td>${h.pair}</td><td>${h.tf}</td><td class="${h.signal==='LONG'?'text-green':(h.signal==='SHORT'?'text-red':'text-amber')}">${h.signal}</td><td>${h.score}</td><td>${h.price}</td><td>${h.sl}</td><td>${h.tp}</td><td>${h.rr}</td><td>${h.patterns.slice(0,20)}</td></tr>`).join('');
+  }
+  function refreshAll(){
+    fetchAllSignals().catch(e=>console.warn);
+  }
+  // init + autofetch/interval
+  function init(){
+    currentTimeframe=document.getElementById("tfSelect").value;
+    currentLimit=parseInt(document.getElementById("countSelect").value);
+    minScoreFilter=parseInt(document.getElementById("filterScore").value);
+    refreshAll();
+    if(refreshInterval) clearInterval(refreshInterval);
+    refreshInterval=setInterval(()=>refreshAll(),30000);
+    document.getElementById("tfSelect").addEventListener("change",()=>{currentTimeframe=document.getElementById("tfSelect").value; refreshAll();});
+    document.getElementById("countSelect").addEventListener("change",()=>{currentLimit=parseInt(document.getElementById("countSelect").value); refreshAll();});
+    document.getElementById("filterScore").addEventListener("change",()=>{minScoreFilter=parseInt(document.getElementById("filterScore").value); renderUI();});
+    document.getElementById("refreshBtn").addEventListener("click",()=>refreshAll());
+  }
+  init();
 </script>
 </body>
 </html>
