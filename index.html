@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Futures Trading Bot - 4 Assets Live</title>
+    <title>Crypto Futures Trading Bot - Stable Signals & Manual Profit Booking</title>
     <style>
         :root {
             --bg: #0a0e14;
@@ -16,6 +16,7 @@
             --blue: #4dabf7;
             --gold: #ffa94d;
             --accent: #748ffc;
+            --purple: #a78bfa;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,10 +29,7 @@
             padding: 20px;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1500px; margin: 0 auto; }
 
         /* Header */
         .header {
@@ -40,188 +38,243 @@
             align-items: center;
             padding: 16px 0;
             border-bottom: 1px solid var(--border);
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
         }
-        .header h1 {
-            font-size: 1.6rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
+        .header h1 { font-size: 1.5rem; font-weight: 700; }
         .header h1 span { color: var(--accent); }
-        .account-info {
+        
+        .account-row {
             display: flex;
-            gap: 24px;
+            gap: 20px;
             align-items: center;
+            flex-wrap: wrap;
         }
-        .account-item {
-            text-align: right;
-        }
+        .account-item { text-align: right; }
         .account-label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: var(--text-dim);
         }
         .account-value {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            font-variant-numeric: tabular-nums;
             font-family: 'JetBrains Mono', 'Consolas', monospace;
         }
         .account-value.up { color: var(--green); }
         .account-value.down { color: var(--red); }
 
-        /* Main Grid - 4 Asset Cards */
+        .signal-timer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--gold);
+            background: rgba(255,169,77,0.08);
+            padding: 8px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,169,77,0.2);
+        }
+        .signal-timer .countdown {
+            font-weight: 700;
+            font-size: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Summary Bar */
+        .summary-bar {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 900px) { .summary-bar { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 600px) { .summary-bar { grid-template-columns: repeat(2, 1fr); } }
+        
+        .summary-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+        }
+        .summary-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+        }
+        .summary-label {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        /* Assets Grid */
         .assets-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 16px;
-            margin-bottom: 24px;
         }
-
-        @media (max-width: 1200px) {
-            .assets-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 700px) {
-            .assets-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 1300px) { .assets-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 750px) { .assets-grid { grid-template-columns: 1fr; } }
 
         /* Asset Card */
         .asset-card {
             background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 14px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
             padding: 20px;
-            transition: all 0.3s;
+            transition: all 0.4s;
             position: relative;
-            overflow: hidden;
         }
-        .asset-card.has-position {
-            border-color: var(--accent);
-            box-shadow: 0 0 20px rgba(116, 143, 252, 0.08);
-        }
-        .asset-card.has-position.long {
-            border-color: var(--green);
-            box-shadow: 0 0 20px rgba(0, 212, 170, 0.1);
-        }
-        .asset-card.has-position.short {
-            border-color: var(--red);
-            box-shadow: 0 0 20px rgba(255, 71, 87, 0.1);
-        }
+        .asset-card.signal-strong-buy { border-color: rgba(0,212,170,0.5); box-shadow: 0 0 25px rgba(0,212,170,0.08); }
+        .asset-card.signal-buy { border-color: rgba(0,212,170,0.3); }
+        .asset-card.signal-strong-sell { border-color: rgba(255,71,87,0.5); box-shadow: 0 0 25px rgba(255,71,87,0.08); }
+        .asset-card.signal-sell { border-color: rgba(255,71,87,0.3); }
+        .asset-card.in-position-long { border-color: var(--green); box-shadow: 0 0 30px rgba(0,212,170,0.12); background: rgba(0,212,170,0.02); }
+        .asset-card.in-position-short { border-color: var(--red); box-shadow: 0 0 30px rgba(255,71,87,0.12); background: rgba(255,71,87,0.02); }
 
         .asset-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
-        .asset-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
+        .asset-name { font-size: 1rem; font-weight: 700; }
         .asset-symbol {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--text-dim);
-            background: rgba(255,255,255,0.04);
-            padding: 3px 8px;
-            border-radius: 4px;
+            background: rgba(255,255,255,0.03);
+            padding: 4px 10px;
+            border-radius: 6px;
         }
 
-        .asset-price {
-            font-size: 1.5rem;
+        .price-display {
+            font-size: 1.6rem;
             font-weight: 700;
-            font-variant-numeric: tabular-nums;
             font-family: 'JetBrains Mono', 'Consolas', monospace;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
-        .asset-change {
-            font-size: 0.8rem;
+        .change-display {
+            font-size: 0.78rem;
             font-weight: 600;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
-        .asset-change.up { color: var(--green); }
-        .asset-change.down { color: var(--red); }
+        .change-display.up { color: var(--green); }
+        .change-display.down { color: var(--red); }
 
-        /* Signal Badge */
+        /* Signal Section */
+        .signal-section {
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
         .signal-badge {
             display: inline-block;
             padding: 6px 14px;
             border-radius: 20px;
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 14px;
+            margin-bottom: 6px;
+            width: fit-content;
+        }
+        .signal-badge.strong-buy {
+            background: rgba(0,212,170,0.15);
+            color: var(--green);
+            border: 1px solid rgba(0,212,170,0.35);
         }
         .signal-badge.buy {
-            background: rgba(0, 212, 170, 0.12);
+            background: rgba(0,212,170,0.08);
             color: var(--green);
-            border: 1px solid rgba(0, 212, 170, 0.25);
+            border: 1px solid rgba(0,212,170,0.2);
+        }
+        .signal-badge.strong-sell {
+            background: rgba(255,71,87,0.15);
+            color: var(--red);
+            border: 1px solid rgba(255,71,87,0.35);
         }
         .signal-badge.sell {
-            background: rgba(255, 71, 87, 0.12);
+            background: rgba(255,71,87,0.08);
             color: var(--red);
-            border: 1px solid rgba(255, 71, 87, 0.25);
+            border: 1px solid rgba(255,71,87,0.2);
         }
-        .signal-badge.wait {
-            background: rgba(255, 169, 77, 0.1);
+        .signal-badge.waiting {
+            background: rgba(255,169,77,0.08);
             color: var(--gold);
-            border: 1px solid rgba(255, 169, 77, 0.2);
+            border: 1px solid rgba(255,169,77,0.2);
+        }
+        .signal-reason {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+        .signal-stability {
+            font-size: 0.65rem;
+            color: var(--accent);
+            margin-top: 4px;
         }
 
-        /* Position Info */
-        .position-info {
+        /* Position P&L Section */
+        .pnl-section {
             display: none;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.25);
             border-radius: 10px;
             padding: 14px;
-            margin-top: 12px;
+            margin-bottom: 12px;
         }
-        .position-info.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
+        .pnl-section.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .position-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 5px 0;
-            font-size: 0.82rem;
-        }
-        .position-label {
-            color: var(--text-dim);
-        }
-        .position-value {
-            font-weight: 600;
-            font-variant-numeric: tabular-nums;
-            font-family: 'JetBrains Mono', 'Consolas', monospace;
-        }
-        .position-value.profit { color: var(--green); font-size: 1rem; }
-        .position-value.loss { color: var(--red); font-size: 1rem; }
-
-        .pnl-display {
-            font-size: 1.8rem;
+        .pnl-main {
+            font-size: 2rem;
             font-weight: 800;
             text-align: center;
-            padding: 10px 0;
-            font-variant-numeric: tabular-nums;
             font-family: 'JetBrains Mono', 'Consolas', monospace;
+            padding: 4px 0;
         }
-        .pnl-display.profit { color: var(--green); }
-        .pnl-display.loss { color: var(--red); }
+        .pnl-main.profit { color: var(--green); }
+        .pnl-main.loss { color: var(--red); }
+        
+        .pnl-percent {
+            font-size: 1rem;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .pnl-percent.profit { color: var(--green); }
+        .pnl-percent.loss { color: var(--red); }
+
+        .position-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            font-size: 0.72rem;
+        }
+        .pos-label { color: var(--text-dim); }
+        .pos-value { text-align: right; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+        .pos-value.green { color: var(--green); }
+        .pos-value.red { color: var(--red); }
+        .pos-value.gold { color: var(--gold); }
 
         /* Buttons */
         .btn {
             width: 100%;
-            padding: 12px;
+            padding: 11px;
             border: none;
             border-radius: 10px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
             cursor: pointer;
             letter-spacing: 0.5px;
@@ -230,99 +283,79 @@
             text-transform: uppercase;
         }
         .btn:disabled {
-            opacity: 0.4;
+            opacity: 0.35;
             cursor: not-allowed;
+            filter: grayscale(40%);
         }
-        .btn.enter-long {
-            background: rgba(0, 212, 170, 0.15);
+
+        .btn-row { display: flex; gap: 8px; }
+        .btn-row .btn { flex: 1; }
+
+        .btn-long {
+            background: rgba(0,212,170,0.12);
             color: var(--green);
-            border: 1px solid rgba(0, 212, 170, 0.3);
+            border: 1px solid rgba(0,212,170,0.3);
         }
-        .btn.enter-long:hover:not(:disabled) {
-            background: rgba(0, 212, 170, 0.25);
-        }
-        .btn.enter-short {
-            background: rgba(255, 71, 87, 0.15);
+        .btn-long:hover:not(:disabled) { background: rgba(0,212,170,0.22); }
+
+        .btn-short {
+            background: rgba(255,71,87,0.12);
             color: var(--red);
-            border: 1px solid rgba(255, 71, 87, 0.3);
+            border: 1px solid rgba(255,71,87,0.3);
         }
-        .btn.enter-short:hover:not(:disabled) {
-            background: rgba(255, 71, 87, 0.25);
-        }
-        .btn.close-trade {
-            background: rgba(255, 169, 77, 0.15);
+        .btn-short:hover:not(:disabled) { background: rgba(255,71,87,0.22); }
+
+        .btn-close-market {
+            background: rgba(255,169,77,0.12);
             color: var(--gold);
-            border: 1px solid rgba(255, 169, 77, 0.3);
+            border: 1px solid rgba(255,169,77,0.3);
         }
-        .btn.close-trade:hover {
-            background: rgba(255, 169, 77, 0.25);
-        }
+        .btn-close-market:hover { background: rgba(255,169,77,0.22); }
 
-        .btn-row {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
+        .btn-book-profit {
+            background: rgba(167,139,250,0.15);
+            color: var(--purple);
+            border: 1px solid rgba(167,139,250,0.3);
         }
-        .btn-row .btn {
-            flex: 1;
-        }
+        .btn-book-profit:hover:not(:disabled) { background: rgba(167,139,250,0.25); }
 
-        /* Active Trades Summary */
-        .trades-summary {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 20px;
-            margin-bottom: 24px;
+        .btn-book-loss {
+            background: rgba(255,71,87,0.1);
+            color: var(--red);
+            border: 1px solid rgba(255,71,87,0.2);
+            font-size: 0.75rem;
         }
-        .summary-title {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-dim);
-            margin-bottom: 14px;
-        }
-        .summary-grid {
+        .btn-book-loss:hover { background: rgba(255,71,87,0.18); }
+
+        .profit-booking-row {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            text-align: center;
-        }
-        @media (max-width: 700px) {
-            .summary-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        .summary-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            font-variant-numeric: tabular-nums;
-            font-family: 'JetBrains Mono', 'Consolas', monospace;
-        }
-        .summary-label {
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 2px;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            margin-top: 8px;
         }
 
-        /* Pulsing dot for live */
+        /* Live indicator */
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.7rem;
+            color: var(--green);
+            margin-top: 8px;
+            width: 100%;
+            justify-content: center;
+        }
         .live-dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             background: var(--green);
-            display: inline-block;
-            margin-right: 6px;
             animation: pulse 1.5s infinite;
         }
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.3; }
         }
-
-        .text-green { color: var(--green); }
-        .text-red { color: var(--red); }
-        .text-gold { color: var(--gold); }
     </style>
 </head>
 <body>
@@ -330,232 +363,252 @@
         <!-- Header -->
         <div class="header">
             <h1><span>◆</span> Futures Trading Bot</h1>
-            <div class="account-info">
+            <div class="account-row">
+                <div class="signal-timer">
+                    ⏳ Signal Refresh: <span class="countdown" id="signalCountdown">10</span>s
+                </div>
                 <div class="account-item">
                     <div class="account-label">Balance</div>
                     <div class="account-value" id="balance">$10,000.00</div>
                 </div>
                 <div class="account-item">
                     <div class="account-label">Total P&L</div>
-                    <div class="account-value" id="totalPnl" style="color:var(--text-dim);">$0.00</div>
+                    <div class="account-value" id="totalPnl">$0.00</div>
                 </div>
                 <div class="account-item">
                     <div class="account-label">Open Trades</div>
-                    <div class="account-value" id="openTradesCount" style="color:var(--accent);">0</div>
+                    <div class="account-value" id="openTrades" style="color:var(--accent);">0</div>
                 </div>
             </div>
         </div>
 
         <!-- Summary Bar -->
-        <div class="trades-summary">
-            <div class="summary-title"><span class="live-dot"></span>Live Trading Summary</div>
-            <div class="summary-grid">
-                <div>
-                    <div class="summary-value" id="totalUnrealizedPnl" style="color:var(--text-dim);">$0.00</div>
-                    <div class="summary-label">Unrealized P&L</div>
-                </div>
-                <div>
-                    <div class="summary-value" id="totalMargin" style="color:var(--blue);">$0.00</div>
-                    <div class="summary-label">Margin Used</div>
-                </div>
-                <div>
-                    <div class="summary-value" id="winRate">--</div>
-                    <div class="summary-label">Win Rate</div>
-                </div>
-                <div>
-                    <div class="summary-value" id="todayTrades">0</div>
-                    <div class="summary-label">Today's Trades</div>
-                </div>
+        <div class="summary-bar">
+            <div class="summary-card">
+                <div class="summary-value" id="sumUnrealizedPnl" style="color:var(--text-dim);">$0.00</div>
+                <div class="summary-label">Unrealized P&L</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value" id="sumMargin" style="color:var(--blue);">$0.00</div>
+                <div class="summary-label">Margin Used</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value" id="sumWinRate">--</div>
+                <div class="summary-label">Win Rate</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value" id="sumTrades">0</div>
+                <div class="summary-label">Trades Today</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value" id="sumBestTrade" style="color:var(--green);">--</div>
+                <div class="summary-label">Best Trade</div>
             </div>
         </div>
 
-        <!-- 4 Asset Cards -->
-        <div class="assets-grid" id="assetsGrid">
-            <!-- Dynamically generated -->
-        </div>
+        <!-- Asset Cards -->
+        <div class="assets-grid" id="assetsGrid"></div>
     </div>
 
     <script>
         // ============================================================
-        // CRYPTO FUTURES TRADING BOT - 4 ASSETS WITH LIVE P&L
+        // STABLE SIGNAL TRADING BOT - 10 SECOND SIGNAL REFRESH
         // ============================================================
 
-        // ---- Configuration ----
         const CONFIG = {
             leverage: 5,
-            riskPerTrade: 0.02, // 2% risk per trade
-            updateInterval: 1500, // Update every 1.5 seconds
+            riskPerTrade: 0.02,
+            signalRefreshSeconds: 10, // Signals update every 10 seconds
+            priceUpdateMs: 1000, // Price updates every 1 second
             assets: [
-                { name: 'Bitcoin', symbol: 'BTC/USDT', icon: '₿', basePrice: 67500, volatility: 0.0015 },
-                { name: 'Ethereum', symbol: 'ETH/USDT', icon: 'Ξ', basePrice: 3450, volatility: 0.0020 },
-                { name: 'Solana', symbol: 'SOL/USDT', icon: '◎', basePrice: 145, volatility: 0.0028 },
-                { name: 'BNB', symbol: 'BNB/USDT', icon: '⬡', basePrice: 580, volatility: 0.0018 }
+                { name: 'Bitcoin', symbol: 'BTC/USDT', icon: '₿', basePrice: 67500, volatility: 0.0012 },
+                { name: 'Ethereum', symbol: 'ETH/USDT', icon: 'Ξ', basePrice: 3450, volatility: 0.0018 },
+                { name: 'Solana', symbol: 'SOL/USDT', icon: '◎', basePrice: 145, volatility: 0.0025 },
+                { name: 'BNB', symbol: 'BNB/USDT', icon: '⬡', basePrice: 580, volatility: 0.0016 }
             ]
         };
 
-        // ---- Global State ----
         const STATE = {
             balance: 10000,
             startingBalance: 10000,
             totalPnl: 0,
             wins: 0,
             losses: 0,
+            bestTrade: 0,
             todayTrades: 0,
-            assets: {}, // { symbol: { price, change, signal, position } }
-            positions: [] // Array of open positions
+            assets: {},
+            positions: [],
+            signalCountdown: CONFIG.signalRefreshSeconds,
+            signalStableCount: {} // Track how long signal has been stable
         };
 
-        // ---- Initialize Assets ----
+        // Initialize assets
         CONFIG.assets.forEach(asset => {
             STATE.assets[asset.symbol] = {
                 ...asset,
                 price: asset.basePrice,
                 change: 0,
-                signal: null, // { direction: 'buy'|'sell'|'wait', strength: 1-10, reason: '' }
-                position: null, // { side: 'long'|'short', entryPrice, size, stopLoss, takeProfit, liquidationPrice }
+                signal: null,
+                signalAge: 0, // How many cycles this signal has persisted
+                position: null,
                 priceHistory: []
             };
+            STATE.signalStableCount[asset.symbol] = 0;
         });
 
-        // ---- Price Generation (Simulated - Replace with API) ----
+        // ---- Price Updates (Every 1 second) ----
         function updatePrices() {
             Object.values(STATE.assets).forEach(asset => {
-                // Random walk price
                 const change = (Math.random() - 0.5) * asset.volatility * asset.price;
                 asset.price += change;
                 asset.change = ((asset.price - asset.basePrice) / asset.basePrice) * 100;
                 
-                // Keep price history for signals (last 20 candles)
-                asset.priceHistory.push(asset.price);
-                if (asset.priceHistory.length > 50) asset.priceHistory.shift();
+                asset.priceHistory.push({
+                    price: asset.price,
+                    time: Date.now()
+                });
+                if (asset.priceHistory.length > 100) asset.priceHistory.shift();
             });
         }
 
-        // ---- Strategy: Generate Trade Signals ----
+        // ---- Signal Generation (Every 10 seconds) ----
         function generateSignals() {
             Object.values(STATE.assets).forEach(asset => {
-                if (asset.position) return; // Skip if already in position
+                if (asset.position) {
+                    // Don't change signal while in position
+                    return;
+                }
                 
-                const prices = asset.priceHistory;
-                if (prices.length < 20) {
-                    asset.signal = { direction: 'wait', strength: 0, reason: 'Gathering data...' };
+                const prices = asset.priceHistory.map(p => p.price);
+                if (prices.length < 30) {
+                    asset.signal = createSignal('wait', 0, 'Gathering market data...', 0);
                     return;
                 }
 
-                // Calculate indicators
-                const recentPrices = prices.slice(-20);
                 const currentPrice = asset.price;
+                const recentPrices = prices.slice(-30);
                 
-                // Simple Moving Averages
-                const sma20 = recentPrices.reduce((a,b) => a+b, 0) / 20;
+                // Calculate indicators with more data for stability
+                const sma20 = recentPrices.slice(-20).reduce((a,b) => a+b, 0) / 20;
                 const sma10 = recentPrices.slice(-10).reduce((a,b) => a+b, 0) / 10;
+                const sma30 = recentPrices.reduce((a,b) => a+b, 0) / 30;
                 
-                // RSI (simplified)
-                const gains = [], losses = [];
-                for (let i = 1; i < recentPrices.length; i++) {
-                    const diff = recentPrices[i] - recentPrices[i-1];
-                    if (diff > 0) gains.push(diff); else losses.push(Math.abs(diff));
+                // RSI with 14 periods for accuracy
+                const rsiPrices = recentPrices.slice(-15);
+                let gains = 0, losses = 0;
+                for (let i = 1; i < rsiPrices.length; i++) {
+                    const diff = rsiPrices[i] - rsiPrices[i-1];
+                    if (diff > 0) gains += diff;
+                    else losses += Math.abs(diff);
                 }
-                const avgGain = gains.length > 0 ? gains.reduce((a,b) => a+b, 0) / 14 : 0;
-                const avgLoss = losses.length > 0 ? losses.reduce((a,b) => a+b, 0) / 14 : 0.0001;
-                const rs = avgGain / avgLoss;
-                const rsi = 100 - (100 / (1 + rs));
+                const avgGain = gains / 14;
+                const avgLoss = Math.max(losses / 14, 0.00001);
+                const rsi = 100 - (100 / (1 + avgGain / avgLoss));
                 
-                // Bollinger Bands (simplified)
-                const mean = sma20;
-                const variance = recentPrices.reduce((sum, p) => sum + Math.pow(p - mean, 2), 0) / 20;
+                // Bollinger Bands
+                const mean20 = sma20;
+                const variance = recentPrices.slice(-20).reduce((sum, p) => sum + Math.pow(p - mean20, 2), 0) / 20;
                 const stdDev = Math.sqrt(variance);
-                const bbUpper = mean + 2 * stdDev;
-                const bbLower = mean - 2 * stdDev;
+                const bbUpper = mean20 + 2 * stdDev;
+                const bbLower = mean20 - 2 * stdDev;
+                const bbWidth = ((bbUpper - bbLower) / mean20) * 100;
                 
-                // ATR (simplified)
-                const trueRanges = [];
-                for (let i = 1; i < Math.min(recentPrices.length, 14); i++) {
-                    trueRanges.push(Math.abs(recentPrices[i] - recentPrices[i-1]));
-                }
-                const atr = trueRanges.length > 0 ? trueRanges.reduce((a,b) => a+b, 0) / trueRanges.length : currentPrice * 0.005;
+                // ATR
+                const atr = stdDev * 1.5;
                 
-                // ---- SIGNAL LOGIC ----
+                // Volume proxy (using volatility)
+                const recentVolatility = stdDev / mean20;
+                const highVolatility = recentVolatility > 0.015;
+                
+                // ---- STABLE SIGNAL LOGIC (Requires multiple conditions) ----
+                const trend = currentPrice > sma20 ? 'up' : 'down';
+                const strongTrend = Math.abs(currentPrice - sma30) > atr * 2;
+                const trendConfirmed = (trend === 'up' && sma10 > sma20) || (trend === 'down' && sma10 < sma20);
+                
+                // Mean reversion zones
+                const deeplyOversold = rsi < 28 && currentPrice < bbLower;
+                const oversold = rsi < 35 && currentPrice < mean20;
+                const deeplyOverbought = rsi > 72 && currentPrice > bbUpper;
+                const overbought = rsi > 65 && currentPrice > mean20;
+                
+                // Require multiple confirmations for a signal
                 let direction = 'wait';
                 let strength = 0;
                 const reasons = [];
                 
-                // Trend detection
-                const trend = currentPrice > sma20 ? 'up' : 'down';
-                const strongTrend = Math.abs(currentPrice - sma20) > atr * 1.5;
-                
-                // Mean reversion signals
-                const oversold = rsi < 30 && currentPrice < bbLower;
-                const overbought = rsi > 70 && currentPrice > bbUpper;
-                
-                // Momentum signals
-                const bullishCross = sma10 > sma20 && prices[prices.length - 2] <= prices[prices.length - 3];
-                const bearishCross = sma10 < sma20 && prices[prices.length - 2] >= prices[prices.length - 3];
-                
-                if (oversold && trend === 'up') {
+                if (deeplyOversold && trend === 'up' && trendConfirmed && !highVolatility) {
                     direction = 'buy';
-                    strength = 8;
-                    reasons.push('RSI Oversold + Uptrend');
-                    reasons.push('Price below BB Lower');
-                } else if (overbought && trend === 'down') {
-                    direction = 'sell';
-                    strength = 8;
-                    reasons.push('RSI Overbought + Downtrend');
-                    reasons.push('Price above BB Upper');
-                } else if (bullishCross && strongTrend) {
+                    strength = 9;
+                    reasons.push('Deep oversold + Strong uptrend');
+                    reasons.push(`RSI:${rsi.toFixed(0)} | BB width:${bbWidth.toFixed(1)}%`);
+                } else if (oversold && trend === 'up' && strongTrend) {
                     direction = 'buy';
                     strength = 7;
-                    reasons.push('Bullish MA Cross');
-                    reasons.push('Strong trend momentum');
-                } else if (bearishCross && strongTrend) {
+                    reasons.push('Oversold in uptrend');
+                    reasons.push(`RSI:${rsi.toFixed(0)} | Confirmed trend`);
+                } else if (deeplyOverbought && trend === 'down' && trendConfirmed && !highVolatility) {
+                    direction = 'sell';
+                    strength = 9;
+                    reasons.push('Deep overbought + Strong downtrend');
+                    reasons.push(`RSI:${rsi.toFixed(0)} | BB width:${bbWidth.toFixed(1)}%`);
+                } else if (overbought && trend === 'down' && strongTrend) {
                     direction = 'sell';
                     strength = 7;
-                    reasons.push('Bearish MA Cross');
-                    reasons.push('Strong trend momentum');
-                } else if (oversold) {
+                    reasons.push('Overbought in downtrend');
+                    reasons.push(`RSI:${rsi.toFixed(0)} | Confirmed trend`);
+                } else if (deeplyOversold && trend === 'down') {
                     direction = 'buy';
-                    strength = 4;
-                    reasons.push('Oversold (counter-trend)');
-                    reasons.push('Weaker signal - caution');
-                } else if (overbought) {
+                    strength = 3;
+                    reasons.push('⚠ Counter-trend oversold');
+                    reasons.push('Higher risk - wait for confirmation');
+                } else if (deeplyOverbought && trend === 'up') {
                     direction = 'sell';
-                    strength = 4;
-                    reasons.push('Overbought (counter-trend)');
-                    reasons.push('Weaker signal - caution');
+                    strength = 3;
+                    reasons.push('⚠ Counter-trend overbought');
+                    reasons.push('Higher risk - wait for confirmation');
                 } else {
-                    reasons.push('No clear signal');
-                    reasons.push(`RSI: ${rsi.toFixed(0)} | Trend: ${trend}`);
+                    reasons.push('Waiting for setup...');
+                    reasons.push(`RSI:${rsi.toFixed(0)} | Trend:${trend} | BB:${bbWidth.toFixed(1)}%`);
                 }
                 
-                asset.signal = {
-                    direction,
-                    strength,
-                    reason: reasons.join(' | '),
-                    rsi: rsi.toFixed(0),
-                    trend,
-                    atr
-                };
+                // Track signal stability
+                const prevDirection = asset.signal?.direction;
+                if (direction === prevDirection) {
+                    asset.signalAge = (asset.signalAge || 0) + 1;
+                } else {
+                    asset.signalAge = 0;
+                }
+                
+                asset.signal = createSignal(direction, strength, reasons.join(' | '), asset.signalAge);
             });
+        }
+
+        function createSignal(direction, strength, reason, age) {
+            let label = 'waiting';
+            if (direction === 'buy' && strength >= 7) label = 'strong-buy';
+            else if (direction === 'buy') label = 'buy';
+            else if (direction === 'sell' && strength >= 7) label = 'strong-sell';
+            else if (direction === 'sell') label = 'sell';
+            
+            return { direction, strength, reason, label, age };
         }
 
         // ---- Trade Execution ----
         function openTrade(symbol, side) {
             const asset = STATE.assets[symbol];
-            if (asset.position) return; // Already in position
+            if (asset.position) return;
             if (STATE.balance <= 0) return;
             
             const price = asset.price;
-            const atr = asset.signal?.atr || price * 0.008;
+            const atr = asset.price * 0.008;
             const riskAmount = STATE.balance * CONFIG.riskPerTrade;
             
-            // Calculate position size
             const stopDistance = atr * 2;
             const positionSize = (riskAmount * CONFIG.leverage) / (stopDistance / price * price);
-            const notionalValue = positionSize * price / CONFIG.leverage; // Actual margin used
+            const notionalValue = (positionSize * price) / CONFIG.leverage;
             
-            if (notionalValue > STATE.balance * 0.25) return; // Max 25% of balance per trade
+            if (notionalValue > STATE.balance * 0.25) return;
             
-            // Create position
             const position = {
                 id: Date.now(),
                 symbol,
@@ -568,27 +621,25 @@
                 liquidationPrice: side === 'long' ? price * (1 - 1/CONFIG.leverage) : price * (1 + 1/CONFIG.leverage),
                 openTime: new Date(),
                 pnl: 0,
-                pnlPercent: 0
+                pnlPercent: 0,
+                highestPnl: 0
             };
             
             asset.position = position;
             STATE.positions.push(position);
             STATE.todayTrades++;
-            
-            // Deduct margin from available balance (simplified)
             STATE.balance -= notionalValue;
             
             updateUI();
         }
 
-        function closeTrade(symbol) {
+        function closeTrade(symbol, reason = 'Manual') {
             const asset = STATE.assets[symbol];
             if (!asset.position) return;
             
             const position = asset.position;
             const exitPrice = asset.price;
             
-            // Calculate final PnL
             let pnl;
             if (position.side === 'long') {
                 pnl = (exitPrice - position.entryPrice) * position.size;
@@ -596,22 +647,58 @@
                 pnl = (position.entryPrice - exitPrice) * position.size;
             }
             
-            // Return margin + PnL to balance
             STATE.balance += position.notionalValue + pnl;
             STATE.totalPnl += pnl;
             
-            if (pnl > 0) STATE.wins++;
-            else STATE.losses++;
+            if (pnl > 0) {
+                STATE.wins++;
+                if (pnl > STATE.bestTrade) STATE.bestTrade = pnl;
+            } else {
+                STATE.losses++;
+            }
             
-            // Remove position
             asset.position = null;
             STATE.positions = STATE.positions.filter(p => p.id !== position.id);
             
             updateUI();
         }
 
-        // ---- Update Position P&L ----
-        function updatePositionPnL() {
+        // ---- Book Partial Profit (Close 50%) ----
+        function bookPartialProfit(symbol) {
+            const asset = STATE.assets[symbol];
+            if (!asset.position) return;
+            
+            const position = asset.position;
+            const exitPrice = asset.price;
+            
+            let pnl;
+            if (position.side === 'long') {
+                pnl = (exitPrice - position.entryPrice) * (position.size / 2);
+            } else {
+                pnl = (position.entryPrice - exitPrice) * (position.size / 2);
+            }
+            
+            // Return half margin + half PnL
+            STATE.balance += (position.notionalValue / 2) + pnl;
+            STATE.totalPnl += pnl;
+            
+            if (pnl > 0) STATE.wins++;
+            else STATE.losses++;
+            
+            // Halve the position
+            position.size /= 2;
+            position.notionalValue /= 2;
+            
+            // If position too small, close completely
+            if (position.notionalValue < 10) {
+                closeTrade(symbol, 'Partial → Full Close');
+            }
+            
+            updateUI();
+        }
+
+        // ---- Update Position P&L (Every second) ----
+        function updateAllPnL() {
             STATE.positions.forEach(position => {
                 const asset = STATE.assets[position.symbol];
                 const currentPrice = asset.price;
@@ -622,114 +709,134 @@
                     position.pnl = (position.entryPrice - currentPrice) * position.size;
                 }
                 
-                position.pnlPercent = (position.pnl / (position.notionalValue * CONFIG.leverage)) * 100;
+                position.pnlPercent = position.notionalValue > 0 ? 
+                    (position.pnl / (position.notionalValue * CONFIG.leverage)) * 100 : 0;
                 
-                // Auto close: Stop Loss / Take Profit
+                if (position.pnl > position.highestPnl) {
+                    position.highestPnl = position.pnl;
+                }
+                
+                // Auto close on SL/TP
                 let shouldClose = false;
+                let closeReason = '';
                 if (position.side === 'long') {
-                    if (currentPrice <= position.stopLoss) shouldClose = true;
-                    if (currentPrice >= position.takeProfit) shouldClose = true;
+                    if (currentPrice <= position.stopLoss) { shouldClose = true; closeReason = 'Stop Loss'; }
+                    if (currentPrice >= position.takeProfit) { shouldClose = true; closeReason = 'Take Profit'; }
                 } else {
-                    if (currentPrice >= position.stopLoss) shouldClose = true;
-                    if (currentPrice <= position.takeProfit) shouldClose = true;
+                    if (currentPrice >= position.stopLoss) { shouldClose = true; closeReason = 'Stop Loss'; }
+                    if (currentPrice <= position.takeProfit) { shouldClose = true; closeReason = 'Take Profit'; }
                 }
                 
                 if (shouldClose) {
-                    closeTrade(position.symbol);
+                    closeTrade(position.symbol, closeReason);
                 }
             });
         }
 
         // ---- UI Rendering ----
+        function getSignalCardClass(asset) {
+            if (asset.position) {
+                return asset.position.side === 'long' ? 'in-position-long' : 'in-position-short';
+            }
+            if (!asset.signal) return '';
+            switch (asset.signal.label) {
+                case 'strong-buy': return 'signal-strong-buy';
+                case 'buy': return 'signal-buy';
+                case 'strong-sell': return 'signal-strong-sell';
+                case 'sell': return 'signal-sell';
+                default: return '';
+            }
+        }
+
+        function getSignalBadgeHTML(asset) {
+            if (asset.position) {
+                const label = asset.position.side === 'long' ? 'LONG ACTIVE' : 'SHORT ACTIVE';
+                const cls = asset.position.side === 'long' ? 'strong-buy' : 'strong-sell';
+                return `<div class="signal-badge ${cls}">🔵 ${label}</div>`;
+            }
+            if (!asset.signal) return '';
+            
+            const age = asset.signal.age || 0;
+            const stabilityText = age >= 3 ? '✅ Stable signal' : age >= 1 ? '🟡 Forming...' : '🔄 New signal';
+            
+            switch (asset.signal.label) {
+                case 'strong-buy':
+                    return `<div class="signal-badge strong-buy">🟢 STRONG BUY (${asset.signal.strength}/10)</div>
+                            <div class="signal-stability">${stabilityText} (${age}x confirmed)</div>`;
+                case 'buy':
+                    return `<div class="signal-badge buy">🟡 BUY (${asset.signal.strength}/10)</div>
+                            <div class="signal-stability">${stabilityText} (${age}x confirmed)</div>`;
+                case 'strong-sell':
+                    return `<div class="signal-badge strong-sell">🔴 STRONG SELL (${asset.signal.strength}/10)</div>
+                            <div class="signal-stability">${stabilityText} (${age}x confirmed)</div>`;
+                case 'sell':
+                    return `<div class="signal-badge sell">🟠 SELL (${asset.signal.strength}/10)</div>
+                            <div class="signal-stability">${stabilityText} (${age}x confirmed)</div>`;
+                default:
+                    return `<div class="signal-badge waiting">⏳ WAITING</div>`;
+            }
+        }
+
         function renderAssetCards() {
             const grid = document.getElementById('assetsGrid');
             
-            grid.innerHTML = CONFIG.assets.map(asset => {
-                const data = STATE.assets[asset.symbol];
-                const hasPosition = !!data.position;
-                const position = data.position;
+            grid.innerHTML = CONFIG.assets.map(assetCfg => {
+                const asset = STATE.assets[assetCfg.symbol];
+                const pos = asset.position;
+                const cardClass = getSignalCardClass(asset);
+                const signalBadgeHTML = getSignalBadgeHTML(asset);
                 
-                let positionClass = '';
-                if (hasPosition && position.side === 'long') positionClass = 'has-position long';
-                else if (hasPosition && position.side === 'short') positionClass = 'has-position short';
-                
-                // Signal badge
-                let signalBadge = '';
-                if (hasPosition) {
-                    signalBadge = `<div class="signal-badge ${position.side === 'long' ? 'buy' : 'sell'}">
-                        🔵 ${position.side.toUpperCase()} OPEN
-                    </div>`;
-                } else if (data.signal) {
-                    const s = data.signal;
-                    if (s.direction === 'buy' && s.strength >= 6) {
-                        signalBadge = `<div class="signal-badge buy">🟢 STRONG BUY (${s.strength}/10)</div>`;
-                    } else if (s.direction === 'buy') {
-                        signalBadge = `<div class="signal-badge buy">🟡 BUY (${s.strength}/10)</div>`;
-                    } else if (s.direction === 'sell' && s.strength >= 6) {
-                        signalBadge = `<div class="signal-badge sell">🔴 STRONG SELL (${s.strength}/10)</div>`;
-                    } else if (s.direction === 'sell') {
-                        signalBadge = `<div class="signal-badge sell">🟠 SELL (${s.strength}/10)</div>`;
-                    } else {
-                        signalBadge = `<div class="signal-badge wait">⏳ WAIT</div>`;
-                    }
-                }
-                
-                // Position P&L display
-                let positionHTML = '';
-                if (hasPosition) {
-                    const pnlClass = position.pnl >= 0 ? 'profit' : 'loss';
-                    positionHTML = `
-                        <div class="position-info active">
-                            <div class="pnl-display ${pnlClass}">
-                                ${position.pnl >= 0 ? '+' : ''}$${position.pnl.toFixed(2)}
+                // Position P&L section
+                let pnlHTML = '';
+                if (pos) {
+                    const pnlClass = pos.pnl >= 0 ? 'profit' : 'loss';
+                    pnlHTML = `
+                        <div class="pnl-section active">
+                            <div class="pnl-main ${pnlClass}">${pos.pnl >= 0 ? '+' : ''}$${pos.pnl.toFixed(2)}</div>
+                            <div class="pnl-percent ${pnlClass}">(${pos.pnlPercent >= 0 ? '+' : ''}${pos.pnlPercent.toFixed(2)}%)</div>
+                            <div class="position-detail">
+                                <span class="pos-label">Entry</span><span class="pos-value">$${pos.entryPrice.toFixed(2)}</span>
+                                <span class="pos-label">Size</span><span class="pos-value">${pos.size.toFixed(4)}</span>
+                                <span class="pos-label">Margin</span><span class="pos-value">$${pos.notionalValue.toFixed(2)}</span>
+                                <span class="pos-label">SL</span><span class="pos-value red">$${pos.stopLoss.toFixed(2)}</span>
+                                <span class="pos-label">TP</span><span class="pos-value green">$${pos.takeProfit.toFixed(2)}</span>
+                                <span class="pos-label">Liq.</span><span class="pos-value red">$${pos.liquidationPrice.toFixed(2)}</span>
+                                <span class="pos-label">High PnL</span><span class="pos-value gold">$${pos.highestPnl.toFixed(2)}</span>
                             </div>
-                            <div class="pnl-display ${pnlClass}" style="font-size:1rem;">
-                                (${position.pnlPercent >= 0 ? '+' : ''}${position.pnlPercent.toFixed(2)}%)
-                            </div>
-                            <div class="position-row">
-                                <span class="position-label">Entry</span>
-                                <span class="position-value">$${position.entryPrice.toFixed(2)}</span>
-                            </div>
-                            <div class="position-row">
-                                <span class="position-label">Size</span>
-                                <span class="position-value">${position.size.toFixed(4)}</span>
-                            </div>
-                            <div class="position-row">
-                                <span class="position-label">Margin</span>
-                                <span class="position-value">$${position.notionalValue.toFixed(2)}</span>
-                            </div>
-                            <div class="position-row">
-                                <span class="position-label">Stop Loss</span>
-                                <span class="position-value text-red">$${position.stopLoss.toFixed(2)}</span>
-                            </div>
-                            <div class="position-row">
-                                <span class="position-label">Take Profit</span>
-                                <span class="position-value text-green">$${position.takeProfit.toFixed(2)}</span>
-                            </div>
-                            <div class="position-row">
-                                <span class="position-label">Liquidation</span>
-                                <span class="position-value text-red">$${position.liquidationPrice.toFixed(2)}</span>
-                            </div>
-                            <button class="btn close-trade" onclick="closeTrade('${asset.symbol}')">
-                                ⚡ CLOSE POSITION
-                            </button>
                         </div>
                     `;
                 }
                 
                 // Action buttons
-                let actionButtons = '';
-                if (!hasPosition && data.signal) {
-                    const canBuy = data.signal.direction === 'buy';
-                    const canSell = data.signal.direction === 'sell';
-                    actionButtons = `
+                let buttonsHTML = '';
+                if (pos) {
+                    // In position - show close and book profit buttons
+                    const hasProfit = pos.pnl > 0;
+                    buttonsHTML = `
                         <div class="btn-row">
-                            <button class="btn enter-long" onclick="openTrade('${asset.symbol}', 'long')" 
-                                ${!canBuy ? 'disabled' : ''}>
+                            <button class="btn btn-book-profit" onclick="bookPartialProfit('${asset.symbol}')" 
+                                ${!hasProfit ? 'disabled' : ''}>
+                                💰 BOOK 50%
+                            </button>
+                            <button class="btn btn-close-market" onclick="closeTrade('${asset.symbol}', 'Manual Close')">
+                                ⚡ CLOSE ALL
+                            </button>
+                        </div>
+                    `;
+                } else if (asset.signal && asset.signal.direction !== 'wait') {
+                    // No position - show entry buttons
+                    const canLong = asset.signal.direction === 'buy';
+                    const canShort = asset.signal.direction === 'sell';
+                    const minStrength = asset.signal.strength >= 5;
+                    
+                    buttonsHTML = `
+                        <div class="btn-row">
+                            <button class="btn btn-long" onclick="openTrade('${asset.symbol}', 'long')" 
+                                ${(!canLong || !minStrength) ? 'disabled' : ''}>
                                 📈 LONG
                             </button>
-                            <button class="btn enter-short" onclick="openTrade('${asset.symbol}', 'short')" 
-                                ${!canSell ? 'disabled' : ''}>
+                            <button class="btn btn-short" onclick="openTrade('${asset.symbol}', 'short')" 
+                                ${(!canShort || !minStrength) ? 'disabled' : ''}>
                                 📉 SHORT
                             </button>
                         </div>
@@ -737,82 +844,98 @@
                 }
                 
                 return `
-                    <div class="asset-card ${positionClass}">
+                    <div class="asset-card ${cardClass}">
                         <div class="asset-header">
                             <div class="asset-name">${asset.icon} ${asset.name}</div>
-                            <div class="asset-symbol">${asset.symbol}</div>
+                            <div class="asset-symbol">${asset.symbol} ${CONFIG.leverage}x</div>
                         </div>
-                        <div class="asset-price">$${data.price.toFixed(2)}</div>
-                        <div class="asset-change ${data.change >= 0 ? 'up' : 'down'}">
-                            ${data.change >= 0 ? '▲' : '▼'} ${Math.abs(data.change).toFixed(2)}%
+                        <div class="price-display">$${asset.price.toFixed(2)}</div>
+                        <div class="change-display ${asset.change >= 0 ? 'up' : 'down'}">
+                            ${asset.change >= 0 ? '▲' : '▼'} ${Math.abs(asset.change).toFixed(2)}%
                         </div>
-                        ${signalBadge}
-                        ${hasPosition ? '' : `<div style="font-size:0.75rem; color:var(--text-dim); margin-bottom:8px;">${data.signal?.reason || ''}</div>`}
-                        ${positionHTML}
-                        ${actionButtons}
+                        <div class="signal-section">
+                            ${signalBadgeHTML}
+                            <div class="signal-reason">${asset.signal?.reason || 'Initializing...'}</div>
+                        </div>
+                        ${pnlHTML}
+                        ${buttonsHTML}
+                        ${pos ? '<div class="live-indicator"><span class="live-dot"></span>LIVE P&L</div>' : ''}
                     </div>
                 `;
             }).join('');
         }
 
         function updateSummary() {
-            // Total unrealized PnL
             const totalUnrealized = STATE.positions.reduce((sum, p) => sum + p.pnl, 0);
-            const pnlEl = document.getElementById('totalUnrealizedPnl');
-            pnlEl.textContent = (totalUnrealized >= 0 ? '+' : '') + '$' + totalUnrealized.toFixed(2);
-            pnlEl.style.color = totalUnrealized >= 0 ? 'var(--green)' : 'var(--red)';
+            const el = document.getElementById('sumUnrealizedPnl');
+            el.textContent = (totalUnrealized >= 0 ? '+' : '') + '$' + totalUnrealized.toFixed(2);
+            el.style.color = totalUnrealized >= 0 ? 'var(--green)' : 'var(--red)';
             
-            // Total margin used
             const totalMargin = STATE.positions.reduce((sum, p) => sum + p.notionalValue, 0);
-            document.getElementById('totalMargin').textContent = '$' + totalMargin.toFixed(2);
+            document.getElementById('sumMargin').textContent = '$' + totalMargin.toFixed(2);
             
-            // Win rate
-            const totalTrades = STATE.wins + STATE.losses;
-            document.getElementById('winRate').textContent = 
-                totalTrades > 0 ? ((STATE.wins / totalTrades) * 100).toFixed(1) + '%' : '--';
+            const total = STATE.wins + STATE.losses;
+            document.getElementById('sumWinRate').textContent = total > 0 ? 
+                ((STATE.wins / total) * 100).toFixed(1) + '%' : '--';
             
-            // Today's trades
-            document.getElementById('todayTrades').textContent = STATE.todayTrades;
+            document.getElementById('sumTrades').textContent = STATE.todayTrades;
+            document.getElementById('sumBestTrade').textContent = 
+                STATE.bestTrade > 0 ? '+$' + STATE.bestTrade.toFixed(2) : '--';
             
-            // Balance
             document.getElementById('balance').textContent = '$' + STATE.balance.toFixed(2);
             
-            // Total PnL
             const totalPnlEl = document.getElementById('totalPnl');
             totalPnlEl.textContent = (STATE.totalPnl >= 0 ? '+' : '') + '$' + STATE.totalPnl.toFixed(2);
-            totalPnlEl.style.color = STATE.totalPnl >= 0 ? 'var(--green)' : 'var(--red)';
+            totalPnlEl.className = 'account-value ' + (STATE.totalPnl >= 0 ? 'up' : 'down');
             
-            // Open trades count
-            document.getElementById('openTradesCount').textContent = STATE.positions.length;
+            document.getElementById('openTrades').textContent = STATE.positions.length;
         }
 
         function updateUI() {
-            updatePositionPnL();
             renderAssetCards();
             updateSummary();
         }
 
+        // ---- Signal Countdown Timer ----
+        function updateCountdown() {
+            STATE.signalCountdown--;
+            if (STATE.signalCountdown <= 0) {
+                STATE.signalCountdown = CONFIG.signalRefreshSeconds;
+                generateSignals();
+                updateUI();
+            }
+            document.getElementById('signalCountdown').textContent = STATE.signalCountdown;
+        }
+
         // ---- Main Loop ----
-        function mainLoop() {
+        function priceLoop() {
             updatePrices();
-            generateSignals();
-            updatePositionPnL();
+            updateAllPnL();
             updateUI();
         }
 
-        // ---- Start Bot ----
+        // ---- Start ----
         function init() {
-            // Initial price history
+            // Seed price history
             Object.values(STATE.assets).forEach(asset => {
-                for (let i = 0; i < 30; i++) {
-                    const noise = (Math.random() - 0.5) * asset.volatility * asset.price;
-                    asset.priceHistory.push(asset.price + noise * (i - 15));
+                let price = asset.basePrice;
+                for (let i = 0; i < 50; i++) {
+                    price += (Math.random() - 0.5) * asset.volatility * price;
+                    asset.priceHistory.push({ price, time: Date.now() - (50-i) * 60000 });
                 }
+                asset.price = asset.priceHistory[asset.priceHistory.length - 1].price;
             });
             
+            generateSignals();
             updateUI();
-            setInterval(mainLoop, CONFIG.updateInterval);
-            console.log('🚀 Trading bot started - monitoring 4 assets');
+            
+            // Price updates every 1 second
+            setInterval(priceLoop, CONFIG.priceUpdateMs);
+            
+            // Signal countdown every 1 second
+            setInterval(updateCountdown, 1000);
+            
+            console.log('🚀 Bot started - Signals refresh every ' + CONFIG.signalRefreshSeconds + 's');
         }
 
         init();
