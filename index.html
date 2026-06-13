@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <title>FuturesEdge | Pro Paper Trading Terminal</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>FuturesEdge | Persistent Paper Trading Terminal</title>
   <style>
     * {
       margin: 0;
@@ -12,7 +12,7 @@
     }
 
     :root {
-      --bg-dark: #05070c;
+      --bg-dark: #03050a;
       --bg-card: #0c0f17;
       --bg-elevated: #12161f;
       --border-dim: rgba(255,255,255,0.06);
@@ -24,8 +24,8 @@
       --accent-red: #ef4444;
       --accent-amber: #f59e0b;
       --accent-purple: #8b5cf6;
-      --success-bg: rgba(16, 185, 129, 0.08);
-      --danger-bg: rgba(239, 68, 68, 0.08);
+      --success-bg: rgba(16, 185, 129, 0.1);
+      --danger-bg: rgba(239, 68, 68, 0.1);
       --mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', monospace;
       --transition-smooth: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
@@ -40,18 +40,17 @@
       height: 100vh;
     }
 
-    /* smooth scrollbar */
     ::-webkit-scrollbar { width: 4px; height: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #2a2f3f; border-radius: 6px; }
 
-    /* header with glass morph */
+    /* header */
     .app-header {
       position: sticky;
       top: 0;
       z-index: 100;
       backdrop-filter: blur(16px);
-      background: rgba(5, 7, 12, 0.85);
+      background: rgba(3, 5, 10, 0.9);
       border-bottom: 1px solid var(--border-dim);
       height: 60px;
       display: flex;
@@ -135,7 +134,6 @@
       font-size: 14px;
     }
 
-    /* main flex */
     .dashboard {
       display: flex;
       height: calc(100vh - 60px);
@@ -226,7 +224,7 @@
       gap: 20px;
     }
 
-    /* signal card with animations */
+    /* signal card */
     .signal-card {
       background: var(--bg-elevated);
       border-radius: 24px;
@@ -282,7 +280,7 @@
       transition: all 0.15s;
       font-size: 13px;
     }
-    .btn-long { background: linear-gradient(135deg, #10b981, #059669); color: white; box-shadow: 0 2px 8px rgba(16,185,129,0.2);}
+    .btn-long { background: linear-gradient(135deg, #10b981, #059669); color: white; }
     .btn-short { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
     .btn-disabled { opacity: 0.4; cursor: not-allowed; filter: grayscale(0.1); }
     .level-grid {
@@ -320,7 +318,6 @@
       border-bottom: 2px solid var(--accent-blue);
     }
 
-    /* tables */
     .trade-table {
       width: 100%;
       border-collapse: collapse;
@@ -350,11 +347,10 @@
     }
     .close-icon:hover { background: var(--accent-red); border-color: var(--accent-red); color: white; }
 
-    /* modal */
     .modal-bg {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.85);
       backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
@@ -401,6 +397,13 @@
     }
     .up { color: var(--accent-green); }
     .down { color: var(--accent-red); }
+    .persist-badge {
+      font-size: 9px;
+      background: #1e293b;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-left: 8px;
+    }
   </style>
 </head>
 <body>
@@ -410,6 +413,7 @@
     <div class="logo-icon">⚡</div>
     <span class="logo-text">FuturesEdge</span>
     <span class="badge-paper">paper trading</span>
+    <span class="persist-badge">💾 auto-save</span>
   </div>
   <div class="live-indicator">
     <div class="pulse-dot"></div>
@@ -467,7 +471,7 @@
       </table>
     </div>
     <div id="tab-history" class="tab-content" style="display: none;">
-      <table class="trade-table"><thead><th>Closed at</th><th>Pair</th><th>Side</th><th>Entry</th><th>Exit</th><th>PnL</th><th>Reason</th></tr></thead>
+      <table class="trade-table"><thead><tr><th>Closed at</th><th>Pair</th><th>Side</th><th>Entry</th><th>Exit</th><th>PnL</th><th>Reason</th></tr></thead>
       <tbody id="history-body"></tbody></table>
     </div>
     <div id="tab-metrics" class="tab-content" style="display: none;">
@@ -477,6 +481,7 @@
         <div class="level-item"><div>Profit Factor</div><div id="metric-pf" style="font-size: 24px;">--</div></div>
         <div class="level-item"><div>Expectancy</div><div id="metric-exp" style="font-size: 24px;">--</div></div>
       </div>
+      <div style="margin-top: 20px; text-align: center;"><button id="clear-data-btn" style="background: #2a2f3f; border: none; padding: 8px 20px; border-radius: 40px; color: #ef4444; cursor: pointer;">🗑️ Reset All Data (Clear History & Balance)</button></div>
     </div>
   </div>
 </div>
@@ -485,7 +490,7 @@
   <div class="modal-card">
     <h3 id="modal-title">Open LONG</h3>
     <div style="margin: 12px 0;">Amount (USDT): <input type="number" id="modal-amount" value="200" step="10" style="background:#1e2538; border: none; padding: 8px; border-radius: 12px; width: 100%; color: white;"></div>
-    <div>Leverage: <select id="modal-leverage" style="background:#1e2538; border-radius: 8px; padding: 6px;"><option>5</option><option>10</option><option>20</option><option>50</option></select></div>
+    <div>Leverage: <select id="modal-leverage" style="background:#1e2538; border-radius: 8px; padding: 6px; width: 100%;"><option>5</option><option>10</option><option>20</option><option>50</option></select></div>
     <div id="modal-risk-info" style="font-size: 11px; margin: 12px 0; background: #0a0d14; padding: 10px; border-radius: 12px;"></div>
     <button id="modal-confirm" style="width: 100%; padding: 12px; border-radius: 40px; border: none; background: #10b981; font-weight: bold; margin-top: 12px;">Confirm</button>
     <button onclick="closeModal()" style="margin-top: 8px; width: 100%; background: none; border: 1px solid #2a2f3f; border-radius: 40px; padding: 8px;">Cancel</button>
@@ -494,19 +499,47 @@
 <div class="toast-container" id="toast-container"></div>
 
 <script>
-  // ---------- CONFIG ----------
+  // ========== PERSISTENCE (localStorage) ==========
+  const STORAGE_KEYS = {
+    BALANCE: 'futuresedge_balance',
+    OPEN_TRADES: 'futuresedge_open_trades',
+    HISTORY: 'futuresedge_history'
+  };
+
+  let balance = 10000;
+  let openTrades = [];      // each trade: { id, symbol, side, entryPrice, sl, tp, leverage, initialMargin, positionSize, currentPrice, unrealizedPnl, openTime }
+  let closedHistory = [];   // each: { id, symbol, side, entryPrice, exitPrice, realizedPnl, closeReason, closedAt, leverage, initialMargin }
+
+  // Load saved data
+  function loadPersistedData() {
+    const savedBalance = localStorage.getItem(STORAGE_KEYS.BALANCE);
+    if (savedBalance && !isNaN(parseFloat(savedBalance))) balance = parseFloat(savedBalance);
+    const savedTrades = localStorage.getItem(STORAGE_KEYS.OPEN_TRADES);
+    if (savedTrades) {
+      try { openTrades = JSON.parse(savedTrades); } catch(e) { openTrades = []; }
+    }
+    const savedHistory = localStorage.getItem(STORAGE_KEYS.HISTORY);
+    if (savedHistory) {
+      try { closedHistory = JSON.parse(savedHistory); } catch(e) { closedHistory = []; }
+    }
+    // ensure each open trade has currentPrice & unrealizedPnl defaults
+    openTrades = openTrades.map(t => ({ ...t, currentPrice: t.entryPrice, unrealizedPnl: 0 }));
+  }
+
+  function persistAll() {
+    localStorage.setItem(STORAGE_KEYS.BALANCE, balance.toString());
+    localStorage.setItem(STORAGE_KEYS.OPEN_TRADES, JSON.stringify(openTrades));
+    localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(closedHistory));
+  }
+
+  // ========== HELPERS ==========
   const SYMBOLS = ['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT'];
   const TIMEFRAMES = ['1m','5m','15m','1h'];
   let currentTF = '5m';
   let currentPair = 'BTCUSDT';
-  let balance = 10000;
-  let openTrades = [];
-  let closedHistory = [];
-  let pairDataCache = new Map(); // symbol -> { candles, analysis, ticker }
+  let pairDataCache = new Map();
   let countdownInterval = null;
-  let lastCandleClose = 0;
 
-  // Helper formatting
   const formatPrice = (p) => p ? `$${p.toLocaleString(undefined, {minimumFractionDigits: p<1?4:2})}` : '--';
   const toast = (msg, type='info') => {
     const cont = document.getElementById('toast-container');
@@ -518,36 +551,34 @@
     setTimeout(() => t.remove(), 2800);
   };
 
-  // Technical analysis engine (robust signal generation)
+  // Technical analysis engine
   async function analyzePair(symbol, candles, ticker) {
     const closes = candles.map(c => c.close);
-    if(closes.length < 30) return { signal: 'NEUTRAL', score: 50, entry: ticker.price, sl: 0, tp1: 0, riskReward: 0 };
+    if(closes.length < 30) return { signal: 'NEUTRAL', score: 50, entry: ticker.price, sl: 0, tp1: 0, rr: 0, analysisText: 'Insufficient data' };
     const price = ticker.price;
     const ema9 = closes.slice(-9).reduce((a,b)=>a+b,0)/9;
     const ema21 = closes.slice(-21).reduce((a,b)=>a+b,0)/21;
-    const rsiPeriod = 14;
     let gains=0, losses=0;
-    for(let i=closes.length-rsiPeriod; i<closes.length; i++) {
+    for(let i=closes.length-14; i<closes.length; i++) {
       let diff = closes[i] - closes[i-1];
       if(diff>0) gains+=diff; else losses-=diff;
     }
-    let rsi = gains+losses ===0 ? 50 : 100 - (100/(1+(gains/rsiPeriod)/(losses/rsiPeriod)));
+    let rsi = gains+losses===0 ? 50 : 100 - (100/(1+(gains/14)/(losses/14)));
     let macdLine = ema9 - ema21;
-    let signal = macdLine > 0 ? 'bull' : 'bear';
     let volatility = (Math.max(...closes.slice(-14)) - Math.min(...closes.slice(-14))) / price;
     let atr = volatility * price;
     let bullScore = 0, bearScore = 0;
-    if(ema9 > ema21) bullScore+=25; else bearScore+=25;
-    if(rsi < 35) bullScore+=25; else if(rsi > 65) bearScore+=25;
-    if(macdLine > 0) bullScore+=20; else bearScore+=20;
-    if(ticker.change24h > 1.5) bullScore+=15; else if(ticker.change24h < -1.5) bearScore+=15;
+    if(ema9 > ema21) bullScore+=28; else bearScore+=28;
+    if(rsi < 35) bullScore+=28; else if(rsi > 65) bearScore+=28;
+    if(macdLine > 0) bullScore+=22; else bearScore+=22;
+    if(ticker.change24h > 1.2) bullScore+=12; else if(ticker.change24h < -1.2) bearScore+=12;
     let total = bullScore + bearScore;
     let finalScore = total ? (bullScore/total)*100 : 50;
     let signalDir = finalScore >= 65 ? 'LONG' : (finalScore <= 35 ? 'SHORT' : 'NEUTRAL');
     let sl = signalDir === 'LONG' ? price - atr * 1.6 : price + atr * 1.6;
     let tp1 = signalDir === 'LONG' ? price + atr * 2.5 : price - atr * 2.5;
     let rr = Math.abs(tp1-price) / Math.abs(price-sl);
-    return { signal: signalDir, score: Math.round(finalScore), entry: price, sl, tp1, rr, atr, rsi: rsi.toFixed(1), analysisText: `RSI: ${rsi.toFixed(0)} | Trend ${ema9>ema21?'bullish':'bearish'} | MACD ${macdLine>0?'positive':'negative'} | ATR $${atr.toFixed(2)}` };
+    return { signal: signalDir, score: Math.round(finalScore), entry: price, sl, tp1, rr, atr, analysisText: `RSI: ${rsi.toFixed(0)} | EMA ${ema9>ema21?'bullish':'bearish'} | MACD ${macdLine>0?'+':'-'} | ATR $${atr.toFixed(2)}` };
   }
 
   async function fetchKlines(sym) {
@@ -618,21 +649,22 @@
     const canLong = a.signal === 'LONG' && a.score >= 60;
     const canShort = a.signal === 'SHORT' && a.score >= 60;
     document.getElementById('trade-buttons-container').innerHTML = `
-      <button class="btn-long ${!canLong ? 'btn-disabled' : ''}" onclick="openTradeModal('LONG', '${sym}')">▲ LONG ${canLong ? '' : '(signal weak)'}</button>
-      <button class="btn-short ${!canShort ? 'btn-disabled' : ''}" onclick="openTradeModal('SHORT', '${sym}')">▼ SHORT ${canShort ? '' : '(signal weak)'}</button>
+      <button class="btn-long ${!canLong ? 'btn-disabled' : ''}" onclick="openTradeModal('LONG', '${sym}')">▲ LONG ${canLong ? '' : '(weak)'}</button>
+      <button class="btn-short ${!canShort ? 'btn-disabled' : ''}" onclick="openTradeModal('SHORT', '${sym}')">▼ SHORT ${canShort ? '' : '(weak)'}</button>
     `;
   }
 
-  // --- TRADE CLOSING FEATURE (STRONG) ---
+  // ========== TRADE CLOSING + HISTORY SAVE ==========
   async function updateOpenTrades() {
     if(!openTrades.length) return;
     for(let trade of openTrades) {
       const tick = await fetchTicker(trade.symbol);
       const currPrice = tick.price;
+      if(!currPrice) continue;
       trade.currentPrice = currPrice;
       let pnlRaw = trade.side === 'LONG' ? (currPrice - trade.entryPrice) / trade.entryPrice * trade.positionSize : (trade.entryPrice - currPrice) / trade.entryPrice * trade.positionSize;
       trade.unrealizedPnl = pnlRaw;
-      // Strong closing logic: SL / TP hits
+      // SL/TP hit check
       if(trade.side === 'LONG') {
         if(currPrice <= trade.sl) closeTradeById(trade.id, 'Stop Loss');
         else if(currPrice >= trade.tp) closeTradeById(trade.id, 'Take Profit');
@@ -643,21 +675,35 @@
     }
     renderOpenTradesTable();
     updateHeaderAndMetrics();
+    persistAll();
   }
 
-  function closeTradeById(id, reason) {
+  window.closeTradeById = function(id, reason) {
     const idx = openTrades.findIndex(t => t.id === id);
     if(idx === -1) return;
     const trade = openTrades[idx];
     const finalPnl = trade.unrealizedPnl;
     balance += trade.initialMargin + finalPnl;
-    closedHistory.unshift({ ...trade, closedAt: new Date().toLocaleTimeString(), realizedPnl: finalPnl, closeReason: reason });
+    // add to history
+    closedHistory.unshift({
+      id: trade.id,
+      symbol: trade.symbol,
+      side: trade.side,
+      entryPrice: trade.entryPrice,
+      exitPrice: trade.currentPrice,
+      realizedPnl: finalPnl,
+      closeReason: reason,
+      closedAt: new Date().toLocaleString(),
+      leverage: trade.leverage,
+      initialMargin: trade.initialMargin
+    });
     openTrades.splice(idx,1);
     toast(`${trade.symbol} ${trade.side} closed: ${finalPnl>=0 ? `+$${finalPnl.toFixed(2)}` : `-$${Math.abs(finalPnl).toFixed(2)}`} (${reason})`, finalPnl>=0 ? 'win' : 'loss');
     renderOpenTradesTable();
     renderHistoryTable();
     updateHeaderAndMetrics();
-  }
+    persistAll();
+  };
 
   function openTradeModal(side, sym) {
     const data = pairDataCache.get(sym);
@@ -673,7 +719,7 @@
       if(amount > balance) { toast("Insufficient balance", "loss"); return; }
       const positionSize = amount * lev;
       const riskAmount = Math.abs(analysis.entry - analysis.sl) / analysis.entry * positionSize;
-      if(riskAmount > balance * 0.2) { toast("Risk too high >20% of balance", "loss"); return; }
+      if(riskAmount > balance * 0.25) { toast("Risk >25% of balance", "loss"); return; }
       const newTrade = {
         id: Date.now(),
         symbol: sym,
@@ -686,7 +732,7 @@
         positionSize: positionSize,
         currentPrice: analysis.entry,
         unrealizedPnl: 0,
-        openTime: new Date().toLocaleTimeString()
+        openTime: new Date().toLocaleString()
       };
       openTrades.push(newTrade);
       balance -= amount;
@@ -694,6 +740,7 @@
       closeModal();
       renderOpenTradesTable();
       updateHeaderAndMetrics();
+      persistAll();
     };
   }
 
@@ -717,7 +764,10 @@
     const hbody = document.getElementById('history-body');
     if(!closedHistory.length) { hbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">No closed trades</td></tr>'; return; }
     hbody.innerHTML = closedHistory.map(h => `
-      <tr><td>${h.closedAt}</td><td>${h.symbol}</td><td>${h.side}</td><td>${formatPrice(h.entryPrice)}</td><td>${formatPrice(h.currentPrice)}</td><td class="${h.realizedPnl>=0?'up':'down'}">${h.realizedPnl>=0?'+':''}$${h.realizedPnl.toFixed(2)}</td><td>${h.closeReason}</td></tr>
+      <tr><td>${h.closedAt}</td><td>${h.symbol}</td><td class="${h.side==='LONG'?'up':'down'}">${h.side}</td>
+      <td>${formatPrice(h.entryPrice)}</td><td>${formatPrice(h.exitPrice)}</td>
+      <td class="${h.realizedPnl>=0?'up':'down'}">${h.realizedPnl>=0?'+':''}$${h.realizedPnl.toFixed(2)}</td>
+      <td>${h.closeReason}</td></tr>
     `).join('');
   }
 
@@ -738,7 +788,20 @@
     document.getElementById('metric-exp').innerHTML = `$${avgProfit}`;
   }
 
-  // Countdown management (next candle)
+  // Reset all data
+  document.getElementById('clear-data-btn')?.addEventListener('click', () => {
+    if(confirm('⚠️ Reset all trading data? Balance will return to $10,000, all open & history cleared.')) {
+      balance = 10000;
+      openTrades = [];
+      closedHistory = [];
+      persistAll();
+      renderOpenTradesTable();
+      renderHistoryTable();
+      updateHeaderAndMetrics();
+      toast('All data reset (balance restored)','info');
+    }
+  });
+
   function startCountdown() {
     if(countdownInterval) clearInterval(countdownInterval);
     countdownInterval = setInterval(() => {
@@ -756,22 +819,14 @@
     }, 200);
   }
 
-  function selectPair(pair) {
-    currentPair = pair;
-    renderPairSidebar();
-    if(pairDataCache.has(pair)) renderSignalCard(pair);
-    else scanAllPairs().then(()=>renderSignalCard(pair));
-  }
-
   function initTimeframeButtons() {
     const cont = document.getElementById('tf-container');
     cont.innerHTML = TIMEFRAMES.map(tf => `<button class="tf-btn ${tf===currentTF?'active':''}" onclick="changeTF('${tf}')">${tf}</button>`).join('');
   }
   window.changeTF = (tf) => { currentTF = tf; initTimeframeButtons(); scanAllPairs(); startCountdown(); };
-  window.selectPair = selectPair;
+  window.selectPair = (pair) => { currentPair = pair; renderPairSidebar(); if(pairDataCache.has(pair)) renderSignalCard(pair); else scanAllPairs().then(()=>renderSignalCard(pair)); };
   window.openTradeModal = openTradeModal;
   window.closeModal = closeModal;
-  window.closeTradeById = closeTradeById;
 
   // Tab switching
   document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -787,10 +842,14 @@
   });
 
   async function bootstrap() {
+    loadPersistedData();
     initTimeframeButtons();
     startCountdown();
     await scanAllPairs();
-    setInterval(async () => { await updateOpenTrades(); scanAllPairs(); }, 4500);
+    renderOpenTradesTable();
+    renderHistoryTable();
+    updateHeaderAndMetrics();
+    setInterval(async () => { await updateOpenTrades(); scanAllPairs(); }, 5000);
     setInterval(() => { renderPairSidebar(); if(currentPair) renderSignalCard(currentPair); }, 8000);
   }
   bootstrap();
