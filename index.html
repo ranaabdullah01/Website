@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>FuturesEdge | Real-Time Paper Trading Terminal</title>
+  <title>FuturesEdge | 50+ Assets Paper Trading Terminal</title>
   <style>
     * {
       margin: 0;
@@ -66,6 +66,7 @@
       align-items: center;
       gap: 8px;
       flex-shrink: 0;
+      flex-wrap: wrap;
     }
     .logo-icon {
       width: 28px;
@@ -82,11 +83,15 @@
       font-weight: 700;
       font-size: 14px;
     }
-    .badge-paper, .persist-badge {
+    .badge-paper, .persist-badge, .asset-count {
       font-size: 8px;
       padding: 2px 6px;
       border-radius: 12px;
       background: rgba(255,255,255,0.08);
+    }
+    .asset-count {
+      background: var(--accent-blue);
+      color: white;
     }
 
     .live-indicator {
@@ -148,7 +153,7 @@
       border-bottom: 1px solid var(--border-dim);
       display: flex;
       flex-direction: column;
-      max-height: 280px;
+      max-height: 380px;
       overflow-y: auto;
     }
 
@@ -187,39 +192,66 @@
       border: 1px solid var(--border-dim);
     }
 
+    /* Search Bar */
+    .search-container {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-dim);
+    }
+    .search-input {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-dim);
+      border-radius: 24px;
+      padding: 10px 16px;
+      color: var(--text-primary);
+      font-size: 12px;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .search-input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+    }
+    .search-input::placeholder {
+      color: var(--text-secondary);
+    }
+
     .pair-list {
       display: flex;
-      overflow-x: auto;
+      flex-wrap: wrap;
       gap: 8px;
       padding: 12px;
-      scrollbar-width: thin;
+      max-height: 240px;
+      overflow-y: auto;
     }
     .pair-row {
       flex: 0 0 auto;
-      min-width: 110px;
+      min-width: 100px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 6px;
-      padding: 10px;
+      padding: 8px;
       background: var(--bg-elevated);
-      border-radius: 14px;
+      border-radius: 12px;
       cursor: pointer;
       transition: all 0.12s;
       border: 1px solid var(--border-dim);
     }
+    .pair-row:hover { transform: translateY(-2px); border-color: var(--accent-blue); }
     .pair-row.active {
       border-color: var(--accent-blue);
-      background: rgba(59,130,246,0.1);
+      background: rgba(59,130,246,0.15);
+      box-shadow: 0 0 8px rgba(59,130,246,0.3);
     }
     .pair-info {
       text-align: center;
     }
-    .pair-symbol { font-weight: 600; font-size: 13px; }
-    .pair-price { font-size: 10px; font-family: var(--mono); color: var(--text-secondary); }
+    .pair-symbol { font-weight: 600; font-size: 12px; }
+    .pair-price { font-size: 9px; font-family: var(--mono); color: var(--text-secondary); }
     .signal-badge {
-      font-size: 9px;
-      padding: 3px 10px;
+      font-size: 8px;
+      padding: 2px 8px;
       border-radius: 20px;
       font-weight: 600;
     }
@@ -499,6 +531,15 @@
       margin-top: 16px;
     }
     .accent-blue { color: #3b82f6; font-weight: 700; }
+    
+    /* No results message */
+    .no-results {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-secondary);
+      font-size: 12px;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -508,6 +549,7 @@
     <div class="logo-icon">⚡</div>
     <span class="logo-text">FuturesEdge</span>
     <span class="badge-paper">paper</span>
+    <span class="asset-count" id="asset-count">52 assets</span>
     <span class="persist-badge">💾 auto-save</span>
   </div>
   <div class="live-indicator">
@@ -531,6 +573,12 @@
       <div style="font-family: monospace; font-weight: bold; font-size: 20px;" id="countdown-display">--</div>
       <div style="height: 3px; background: #1e2432; margin-top: 6px;"><div id="progress-fill" style="width: 0%; height: 100%; background: linear-gradient(90deg, #3b82f6, #8b5cf6); transition: width 0.3s linear;"></div></div>
     </div>
+    
+    <!-- SEARCH BAR -->
+    <div class="search-container">
+      <input type="text" class="search-input" id="search-input" placeholder="🔍 Search crypto... (BTC, ETH, SOL, etc.)" autocomplete="off">
+    </div>
+    
     <div class="pair-list" id="pair-list-container"></div>
   </div>
 
@@ -608,18 +656,39 @@
 <div class="toast-container" id="toast-container"></div>
 
 <script>
-  // ========== PERSISTENCE ==========
-  const STORAGE_KEYS = { BALANCE: 'futuresedge_balance', OPEN_TRADES: 'futuresedge_open_trades', HISTORY: 'futuresedge_history' };
+  // ========== 50+ CRYPTOCURRENCY ASSETS ==========
+  // Top 50+ cryptocurrencies by market cap (Binance Futures supported)
+  const SYMBOLS = [
+    // Major Coins
+    'BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'SOLUSDT', 'XRPUSDT', 'DOGEUSDT', 'ADAUSDT', 
+    'AVAXUSDT', 'DOTUSDT', 'LINKUSDT', 'MATICUSDT', 'UNIUSDT', 'ATOMUSDT', 'LTCUSDT',
+    'NEARUSDT', 'ALGOUSDT', 'VETUSDT', 'ICPUSDT', 'FILUSDT', 'EGLDUSDT', 'AAVEUSDT',
+    'XTZUSDT', 'THETAUSDT', 'EOSUSDT', 'KSMUSDT', 'ZECUSDT', 'XLMUSDT', 'TRXUSDT',
+    // DeFi & Layer 2
+    'ARBUSDT', 'OPUSDT', 'IMXUSDT', 'MKRUSDT', 'CRVUSDT', 'SUSHIUSDT', 'COMPUSDT',
+    '1INCHUSDT', 'SNXUSDT', 'RUNEUSDT', 'FLOWUSDT', 'STXUSDT', 'SANDUSDT', 'MANAUSDT',
+    // Gaming & Metaverse
+    'GALAUSDT', 'AXSUSDT', 'ENJUSDT', 'ILVUSDT', 'YGGUSDT', 'APEUSDT', 'MAGICUSDT',
+    // Memes & Community
+    'SHIBUSDT', 'PEPEUSDT', 'FLOKIUSDT', 'BONKUSDT', 'WIFUSDT',
+    // Infrastructure
+    'INJUSDT', 'TIAUSDT', 'SEIUSDT', 'SUIUSDT', 'APTUSDT', 'ARUSDT', 'RNDRUSDT',
+    'FETUSDT', 'AGIXUSDT', 'OCEANUSDT'
+  ];
+  
+  const TIMEFRAMES = ['1m','5m','15m','1h'];
+  
+  let currentTF = '5m';
+  let currentPair = 'BTCUSDT';
   let balance = 10000;
   let openTrades = [];
   let closedHistory = [];
   let pairDataCache = new Map();
-  let currentTF = '5m';
-  let currentPair = 'BTCUSDT';
   let countdownInterval = null;
+  let searchQuery = '';
 
-  const SYMBOLS = ['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','DOGEUSDT','ADAUSDT','AVAXUSDT'];
-  const TIMEFRAMES = ['1m','5m','15m','1h'];
+  // ========== PERSISTENCE ==========
+  const STORAGE_KEYS = { BALANCE: 'futuresedge_balance', OPEN_TRADES: 'futuresedge_open_trades', HISTORY: 'futuresedge_history' };
 
   function loadPersistedData() {
     const savedBalance = localStorage.getItem(STORAGE_KEYS.BALANCE);
@@ -650,36 +719,25 @@
     setTimeout(() => t.remove(), 2500);
   };
 
-  // ========== REAL-TIME PRICE FETCHING (ACCURATE BINANCE PRICES) ==========
+  // ========== REAL-TIME PRICE FETCHING ==========
   async function fetchRealtimePrice(sym) {
     try {
-      // Binance Futures real-time price endpoint - MOST ACCURATE
       const res = await fetch(`https://fapi.binance.com/fapi/v1/ticker/price?symbol=${sym}`);
       const data = await res.json();
       return parseFloat(data.price);
-    } catch(e) {
-      return null;
-    }
+    } catch(e) { return null; }
   }
 
   async function fetchTicker(sym) {
     try {
-      // Get BOTH real-time price and 24hr change from different endpoints
       const [priceRes, changeRes] = await Promise.all([
         fetch(`https://fapi.binance.com/fapi/v1/ticker/price?symbol=${sym}`),
         fetch(`https://fapi.binance.com/fapi/v1/ticker/24hr?symbol=${sym}`)
       ]);
-      
       const priceData = await priceRes.json();
       const changeData = await changeRes.json();
-      
-      return { 
-        price: parseFloat(priceData.price),  // REAL-TIME price - exact match with Binance!
-        change24h: parseFloat(changeData.priceChangePercent || 0)
-      };
-    } catch(e) { 
-      return { price: 0, change24h: 0 }; 
-    }
+      return { price: parseFloat(priceData.price), change24h: parseFloat(changeData.priceChangePercent || 0) };
+    } catch(e) { return { price: 0, change24h: 0 }; }
   }
 
   async function fetchKlines(sym) {
@@ -694,7 +752,7 @@
   async function analyzePair(symbol, candles, ticker) {
     const closes = candles.map(c => c.close);
     if(closes.length < 30) return { signal: 'NEUTRAL', score: 50, entry: ticker.price, sl: 0, tp1: 0, rr: 0, atr: 0 };
-    const price = ticker.price; // Uses REAL-TIME price from dedicated endpoint
+    const price = ticker.price;
     const ema9 = closes.slice(-9).reduce((a,b)=>a+b,0)/9;
     const ema21 = closes.slice(-21).reduce((a,b)=>a+b,0)/21;
     let gains=0, losses=0;
@@ -721,7 +779,8 @@
   }
 
   async function scanAllPairs() {
-    for(let sym of SYMBOLS) {
+    const symbolsToScan = SYMBOLS;
+    for(let sym of symbolsToScan) {
       const [candles, ticker] = await Promise.all([fetchKlines(sym), fetchTicker(sym)]);
       if(candles.length && ticker.price) {
         const analysis = await analyzePair(sym, candles, ticker);
@@ -730,17 +789,29 @@
     }
     renderPairSidebar();
     if(currentPair && pairDataCache.has(currentPair)) renderSignalCard(currentPair);
+    document.getElementById('asset-count').innerHTML = `${SYMBOLS.length} assets`;
   }
 
   function renderPairSidebar() {
     const container = document.getElementById('pair-list-container');
-    container.innerHTML = SYMBOLS.map(sym => {
+    const filteredSymbols = SYMBOLS.filter(sym => 
+      sym.toLowerCase().replace('usdt', '').includes(searchQuery.toLowerCase()) ||
+      sym.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    
+    if(filteredSymbols.length === 0) {
+      container.innerHTML = '<div class="no-results">🔍 No matching assets found</div>';
+      return;
+    }
+    
+    container.innerHTML = filteredSymbols.map(sym => {
       const data = pairDataCache.get(sym);
       const sig = data?.analysis.signal || 'NEUTRAL';
       const score = data?.analysis.score || 0;
       const price = data?.ticker.price;
+      const displayName = sym.replace('USDT', '');
       return `<div class="pair-row ${currentPair === sym ? 'active' : ''}" onclick="selectPair('${sym}')">
-        <div class="pair-info"><div class="pair-symbol">${sym.replace('USDT','')}</div><div class="pair-price">${price ? formatShort(price) : '--'}</div></div>
+        <div class="pair-info"><div class="pair-symbol">${displayName}</div><div class="pair-price">${price ? formatShort(price) : '--'}</div></div>
         <span class="signal-badge ${sig === 'LONG' ? 'sig-long' : (sig === 'SHORT' ? 'sig-short' : '')}">${sig} ${score}</span>
       </div>`;
     }).join('');
@@ -775,23 +846,18 @@
     `;
   }
 
-  // ========== TRADE MANAGEMENT WITH REAL-TIME PRICES ==========
   async function updateOpenTrades() {
     if(!openTrades.length) return;
     for(let trade of openTrades) {
-      // Use REAL-TIME price endpoint for current price
       const realPrice = await fetchRealtimePrice(trade.symbol);
       if(!realPrice) continue;
-      
-      const currPrice = realPrice; // Now matches Binance exactly!
+      const currPrice = realPrice;
       trade.currentPrice = currPrice;
-      
       let pnlRaw = trade.side === 'LONG' 
         ? (currPrice - trade.entryPrice) / trade.entryPrice * trade.positionSize 
         : (trade.entryPrice - currPrice) / trade.entryPrice * trade.positionSize;
       trade.unrealizedPnl = pnlRaw;
       
-      // SL/TP hit check using REAL-TIME prices
       if(trade.side === 'LONG') {
         if(currPrice <= trade.sl) closeTradeById(trade.id, 'Stop Loss');
         else if(currPrice >= trade.tp) closeTradeById(trade.id, 'Take Profit');
@@ -834,7 +900,6 @@
     const modal = document.getElementById('trade-modal');
     modal.classList.add('open');
     
-    // Update risk info
     const updateRisk = () => {
       const amount = parseFloat(document.getElementById('modal-amount').value) || 200;
       const lev = parseFloat(document.getElementById('modal-leverage').value);
@@ -941,6 +1006,12 @@
     }
   });
 
+  // Search functionality
+  document.getElementById('search-input')?.addEventListener('input', (e) => {
+    searchQuery = e.target.value;
+    renderPairSidebar();
+  });
+
   function startCountdown() {
     if(countdownInterval) clearInterval(countdownInterval);
     countdownInterval = setInterval(() => {
@@ -988,13 +1059,12 @@
     renderHistoryTable();
     updateHeaderAndMetrics();
     updateOpenCount();
-    // Update real-time prices every 2 seconds
     setInterval(async () => { await updateOpenTrades(); }, 2000);
     setInterval(async () => { 
       await scanAllPairs();
       renderPairSidebar(); 
       if(currentPair && pairDataCache.has(currentPair)) renderSignalCard(currentPair); 
-    }, 8000);
+    }, 10000);
   }
   bootstrap();
 </script>
