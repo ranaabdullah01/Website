@@ -2,20 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>FuturesEdge | Persistent Paper Trading Terminal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>FuturesEdge | Mobile Trading Terminal</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
     }
 
     :root {
       --bg-dark: #03050a;
       --bg-card: #0c0f17;
       --bg-elevated: #12161f;
-      --border-dim: rgba(255,255,255,0.06);
+      --border-dim: rgba(255,255,255,0.08);
       --border-glow: rgba(64, 128, 255, 0.3);
       --text-primary: #eef2ff;
       --text-secondary: #8b92b0;
@@ -24,8 +25,8 @@
       --accent-red: #ef4444;
       --accent-amber: #f59e0b;
       --accent-purple: #8b5cf6;
-      --success-bg: rgba(16, 185, 129, 0.1);
-      --danger-bg: rgba(239, 68, 68, 0.1);
+      --success-bg: rgba(16, 185, 129, 0.15);
+      --danger-bg: rgba(239, 68, 68, 0.15);
       --mono: 'SF Mono', 'JetBrains Mono', 'Fira Code', monospace;
       --transition-smooth: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
@@ -33,76 +34,74 @@
     body {
       background: var(--bg-dark);
       color: var(--text-primary);
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
       font-size: 13px;
       line-height: 1.5;
       overflow-x: hidden;
-      height: 100vh;
+      min-height: 100vh;
     }
 
-    ::-webkit-scrollbar { width: 4px; height: 4px; }
+    ::-webkit-scrollbar { width: 3px; height: 3px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #2a2f3f; border-radius: 6px; }
 
-    /* header */
+    /* Mobile-first header */
     .app-header {
       position: sticky;
       top: 0;
       z-index: 100;
       backdrop-filter: blur(16px);
-      background: rgba(3, 5, 10, 0.9);
+      background: rgba(3, 5, 10, 0.95);
       border-bottom: 1px solid var(--border-dim);
-      height: 60px;
+      padding: 12px 16px;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
-      padding: 0 24px;
-      gap: 20px;
+      justify-content: space-between;
+      gap: 10px;
     }
 
     .logo-area {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      flex-shrink: 0;
     }
     .logo-icon {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
       background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-      border-radius: 10px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 18px;
-      box-shadow: 0 0 12px rgba(59,130,246,0.4);
+      font-size: 14px;
     }
     .logo-text {
       font-weight: 700;
-      font-size: 16px;
-      letter-spacing: -0.3px;
+      font-size: 14px;
     }
-    .badge-paper {
-      background: rgba(255,255,255,0.05);
-      padding: 2px 8px;
-      border-radius: 20px;
-      font-size: 9px;
-      font-weight: 500;
-      color: var(--text-secondary);
+    .badge-paper, .persist-badge {
+      font-size: 8px;
+      padding: 2px 6px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
     }
 
     .live-indicator {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 11px;
+      gap: 5px;
+      font-size: 10px;
       background: var(--bg-elevated);
-      padding: 4px 12px;
-      border-radius: 40px;
+      padding: 4px 10px;
+      border-radius: 20px;
       border: 1px solid var(--border-dim);
     }
     .pulse-dot {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       background: var(--accent-green);
       border-radius: 50%;
       animation: pulse 1.8s infinite;
@@ -110,12 +109,11 @@
     @keyframes pulse { 0% { opacity: 0.4; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
 
     .header-stats {
-      margin-left: auto;
       display: flex;
-      gap: 18px;
+      gap: 12px;
       background: var(--bg-card);
-      padding: 6px 18px;
-      border-radius: 40px;
+      padding: 4px 12px;
+      border-radius: 20px;
       border: 1px solid var(--border-dim);
     }
     .stat-chip {
@@ -124,34 +122,38 @@
       align-items: flex-end;
     }
     .chip-label {
-      font-size: 9px;
+      font-size: 8px;
       color: var(--text-secondary);
       text-transform: uppercase;
     }
     .chip-value {
       font-family: var(--mono);
       font-weight: 700;
-      font-size: 14px;
+      font-size: 12px;
     }
 
+    /* Mobile dashboard - column layout */
     .dashboard {
       display: flex;
-      height: calc(100vh - 60px);
+      flex-direction: column;
+      height: auto;
+      min-height: calc(100vh - 70px);
     }
 
-    /* sidebar */
+    /* Sidebar becomes top section on mobile */
     .side-panel {
-      width: 270px;
+      width: 100%;
       background: var(--bg-card);
-      border-right: 1px solid var(--border-dim);
+      border-right: none;
+      border-bottom: 1px solid var(--border-dim);
       display: flex;
       flex-direction: column;
+      max-height: 280px;
       overflow-y: auto;
-      flex-shrink: 0;
     }
 
     .tf-selector {
-      padding: 16px;
+      padding: 12px;
       border-bottom: 1px solid var(--border-dim);
     }
     .tf-buttons {
@@ -163,7 +165,7 @@
     .tf-btn {
       background: transparent;
       border: 1px solid var(--border-dim);
-      padding: 4px 12px;
+      padding: 6px 14px;
       border-radius: 24px;
       font-size: 11px;
       font-weight: 500;
@@ -175,86 +177,94 @@
       background: var(--accent-blue);
       border-color: var(--accent-blue);
       color: white;
-      box-shadow: 0 2px 6px rgba(59,130,246,0.3);
     }
 
     .countdown-card {
-      padding: 12px 16px;
+      padding: 10px 12px;
       background: var(--bg-elevated);
       margin: 8px;
-      border-radius: 16px;
+      border-radius: 14px;
       border: 1px solid var(--border-dim);
     }
 
     .pair-list {
-      flex: 1;
-      overflow-y: auto;
-      margin-top: 8px;
+      display: flex;
+      overflow-x: auto;
+      gap: 8px;
+      padding: 12px;
+      scrollbar-width: thin;
     }
     .pair-row {
+      flex: 0 0 auto;
+      min-width: 110px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 10px;
-      padding: 12px 16px;
+      gap: 6px;
+      padding: 10px;
+      background: var(--bg-elevated);
+      border-radius: 14px;
       cursor: pointer;
       transition: all 0.12s;
-      border-left: 3px solid transparent;
+      border: 1px solid var(--border-dim);
     }
-    .pair-row:hover { background: rgba(255,255,255,0.02); }
-    .pair-row.active { background: rgba(59,130,246,0.08); border-left-color: var(--accent-blue); }
-    .pair-info { flex: 1; }
+    .pair-row.active {
+      border-color: var(--accent-blue);
+      background: rgba(59,130,246,0.1);
+    }
+    .pair-info {
+      text-align: center;
+    }
     .pair-symbol { font-weight: 600; font-size: 13px; }
-    .pair-price { font-size: 11px; font-family: var(--mono); color: var(--text-secondary); }
+    .pair-price { font-size: 10px; font-family: var(--mono); color: var(--text-secondary); }
     .signal-badge {
-      font-size: 10px;
-      padding: 2px 8px;
+      font-size: 9px;
+      padding: 3px 10px;
       border-radius: 20px;
       font-weight: 600;
     }
     .sig-long { background: var(--success-bg); color: var(--accent-green); }
     .sig-short { background: var(--danger-bg); color: var(--accent-red); }
 
-    /* main content */
+    /* Main area */
     .main-area {
       flex: 1;
-      overflow-y: auto;
-      padding: 20px 24px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
-    /* signal card */
+    /* Signal card - mobile optimized */
     .signal-card {
       background: var(--bg-elevated);
-      border-radius: 24px;
+      border-radius: 20px;
       border: 1px solid var(--border-dim);
-      transition: var(--transition-smooth);
       overflow: hidden;
-      animation: fadeSlideUp 0.35s ease-out;
-    }
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
     }
     .signal-header {
-      padding: 20px 24px 12px;
+      padding: 16px;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      gap: 12px;
       border-bottom: 1px solid var(--border-dim);
+    }
+    @media (min-width: 600px) {
+      .signal-header { flex-direction: row; justify-content: space-between; align-items: center; }
     }
     .signal-strength {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 16px;
+      justify-content: space-between;
     }
     .score-ring {
       position: relative;
-      width: 64px;
-      height: 64px;
+      width: 56px;
+      height: 56px;
+      flex-shrink: 0;
     }
-    .score-ring svg { transform: rotate(-90deg); }
+    .score-ring svg { width: 56px; height: 56px; transform: rotate(-90deg); }
     .score-text {
       position: absolute;
       inset: 0;
@@ -262,110 +272,151 @@
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 18px;
+      font-size: 16px;
       font-family: var(--mono);
     }
     .trade-buttons {
       display: flex;
-      gap: 12px;
-      margin-top: 16px;
+      gap: 10px;
+      margin-top: 14px;
     }
     .btn-long, .btn-short {
       flex: 1;
-      padding: 10px;
+      padding: 12px;
       border-radius: 40px;
       font-weight: 700;
       border: none;
       cursor: pointer;
-      transition: all 0.15s;
       font-size: 13px;
     }
     .btn-long { background: linear-gradient(135deg, #10b981, #059669); color: white; }
     .btn-short { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; }
-    .btn-disabled { opacity: 0.4; cursor: not-allowed; filter: grayscale(0.1); }
+    .btn-disabled { opacity: 0.4; cursor: not-allowed; }
+    
     .level-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 16px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+      padding: 0 16px;
+    }
+    @media (min-width: 500px) {
+      .level-grid { grid-template-columns: repeat(3, 1fr); }
     }
     .level-item {
       background: rgba(0,0,0,0.3);
-      border-radius: 16px;
+      border-radius: 14px;
       padding: 10px;
       text-align: center;
     }
 
+    /* Tabs - mobile friendly */
     .tabs {
       display: flex;
       gap: 4px;
       border-bottom: 1px solid var(--border-dim);
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+      overflow-x: auto;
     }
     .tab-btn {
       background: none;
       border: none;
-      padding: 8px 20px;
+      padding: 10px 16px;
       color: var(--text-secondary);
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.1s;
-      border-radius: 12px 12px 0 0;
+      white-space: nowrap;
+      font-size: 12px;
     }
     .tab-btn.active {
       color: var(--accent-blue);
-      background: var(--bg-card);
       border-bottom: 2px solid var(--accent-blue);
     }
 
+    /* Tables - horizontal scroll on mobile */
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
     .trade-table {
       width: 100%;
+      min-width: 700px;
       border-collapse: collapse;
       background: var(--bg-elevated);
-      border-radius: 20px;
+      border-radius: 16px;
       overflow: hidden;
     }
     th {
       text-align: left;
-      padding: 14px 12px;
+      padding: 12px 8px;
       background: rgba(0,0,0,0.3);
-      font-size: 10px;
+      font-size: 9px;
       color: var(--text-secondary);
     }
     td {
-      padding: 12px;
+      padding: 10px 8px;
       border-bottom: 1px solid var(--border-dim);
-      font-size: 12px;
+      font-size: 11px;
     }
     
-    /* ===== HIGHLY VISIBLE CLOSE BUTTON ===== */
+    /* HIGHLY VISIBLE BUTTONS */
     .close-btn {
-      background: linear-gradient(135deg, #ef4444, #dc2626);
+      background: linear-gradient(135deg, #ef4444, #b91c1c);
       border: none;
       border-radius: 8px;
-      padding: 6px 16px;
-      font-size: 12px;
+      padding: 8px 14px;
+      font-size: 11px;
       font-weight: 700;
       color: white;
       cursor: pointer;
       transition: all 0.2s ease;
-      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
-      letter-spacing: 0.3px;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+      white-space: nowrap;
     }
-    .close-btn:hover {
-      background: linear-gradient(135deg, #dc2626, #b91c1c);
-      transform: scale(1.02);
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
-    }
-    .close-btn:active {
+    .close-btn:hover, .close-btn:active {
+      background: linear-gradient(135deg, #dc2626, #991b1b);
       transform: scale(0.98);
     }
-    /* ======================================= */
-
+    
+    /* Cancel button in modal - highly visible */
+    .cancel-btn {
+      background: linear-gradient(135deg, #6b7280, #4b5563);
+      border: none;
+      border-radius: 40px;
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 8px;
+      transition: all 0.2s;
+    }
+    .cancel-btn:active { transform: scale(0.98); }
+    
+    /* Leverage selector - visible numbers */
+    #modal-leverage {
+      background: #1e2538;
+      border: 1px solid var(--accent-blue);
+      border-radius: 12px;
+      padding: 10px;
+      width: 100%;
+      color: var(--accent-green);
+      font-weight: 700;
+      font-size: 14px;
+      font-family: var(--mono);
+    }
+    #modal-leverage option {
+      background: #0c0f17;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    
+    /* Modal */
     .modal-bg {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0,0,0,0.9);
       backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
@@ -374,50 +425,70 @@
       opacity: 0;
       visibility: hidden;
       transition: 0.2s;
+      padding: 16px;
     }
     .modal-bg.open { opacity: 1; visibility: visible; }
     .modal-card {
       background: var(--bg-card);
-      border-radius: 32px;
-      width: 380px;
-      padding: 24px;
-      transform: scale(0.96);
-      transition: transform 0.2s;
+      border-radius: 28px;
+      width: 100%;
+      max-width: 380px;
+      padding: 20px;
       border: 1px solid var(--border-glow);
     }
-    .modal-bg.open .modal-card { transform: scale(1); }
-
+    
+    /* Toast */
     .toast-container {
       position: fixed;
-      bottom: 24px;
-      right: 24px;
+      bottom: 20px;
+      left: 16px;
+      right: 16px;
       z-index: 1100;
       display: flex;
       flex-direction: column;
       gap: 8px;
+      pointer-events: none;
     }
     .toast {
       background: #1e1f2c;
       border-radius: 40px;
-      padding: 10px 18px;
+      padding: 12px 18px;
       font-size: 12px;
       font-weight: 500;
-      animation: slideInRight 0.2s ease;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+      text-align: center;
       border-left: 3px solid;
-    }
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(30px); }
-      to { opacity: 1; transform: translateX(0); }
+      pointer-events: auto;
     }
     .up { color: var(--accent-green); }
     .down { color: var(--accent-red); }
-    .persist-badge {
-      font-size: 9px;
-      background: #1e293b;
-      padding: 2px 8px;
-      border-radius: 12px;
-      margin-left: 8px;
+    
+    /* Utility */
+    #signal-details { padding: 0 16px 20px 16px; }
+    #signal-analysis {
+      font-size: 11px;
+      background: #0a0d14;
+      padding: 12px;
+      border-radius: 16px;
+      margin-bottom: 14px;
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    @media (min-width: 600px) {
+      .metrics-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .reset-btn {
+      background: #2a2f3f;
+      border: 1px solid var(--accent-red);
+      padding: 10px 20px;
+      border-radius: 40px;
+      color: var(--accent-red);
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 16px;
     }
   </style>
 </head>
@@ -427,100 +498,108 @@
   <div class="logo-area">
     <div class="logo-icon">⚡</div>
     <span class="logo-text">FuturesEdge</span>
-    <span class="badge-paper">paper trading</span>
-    <span class="persist-badge">💾 auto-save</span>
+    <span class="badge-paper">paper</span>
   </div>
   <div class="live-indicator">
     <div class="pulse-dot"></div>
-    <span>LIVE DATA</span>
+    <span>LIVE</span>
   </div>
   <div class="header-stats">
-    <div class="stat-chip"><span class="chip-label">Balance</span><span class="chip-value" id="header-balance">$10,000</span></div>
-    <div class="stat-chip"><span class="chip-label">Unrealized PnL</span><span class="chip-value" id="header-upnl">$0</span></div>
+    <div class="stat-chip"><span class="chip-label">Balance</span><span class="chip-value" id="header-balance">$10k</span></div>
+    <div class="stat-chip"><span class="chip-label">PnL</span><span class="chip-value" id="header-upnl">$0</span></div>
   </div>
 </div>
 
 <div class="dashboard">
   <div class="side-panel">
     <div class="tf-selector">
-      <div style="font-size: 11px; color: var(--text-secondary);">TIMEFRAME</div>
+      <div style="font-size: 10px; color: var(--text-secondary);">TIMEFRAME</div>
       <div class="tf-buttons" id="tf-container"></div>
     </div>
     <div class="countdown-card">
       <div style="font-size: 10px;">⏱️ Next candle</div>
-      <div style="font-family: monospace; font-weight: bold; font-size: 18px;" id="countdown-display">--</div>
-      <div style="height: 3px; background: #1e2432; margin-top: 8px;"><div id="progress-fill" style="width: 0%; height: 100%; background: linear-gradient(90deg, #3b82f6, #8b5cf6); transition: width 0.3s linear;"></div></div>
+      <div style="font-family: monospace; font-weight: bold; font-size: 20px;" id="countdown-display">--</div>
+      <div style="height: 3px; background: #1e2432; margin-top: 6px;"><div id="progress-fill" style="width: 0%; height: 100%; background: linear-gradient(90deg, #3b82f6, #8b5cf6); transition: width 0.3s linear;"></div></div>
     </div>
     <div class="pair-list" id="pair-list-container"></div>
-    <div style="padding: 12px; font-size: 9px; color: #3b4252; border-top: 1px solid var(--border-dim);" id="last-scan-ts">last scan: --</div>
   </div>
 
   <div class="main-area">
     <div class="signal-card" id="signal-card">
       <div class="signal-header">
-        <div><span id="signal-pair-name" style="font-size: 20px; font-weight: 700;">BTC/USDT</span><div style="font-size: 10px;" id="signal-meta"></div></div>
+        <div><span id="signal-pair-name" style="font-size: 18px; font-weight: 700;">BTC/USDT</span><div style="font-size: 9px;" id="signal-meta"></div></div>
         <div class="signal-strength">
           <div class="score-ring">
-            <svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="none" stroke="#222836" stroke-width="4"/><circle id="score-ring-path" cx="32" cy="32" r="28" fill="none" stroke="#10b981" stroke-width="4" stroke-dasharray="175.9" stroke-dashoffset="175.9" stroke-linecap="round"/></svg>
+            <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="24" fill="none" stroke="#222836" stroke-width="3"/><circle id="score-ring-path" cx="28" cy="28" r="24" fill="none" stroke="#10b981" stroke-width="3" stroke-dasharray="150.8" stroke-dashoffset="150.8" stroke-linecap="round"/></svg>
             <div class="score-text" id="score-value">--</div>
           </div>
-          <div><span id="signal-direction" style="font-weight: 800; font-size: 22px;">NEUTRAL</span><div id="signal-confidence" style="font-size: 9px;">waiting</div></div>
+          <div><span id="signal-direction" style="font-weight: 800; font-size: 18px;">NEUTRAL</span><div id="signal-confidence" style="font-size: 8px;">waiting</div></div>
         </div>
       </div>
-      <div style="padding: 0 24px 20px 24px;" id="signal-details">
-        <div id="signal-analysis" style="font-size: 12px; background: #0a0d14; padding: 14px; border-radius: 20px; margin-bottom: 16px;">✨ Select a pair from sidebar to generate analysis</div>
+      <div id="signal-details">
+        <div id="signal-analysis" style="font-size: 11px;">✨ Select a pair</div>
         <div class="level-grid" id="levels-container"></div>
         <div class="trade-buttons" id="trade-buttons-container"></div>
       </div>
     </div>
 
     <div class="tabs">
-      <button class="tab-btn active" data-tab="open">📂 OPEN TRADES</button>
+      <button class="tab-btn active" data-tab="open">📂 OPEN (0)</button>
       <button class="tab-btn" data-tab="history">📜 HISTORY</button>
       <button class="tab-btn" data-tab="metrics">📊 METRICS</button>
     </div>
+    
     <div id="tab-open" class="tab-content">
-      <table class="trade-table">
-        <thead><tr><th>Pair</th><th>Side</th><th>Entry</th><th>Size</th><th>Leverage</th><th>SL</th><th>TP</th><th>Current</th><th>PnL</th><th>Action</th></tr></thead>
-        <tbody id="open-positions-body"></tbody>
-      </table>
-    </div>
-    <div id="tab-history" class="tab-content" style="display: none;">
-      <table class="trade-table"><thead><th>Closed at</th><th>Pair</th><th>Side</th><th>Entry</th><th>Exit</th><th>PnL</th><th>Reason</th></thead>
-      <tbody id="history-body"></tbody></table>
-    </div>
-    <div id="tab-metrics" class="tab-content" style="display: none;">
-      <div style="display: grid; grid-template-columns: repeat(4,1fr); gap: 14px;">
-        <div class="level-item"><div>Win Rate</div><div id="metric-wr" style="font-size: 24px; font-weight: 700;">--</div></div>
-        <div class="level-item"><div>Total Trades</div><div id="metric-total" style="font-size: 24px;">0</div></div>
-        <div class="level-item"><div>Profit Factor</div><div id="metric-pf" style="font-size: 24px;">--</div></div>
-        <div class="level-item"><div>Expectancy</div><div id="metric-exp" style="font-size: 24px;">--</div></div>
+      <div class="table-wrapper">
+        <table class="trade-table">
+          <thead><tr><th>Pair</th><th>Side</th><th>Entry</th><th>Size</th><th>Lev</th><th>SL</th><th>TP</th><th>Current</th><th>PnL</th><th>Action</th></tr></thead>
+          <tbody id="open-positions-body"></tbody>
+        </table>
       </div>
-      <div style="margin-top: 20px; text-align: center;"><button id="clear-data-btn" style="background: #2a2f3f; border: none; padding: 8px 20px; border-radius: 40px; color: #ef4444; cursor: pointer;">🗑️ Reset All Data (Clear History & Balance)</button></div>
+    </div>
+    
+    <div id="tab-history" class="tab-content" style="display: none;">
+      <div class="table-wrapper">
+        <table class="trade-table"><thead><tr><th>Closed</th><th>Pair</th><th>Side</th><th>Entry</th><th>Exit</th><th>PnL</th><th>Reason</th></tr></thead>
+        <tbody id="history-body"></tbody></table>
+      </div>
+    </div>
+    
+    <div id="tab-metrics" class="tab-content" style="display: none;">
+      <div class="metrics-grid">
+        <div class="level-item"><div>Win Rate</div><div id="metric-wr" style="font-size: 22px; font-weight: 700;">--</div></div>
+        <div class="level-item"><div>Total Trades</div><div id="metric-total" style="font-size: 22px;">0</div></div>
+        <div class="level-item"><div>Profit Factor</div><div id="metric-pf" style="font-size: 22px;">--</div></div>
+        <div class="level-item"><div>Expectancy</div><div id="metric-exp" style="font-size: 22px;">--</div></div>
+      </div>
+      <button class="reset-btn" id="clear-data-btn">🗑️ RESET ALL DATA</button>
     </div>
   </div>
 </div>
 
 <div class="modal-bg" id="trade-modal">
   <div class="modal-card">
-    <h3 id="modal-title">Open LONG</h3>
-    <div style="margin: 12px 0;">Amount (USDT): <input type="number" id="modal-amount" value="200" step="10" style="background:#1e2538; border: none; padding: 8px; border-radius: 12px; width: 100%; color: white;"></div>
-    <div>Leverage: <select id="modal-leverage" style="background:#1e2538; border-radius: 8px; padding: 6px; width: 100%;"><option>5</option><option>10</option><option>20</option><option>50</option></select></div>
-    <div id="modal-risk-info" style="font-size: 11px; margin: 12px 0; background: #0a0d14; padding: 10px; border-radius: 12px;"></div>
-    <button id="modal-confirm" style="width: 100%; padding: 12px; border-radius: 40px; border: none; background: #10b981; font-weight: bold; margin-top: 12px;">Confirm</button>
-    <button onclick="closeModal()" style="margin-top: 8px; width: 100%; background: none; border: 1px solid #2a2f3f; border-radius: 40px; padding: 8px;">Cancel</button>
+    <h3 id="modal-title" style="margin-bottom: 16px;">Open LONG</h3>
+    <div style="margin-bottom: 14px;">
+      <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 6px;">Amount (USDT)</div>
+      <input type="number" id="modal-amount" value="200" step="10" style="background:#1e2538; border: 1px solid var(--border-dim); padding: 12px; border-radius: 14px; width: 100%; color: white; font-size: 14px;">
+    </div>
+    <div style="margin-bottom: 14px;">
+      <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 6px;">Leverage</div>
+      <select id="modal-leverage">
+        <option value="5">5x</option><option value="10" selected>10x</option><option value="20">20x</option><option value="50">50x</option>
+      </select>
+    </div>
+    <div id="modal-risk-info" style="font-size: 11px; margin: 12px 0; background: #0a0d14; padding: 12px; border-radius: 14px;"></div>
+    <button id="modal-confirm" style="width: 100%; padding: 14px; border-radius: 40px; border: none; background: linear-gradient(135deg, #10b981, #059669); font-weight: bold; font-size: 14px; color: white;">Confirm Trade</button>
+    <button class="cancel-btn" onclick="closeModal()">Cancel</button>
   </div>
 </div>
 <div class="toast-container" id="toast-container"></div>
 
 <script>
-  // ========== PERSISTENCE (localStorage) ==========
-  const STORAGE_KEYS = {
-    BALANCE: 'futuresedge_balance',
-    OPEN_TRADES: 'futuresedge_open_trades',
-    HISTORY: 'futuresedge_history'
-  };
-
+  // ========== PERSISTENCE ==========
+  const STORAGE_KEYS = { BALANCE: 'futuresedge_balance', OPEN_TRADES: 'futuresedge_open_trades', HISTORY: 'futuresedge_history' };
   let balance = 10000;
   let openTrades = [];
   let closedHistory = [];
@@ -536,13 +615,9 @@
     const savedBalance = localStorage.getItem(STORAGE_KEYS.BALANCE);
     if (savedBalance && !isNaN(parseFloat(savedBalance))) balance = parseFloat(savedBalance);
     const savedTrades = localStorage.getItem(STORAGE_KEYS.OPEN_TRADES);
-    if (savedTrades) {
-      try { openTrades = JSON.parse(savedTrades); } catch(e) { openTrades = []; }
-    }
+    if (savedTrades) { try { openTrades = JSON.parse(savedTrades); } catch(e) { openTrades = []; } }
     const savedHistory = localStorage.getItem(STORAGE_KEYS.HISTORY);
-    if (savedHistory) {
-      try { closedHistory = JSON.parse(savedHistory); } catch(e) { closedHistory = []; }
-    }
+    if (savedHistory) { try { closedHistory = JSON.parse(savedHistory); } catch(e) { closedHistory = []; } }
     openTrades = openTrades.map(t => ({ ...t, currentPrice: t.entryPrice, unrealizedPnl: 0 }));
   }
 
@@ -553,6 +628,8 @@
   }
 
   const formatPrice = (p) => p ? `$${p.toLocaleString(undefined, {minimumFractionDigits: p<1?4:2})}` : '--';
+  const formatShort = (p) => p ? `$${p.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}` : '--';
+  
   const toast = (msg, type='info') => {
     const cont = document.getElementById('toast-container');
     const t = document.createElement('div');
@@ -560,12 +637,12 @@
     t.style.borderLeftColor = type === 'win' ? '#10b981' : type === 'loss' ? '#ef4444' : '#3b82f6';
     t.innerText = msg;
     cont.appendChild(t);
-    setTimeout(() => t.remove(), 2800);
+    setTimeout(() => t.remove(), 2500);
   };
 
   async function analyzePair(symbol, candles, ticker) {
     const closes = candles.map(c => c.close);
-    if(closes.length < 30) return { signal: 'NEUTRAL', score: 50, entry: ticker.price, sl: 0, tp1: 0, rr: 0, analysisText: 'Insufficient data' };
+    if(closes.length < 30) return { signal: 'NEUTRAL', score: 50, entry: ticker.price, sl: 0, tp1: 0, rr: 0 };
     const price = ticker.price;
     const ema9 = closes.slice(-9).reduce((a,b)=>a+b,0)/9;
     const ema21 = closes.slice(-21).reduce((a,b)=>a+b,0)/21;
@@ -589,12 +666,12 @@
     let sl = signalDir === 'LONG' ? price - atr * 1.6 : price + atr * 1.6;
     let tp1 = signalDir === 'LONG' ? price + atr * 2.5 : price - atr * 2.5;
     let rr = Math.abs(tp1-price) / Math.abs(price-sl);
-    return { signal: signalDir, score: Math.round(finalScore), entry: price, sl, tp1, rr, atr, analysisText: `RSI: ${rsi.toFixed(0)} | EMA ${ema9>ema21?'bullish':'bearish'} | MACD ${macdLine>0?'+':'-'} | ATR $${atr.toFixed(2)}` };
+    return { signal: signalDir, score: Math.round(finalScore), entry: price, sl, tp1, rr, atr };
   }
 
   async function fetchKlines(sym) {
     try {
-      const res = await fetch(`https://fapi.binance.com/fapi/v1/klines?symbol=${sym}&interval=${currentTF}&limit=100`);
+      const res = await fetch(`https://fapi.binance.com/fapi/v1/klines?symbol=${sym}&interval=${currentTF}&limit=80`);
       const data = await res.json();
       if(!Array.isArray(data)) return [];
       return data.map(k => ({ open: +k[1], high: +k[2], low: +k[3], close: +k[4], volume: +k[5], time: +k[0] }));
@@ -614,12 +691,11 @@
       const [candles, ticker] = await Promise.all([fetchKlines(sym), fetchTicker(sym)]);
       if(candles.length && ticker.price) {
         const analysis = await analyzePair(sym, candles, ticker);
-        pairDataCache.set(sym, { candles, ticker, analysis, lastUpdate: Date.now() });
+        pairDataCache.set(sym, { candles, ticker, analysis });
       }
     }
     renderPairSidebar();
     if(currentPair && pairDataCache.has(currentPair)) renderSignalCard(currentPair);
-    document.getElementById('last-scan-ts').innerText = `last scan: ${new Date().toLocaleTimeString()}`;
   }
 
   function renderPairSidebar() {
@@ -630,8 +706,8 @@
       const score = data?.analysis.score || 0;
       const price = data?.ticker.price;
       return `<div class="pair-row ${currentPair === sym ? 'active' : ''}" onclick="selectPair('${sym}')">
-        <div class="pair-info"><div class="pair-symbol">${sym.replace('USDT','')}</div><div class="pair-price">${price ? formatPrice(price) : '--'}</div></div>
-        <span class="signal-badge ${sig === 'LONG' ? 'sig-long' : (sig === 'SHORT' ? 'sig-short' : '')}" style="background:${sig==='LONG'?'#10b98120':sig==='SHORT'?'#ef444420':'#2a2f3f'}">${sig} ${score}</span>
+        <div class="pair-info"><div class="pair-symbol">${sym.replace('USDT','')}</div><div class="pair-price">${price ? formatShort(price) : '--'}</div></div>
+        <span class="signal-badge ${sig === 'LONG' ? 'sig-long' : (sig === 'SHORT' ? 'sig-short' : '')}">${sig} ${score}</span>
       </div>`;
     }).join('');
   }
@@ -641,27 +717,27 @@
     if(!cache) return;
     const a = cache.analysis;
     document.getElementById('signal-pair-name').innerHTML = sym.replace('USDT','/USDT');
-    document.getElementById('signal-meta').innerHTML = `24h: ${cache.ticker.change24h>0?'+':''}${cache.ticker.change24h.toFixed(2)}% | TF: ${currentTF}`;
+    document.getElementById('signal-meta').innerHTML = `24h: ${cache.ticker.change24h>0?'+':''}${cache.ticker.change24h.toFixed(2)}%`;
     document.getElementById('score-value').innerText = a.score;
-    const ring = document.getElementById('score-ring-path');
-    const circumference = 175.9;
+    const circumference = 150.8;
     const offset = circumference - (a.score / 100) * circumference;
+    const ring = document.getElementById('score-ring-path');
     ring.style.strokeDashoffset = offset;
     ring.style.stroke = a.signal === 'LONG' ? '#10b981' : a.signal === 'SHORT' ? '#ef4444' : '#f59e0b';
     document.getElementById('signal-direction').innerHTML = a.signal;
     document.getElementById('signal-direction').style.color = a.signal === 'LONG' ? '#10b981' : a.signal === 'SHORT' ? '#ef4444' : '#f59e0b';
-    document.getElementById('signal-confidence').innerHTML = `Score ${a.score} | ${a.score>70?'High confidence':a.score>50?'Medium':'Low'}`;
-    document.getElementById('signal-analysis').innerHTML = `📈 ${a.analysisText} <br> 🧠 Risk/Reward: 1:${a.rr.toFixed(2)}`;
+    document.getElementById('signal-confidence').innerHTML = `Score ${a.score} | ${a.score>70?'High':a.score>50?'Medium':'Low'}`;
+    document.getElementById('signal-analysis').innerHTML = `📊 R/R: 1:${a.rr.toFixed(2)} | ATR $${a.atr?.toFixed(2) || 0}`;
     document.getElementById('levels-container').innerHTML = `
       <div class="level-item"><div>🎯 Entry</div><div class="up">${formatPrice(a.entry)}</div></div>
-      <div class="level-item"><div>🛑 Stop Loss</div><div class="down">${formatPrice(a.sl)}</div></div>
-      <div class="level-item"><div>✅ Take Profit</div><div class="up">${formatPrice(a.tp1)}</div></div>
+      <div class="level-item"><div>🛑 SL</div><div class="down">${formatPrice(a.sl)}</div></div>
+      <div class="level-item"><div>✅ TP</div><div class="up">${formatPrice(a.tp1)}</div></div>
     `;
     const canLong = a.signal === 'LONG' && a.score >= 60;
     const canShort = a.signal === 'SHORT' && a.score >= 60;
     document.getElementById('trade-buttons-container').innerHTML = `
-      <button class="btn-long ${!canLong ? 'btn-disabled' : ''}" onclick="openTradeModal('LONG', '${sym}')">▲ LONG ${canLong ? '' : '(weak)'}</button>
-      <button class="btn-short ${!canShort ? 'btn-disabled' : ''}" onclick="openTradeModal('SHORT', '${sym}')">▼ SHORT ${canShort ? '' : '(weak)'}</button>
+      <button class="btn-long ${!canLong ? 'btn-disabled' : ''}" onclick="openTradeModal('LONG', '${sym}')">▲ LONG</button>
+      <button class="btn-short ${!canShort ? 'btn-disabled' : ''}" onclick="openTradeModal('SHORT', '${sym}')">▼ SHORT</button>
     `;
   }
 
@@ -694,23 +770,18 @@
     const finalPnl = trade.unrealizedPnl;
     balance += trade.initialMargin + finalPnl;
     closedHistory.unshift({
-      id: trade.id,
-      symbol: trade.symbol,
-      side: trade.side,
-      entryPrice: trade.entryPrice,
-      exitPrice: trade.currentPrice,
-      realizedPnl: finalPnl,
-      closeReason: reason,
-      closedAt: new Date().toLocaleString(),
-      leverage: trade.leverage,
-      initialMargin: trade.initialMargin
+      id: trade.id, symbol: trade.symbol, side: trade.side,
+      entryPrice: trade.entryPrice, exitPrice: trade.currentPrice,
+      realizedPnl: finalPnl, closeReason: reason,
+      closedAt: new Date().toLocaleString()
     });
     openTrades.splice(idx,1);
-    toast(`${trade.symbol} ${trade.side} closed: ${finalPnl>=0 ? `+$${finalPnl.toFixed(2)}` : `-$${Math.abs(finalPnl).toFixed(2)}`} (${reason})`, finalPnl>=0 ? 'win' : 'loss');
+    toast(`${trade.symbol} ${trade.side} closed: ${finalPnl>=0 ? `+$${finalPnl.toFixed(2)}` : `-$${Math.abs(finalPnl).toFixed(2)}`}`, finalPnl>=0 ? 'win' : 'loss');
     renderOpenTradesTable();
     renderHistoryTable();
     updateHeaderAndMetrics();
     persistAll();
+    updateOpenCount();
   };
 
   function openTradeModal(side, sym) {
@@ -729,26 +800,18 @@
       const riskAmount = Math.abs(analysis.entry - analysis.sl) / analysis.entry * positionSize;
       if(riskAmount > balance * 0.25) { toast("Risk >25% of balance", "loss"); return; }
       const newTrade = {
-        id: Date.now(),
-        symbol: sym,
-        side: side,
-        entryPrice: analysis.entry,
-        sl: analysis.sl,
-        tp: analysis.tp1,
-        leverage: lev,
-        initialMargin: amount,
-        positionSize: positionSize,
-        currentPrice: analysis.entry,
-        unrealizedPnl: 0,
-        openTime: new Date().toLocaleString()
+        id: Date.now(), symbol: sym, side: side, entryPrice: analysis.entry,
+        sl: analysis.sl, tp: analysis.tp1, leverage: lev, initialMargin: amount,
+        positionSize: positionSize, currentPrice: analysis.entry, unrealizedPnl: 0
       };
       openTrades.push(newTrade);
       balance -= amount;
-      toast(`✅ ${side} ${sym} opened @ ${formatPrice(analysis.entry)}`, "win");
+      toast(`✅ ${side} ${sym} opened`, "win");
       closeModal();
       renderOpenTradesTable();
       updateHeaderAndMetrics();
       persistAll();
+      updateOpenCount();
     };
   }
 
@@ -759,13 +822,10 @@
     if(!openTrades.length) { tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;">No open positions</td></tr>'; return; }
     tbody.innerHTML = openTrades.map(t => `
       <tr>
-        <td>${t.symbol}</td>
-        <td class="${t.side==='LONG'?'up':'down'}">${t.side}</td>
-        <td>${formatPrice(t.entryPrice)}</td>
-        <td>$${t.initialMargin}</td>
-        <td>${t.leverage}x</td>
-        <td class="down">${formatPrice(t.sl)}</td>
-        <td class="up">${formatPrice(t.tp)}</td>
+        <td>${t.symbol}</td><td class="${t.side==='LONG'?'up':'down'}">${t.side}</td>
+        <td>${formatPrice(t.entryPrice)}</td><td>$${t.initialMargin}</td>
+        <td class="accent-blue" style="color:#3b82f6; font-weight:700;">${t.leverage}x</td>
+        <td class="down">${formatPrice(t.sl)}</td><td class="up">${formatPrice(t.tp)}</td>
         <td>${formatPrice(t.currentPrice)}</td>
         <td class="${t.unrealizedPnl>=0?'up':'down'}">${t.unrealizedPnl>=0?'+':''}$${t.unrealizedPnl?.toFixed(2)||0}</td>
         <td><button class="close-btn" onclick="closeTradeById(${t.id}, 'Manual')">✕ CLOSE</button></td>
@@ -777,22 +837,22 @@
     const hbody = document.getElementById('history-body');
     if(!closedHistory.length) { hbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No closed trades</td></tr>'; return; }
     hbody.innerHTML = closedHistory.map(h => `
-      <tr>
-        <td>${h.closedAt}</td>
-        <td>${h.symbol}</td>
-        <td class="${h.side==='LONG'?'up':'down'}">${h.side}</td>
-        <td>${formatPrice(h.entryPrice)}</td>
-        <td>${formatPrice(h.exitPrice)}</td>
-        <td class="${h.realizedPnl>=0?'up':'down'}">${h.realizedPnl>=0?'+':''}$${h.realizedPnl.toFixed(2)}</td>
-        <td>${h.closeReason}</td>
-      </tr>
+      <tr><td>${h.closedAt}</td><td>${h.symbol}</td><td class="${h.side==='LONG'?'up':'down'}">${h.side}</td>
+      <td>${formatPrice(h.entryPrice)}</td><td>${formatPrice(h.exitPrice)}</td>
+      <td class="${h.realizedPnl>=0?'up':'down'}">${h.realizedPnl>=0?'+':''}$${h.realizedPnl.toFixed(2)}</td>
+      <td>${h.closeReason}</td></tr>
     `).join('');
+  }
+
+  function updateOpenCount() {
+    const btn = document.querySelector('.tab-btn[data-tab="open"]');
+    if(btn) btn.innerHTML = `📂 OPEN (${openTrades.length})`;
   }
 
   function updateHeaderAndMetrics() {
     const totalUpnl = openTrades.reduce((acc,t)=>acc+(t.unrealizedPnl||0),0);
-    document.getElementById('header-balance').innerHTML = `$${balance.toFixed(2)}`;
-    document.getElementById('header-upnl').innerHTML = `${totalUpnl>=0?'+':''}$${totalUpnl.toFixed(2)}`;
+    document.getElementById('header-balance').innerHTML = balance >= 10000 ? `$${Math.round(balance/1000)}k` : `$${balance.toFixed(0)}`;
+    document.getElementById('header-upnl').innerHTML = `${totalUpnl>=0?'+':''}$${totalUpnl.toFixed(0)}`;
     const wins = closedHistory.filter(t=>t.realizedPnl>0).length;
     const total = closedHistory.length;
     const wr = total ? ((wins/total)*100).toFixed(0) : '--';
@@ -807,15 +867,11 @@
   }
 
   document.getElementById('clear-data-btn')?.addEventListener('click', () => {
-    if(confirm('⚠️ Reset all trading data? Balance will return to $10,000, all open & history cleared.')) {
-      balance = 10000;
-      openTrades = [];
-      closedHistory = [];
-      persistAll();
-      renderOpenTradesTable();
-      renderHistoryTable();
-      updateHeaderAndMetrics();
-      toast('All data reset (balance restored)','info');
+    if(confirm('Reset all data?')) {
+      balance = 10000; openTrades = []; closedHistory = [];
+      persistAll(); renderOpenTradesTable(); renderHistoryTable();
+      updateHeaderAndMetrics(); updateOpenCount();
+      toast('Data reset', 'info');
     }
   });
 
@@ -826,13 +882,12 @@
       const now = Date.now();
       const nextCandle = Math.ceil(now / tfMs) * tfMs;
       const remain = nextCandle - now;
-      const seconds = Math.floor(remain/1000);
-      const mins = Math.floor(seconds/60);
-      const secs = seconds%60;
+      const mins = Math.floor(remain/60000);
+      const secs = Math.floor((remain%60000)/1000);
       document.getElementById('countdown-display').innerHTML = `${mins}m ${secs}s`;
       const progress = ((tfMs-remain)/tfMs)*100;
       document.getElementById('progress-fill').style.width = `${Math.min(100,progress)}%`;
-      if(remain < 1000) setTimeout(()=> scanAllPairs(), 200);
+      if(remain < 800) setTimeout(()=> scanAllPairs(), 100);
     }, 200);
   }
 
@@ -841,13 +896,13 @@
     cont.innerHTML = TIMEFRAMES.map(tf => `<button class="tf-btn ${tf===currentTF?'active':''}" onclick="changeTF('${tf}')">${tf}</button>`).join('');
   }
   
-  window.changeTF = (tf) => { currentTF = tf; initTimeframeButtons(); scanAllPairs(); startCountdown(); };
-  window.selectPair = (pair) => { currentPair = pair; renderPairSidebar(); if(pairDataCache.has(pair)) renderSignalCard(pair); else scanAllPairs().then(()=>renderSignalCard(pair)); };
+  window.changeTF = (tf) => { currentTF = tf; initTimeframeButtons(); scanAllPairs(); };
+  window.selectPair = (pair) => { currentPair = pair; renderPairSidebar(); if(pairDataCache.has(pair)) renderSignalCard(pair); };
   window.openTradeModal = openTradeModal;
   window.closeModal = closeModal;
 
   document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
       const tabName = btn.getAttribute('data-tab');
@@ -866,8 +921,9 @@
     renderOpenTradesTable();
     renderHistoryTable();
     updateHeaderAndMetrics();
-    setInterval(async () => { await updateOpenTrades(); scanAllPairs(); }, 5000);
-    setInterval(() => { renderPairSidebar(); if(currentPair && pairDataCache.has(currentPair)) renderSignalCard(currentPair); }, 8000);
+    updateOpenCount();
+    setInterval(async () => { await updateOpenTrades(); }, 5000);
+    setInterval(() => { renderPairSidebar(); if(currentPair && pairDataCache.has(currentPair)) renderSignalCard(currentPair); }, 10000);
   }
   bootstrap();
 </script>
