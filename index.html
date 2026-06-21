@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
   <title>Quorix Futures Bot | 50+ Assets Paper Trading Terminal</title>
-  <!-- Lightweight Charts -->
   <script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -400,6 +399,14 @@
     isScanning: false
   };
 
+  // Chart state - save zoom/position
+  let chartState = {
+    chart: null,
+    candlestickSeries: null,
+    lastVisibleRange: null,
+    isUpdating: false
+  };
+
   // ========== DOM REFS ==========
   const $ = id => document.getElementById(id);
   const dom = {
@@ -430,11 +437,8 @@
     chartContainer: $('chart-container')
   };
 
-  let chart = null;
-  let candlestickSeries = null;
   let countdownInterval = null;
   let loadingInterval = null;
-  let isChartUpdating = false;
 
   // ========== LOADING FUNCTIONS ==========
   const LOADING_MESSAGES = [
@@ -624,17 +628,24 @@
     };
   }
 
-  // ========== CHART FUNCTIONS ==========
+  // ========== CHART FUNCTIONS - ZOOM SAVE FIX ==========
   function initChart() {
-    if (chart) {
-      chart.remove();
-      chart = null;
-      candlestickSeries = null;
+    if (chartState.chart) {
+      // Save current zoom before removing
+      if (chartState.chart.timeScale()) {
+        try {
+          chartState.lastVisibleRange = chartState.chart.timeScale().getVisibleRange();
+        } catch(e) {}
+      }
+      chartState.chart.remove();
+      chartState.chart = null;
+      chartState.candlestickSeries = null;
     }
+    
     if (!dom.chartContainer) return false;
     
     try {
-      chart = LightweightCharts.createChart(dom.chartContainer, {
+      const chart = LightweightCharts.createChart(dom.chartContainer, {
         layout: {
           background: { color: '#03050a' },
           textColor: '#8b92b0',
@@ -658,13 +669,23 @@
         height: dom.chartContainer.clientHeight || 420,
       });
       
-      candlestickSeries = chart.addCandlestickSeries({
+      const candlestickSeries = chart.addCandlestickSeries({
         upColor: '#10b981',
         downColor: '#ef4444',
         borderDownColor: '#ef4444',
         borderUpColor: '#10b981',
         wickDownColor: '#ef4444',
         wickUpColor: '#10b981',
+      });
+      
+      chartState.chart = chart;
+      chartState.candlestickSeries = candlestickSeries;
+      
+      // Save zoom on any change
+      chart.timeScale().subscribeVisibleRangeChange((range) => {
+        if (range) {
+          chartState.lastVisibleRange = range;
+        }
       });
       
       const resizeObserver = new ResizeObserver(() => {
@@ -686,20 +707,21 @@
   }
 
   async function updateChart(symbol) {
-    if (isChartUpdating) return;
-    isChartUpdating = true;
+    if (chartState.isUpdating) return;
+    chartState.isUpdating = true;
     
     try {
-      const candles = await fetchKlines(symbol, 100);
+      const candles = await fetchKlines(symbol, 150);
       if (!candles || candles.length === 0) {
-        isChartUpdating = false;
+        chartState.isUpdating = false;
         return;
       }
       
-      if (!chart || !candlestickSeries) {
+      // If chart doesn't exist, create it
+      if (!chartState.chart || !chartState.candlestickSeries) {
         const inited = initChart();
         if (!inited) {
-          isChartUpdating = false;
+          chartState.isUpdating = false;
           return;
         }
       }
@@ -712,18 +734,36 @@
         close: c.close,
       }));
       
-      candlestickSeries.setData(chartData);
-      chart.timeScale().fitContent();
+      // Update data
+      chartState.candlestickSeries.setData(chartData);
+      
+      // RESTORE ZOOM POSITION - THIS IS THE FIX!
+      if (chartState.lastVisibleRange) {
+        try {
+          chartState.chart.timeScale().setVisibleRange(chartState.lastVisibleRange);
+        } catch(e) {
+          // If range is invalid, fit content
+          chartState.chart.timeScale().fitContent();
+        }
+      } else {
+        chartState.chart.timeScale().fitContent();
+      }
       
     } catch(e) {
       console.warn('Chart update error:', e);
+      // If error, try to fit content
+      try {
+        if (chartState.chart) {
+          chartState.chart.timeScale().fitContent();
+        }
+      } catch(e2) {}
     } finally {
-      isChartUpdating = false;
+      chartState.isUpdating = false;
     }
   }
 
   // ========== SCAN PAIRS ==========
-  async function scanAllPairs(showProgress = true) {
+  async function scanAllPairs(showProgress = true, updateChartData = true) {
     if (state.isScanning) return;
     state.isScanning = true;
     
@@ -763,6 +803,9 @@
     
     if (state.currentPair && state.pairData.has(state.currentPair)) {
       renderSignalCard(state.currentPair);
+      if (updateChartData) {
+        await updateChart(state.currentPair);
+      }
     }
   }
 
@@ -1036,18 +1079,19 @@
   }
 
   window.changeTF = function(tf) {
+    if (state.currentTF === tf) return;
     state.currentTF = tf;
     initTimeframeButtons();
-    scanAllPairs(true).then(() => {
-      if (state.currentPair && state.pairData.has(state.currentPair)) {
-        updateChart(state.currentPair);
-      }
-    });
+    // Reset chart zoom when changing timeframe
+    chartState.lastVisibleRange = null;
+    scanAllPairs(true, true);
   };
 
   window.selectPair = function(pair) {
     if (state.currentPair === pair) return;
     state.currentPair = pair;
+    // Reset chart zoom when changing pair
+    chartState.lastVisibleRange = null;
     renderPairSidebar();
     if (state.pairData.has(pair)) {
       renderSignalCard(pair);
@@ -1110,7 +1154,7 @@
     startLoadingAnimation();
     initChart();
     
-    await scanAllPairs(true);
+    await scanAllPairs(true, true);
     
     renderOpenTradesTable();
     renderHistoryTable();
@@ -1119,7 +1163,7 @@
     
     if (state.currentPair && state.pairData.has(state.currentPair)) {
       renderSignalCard(state.currentPair);
-      updateChart(state.currentPair);
+      await updateChart(state.currentPair);
     }
     
     finishLoading();
@@ -1127,28 +1171,28 @@
     // Update open trades every 3 seconds
     setInterval(updateOpenTrades, 3000);
     
-    // Refresh data every 15 seconds (only if not scanning)
+    // Refresh data every 15 seconds - BUT PRESERVE ZOOM!
     setInterval(async () => {
       if (!state.isScanning) {
-        await scanAllPairs(false);
+        // Save current zoom before refresh
+        if (chartState.chart && chartState.chart.timeScale()) {
+          try {
+            const range = chartState.chart.timeScale().getVisibleRange();
+            if (range) {
+              chartState.lastVisibleRange = range;
+            }
+          } catch(e) {}
+        }
+        
+        await scanAllPairs(false, true);
+        
         if (state.currentPair && state.pairData.has(state.currentPair)) {
           renderSignalCard(state.currentPair);
+          // Chart will restore zoom automatically in updateChart()
         }
       }
     }, 15000);
   }
-
-  // Handle visibility change - pause updates when tab is hidden
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) {
-      // Tab hidden - reduce updates
-    } else {
-      // Tab visible - refresh data
-      if (!state.isScanning) {
-        scanAllPairs(false);
-      }
-    }
-  });
 
   bootstrap();
 </script>
