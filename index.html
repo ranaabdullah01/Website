@@ -399,13 +399,10 @@
     isScanning: false
   };
 
-  // Chart state - save zoom/position
-  let chartState = {
-    chart: null,
-    candlestickSeries: null,
-    lastVisibleRange: null,
-    isUpdating: false
-  };
+  let chart = null;
+  let candlestickSeries = null;
+  let countdownInterval = null;
+  let loadingInterval = null;
 
   // ========== DOM REFS ==========
   const $ = id => document.getElementById(id);
@@ -436,9 +433,6 @@
     metricExp: $('metric-exp'),
     chartContainer: $('chart-container')
   };
-
-  let countdownInterval = null;
-  let loadingInterval = null;
 
   // ========== LOADING FUNCTIONS ==========
   const LOADING_MESSAGES = [
@@ -628,24 +622,17 @@
     };
   }
 
-  // ========== CHART FUNCTIONS - ZOOM SAVE FIX ==========
+  // ========== CHART FUNCTIONS ==========
   function initChart() {
-    if (chartState.chart) {
-      // Save current zoom before removing
-      if (chartState.chart.timeScale()) {
-        try {
-          chartState.lastVisibleRange = chartState.chart.timeScale().getVisibleRange();
-        } catch(e) {}
-      }
-      chartState.chart.remove();
-      chartState.chart = null;
-      chartState.candlestickSeries = null;
+    if (chart) {
+      chart.remove();
+      chart = null;
+      candlestickSeries = null;
     }
-    
     if (!dom.chartContainer) return false;
     
     try {
-      const chart = LightweightCharts.createChart(dom.chartContainer, {
+      chart = LightweightCharts.createChart(dom.chartContainer, {
         layout: {
           background: { color: '#03050a' },
           textColor: '#8b92b0',
@@ -669,23 +656,13 @@
         height: dom.chartContainer.clientHeight || 420,
       });
       
-      const candlestickSeries = chart.addCandlestickSeries({
+      candlestickSeries = chart.addCandlestickSeries({
         upColor: '#10b981',
         downColor: '#ef4444',
         borderDownColor: '#ef4444',
         borderUpColor: '#10b981',
         wickDownColor: '#ef4444',
         wickUpColor: '#10b981',
-      });
-      
-      chartState.chart = chart;
-      chartState.candlestickSeries = candlestickSeries;
-      
-      // Save zoom on any change
-      chart.timeScale().subscribeVisibleRangeChange((range) => {
-        if (range) {
-          chartState.lastVisibleRange = range;
-        }
       });
       
       const resizeObserver = new ResizeObserver(() => {
@@ -707,23 +684,13 @@
   }
 
   async function updateChart(symbol) {
-    if (chartState.isUpdating) return;
-    chartState.isUpdating = true;
-    
     try {
-      const candles = await fetchKlines(symbol, 150);
-      if (!candles || candles.length === 0) {
-        chartState.isUpdating = false;
-        return;
-      }
+      const candles = await fetchKlines(symbol, 100);
+      if (!candles || candles.length === 0) return;
       
-      // If chart doesn't exist, create it
-      if (!chartState.chart || !chartState.candlestickSeries) {
+      if (!chart || !candlestickSeries) {
         const inited = initChart();
-        if (!inited) {
-          chartState.isUpdating = false;
-          return;
-        }
+        if (!inited) return;
       }
       
       const chartData = candles.map(c => ({
@@ -734,36 +701,16 @@
         close: c.close,
       }));
       
-      // Update data
-      chartState.candlestickSeries.setData(chartData);
-      
-      // RESTORE ZOOM POSITION - THIS IS THE FIX!
-      if (chartState.lastVisibleRange) {
-        try {
-          chartState.chart.timeScale().setVisibleRange(chartState.lastVisibleRange);
-        } catch(e) {
-          // If range is invalid, fit content
-          chartState.chart.timeScale().fitContent();
-        }
-      } else {
-        chartState.chart.timeScale().fitContent();
-      }
+      candlestickSeries.setData(chartData);
+      chart.timeScale().fitContent();
       
     } catch(e) {
       console.warn('Chart update error:', e);
-      // If error, try to fit content
-      try {
-        if (chartState.chart) {
-          chartState.chart.timeScale().fitContent();
-        }
-      } catch(e2) {}
-    } finally {
-      chartState.isUpdating = false;
     }
   }
 
   // ========== SCAN PAIRS ==========
-  async function scanAllPairs(showProgress = true, updateChartData = true) {
+  async function scanAllPairs(showProgress = true) {
     if (state.isScanning) return;
     state.isScanning = true;
     
@@ -788,9 +735,7 @@
             const analysis = analyzePair(sym, candles, ticker);
             state.pairData.set(sym, { candles, ticker, analysis });
           }
-        } catch(e) {
-          // Silent fail for individual pairs
-        }
+        } catch(e) {}
         completed++;
         if (showProgress) {
           updateLoadingProgress((completed / total) * 100);
@@ -803,9 +748,6 @@
     
     if (state.currentPair && state.pairData.has(state.currentPair)) {
       renderSignalCard(state.currentPair);
-      if (updateChartData) {
-        await updateChart(state.currentPair);
-      }
     }
   }
 
@@ -1079,19 +1021,16 @@
   }
 
   window.changeTF = function(tf) {
-    if (state.currentTF === tf) return;
     state.currentTF = tf;
     initTimeframeButtons();
-    // Reset chart zoom when changing timeframe
-    chartState.lastVisibleRange = null;
-    scanAllPairs(true, true);
+    scanAllPairs(true);
+    if (state.currentPair && state.pairData.has(state.currentPair)) {
+      updateChart(state.currentPair);
+    }
   };
 
   window.selectPair = function(pair) {
-    if (state.currentPair === pair) return;
     state.currentPair = pair;
-    // Reset chart zoom when changing pair
-    chartState.lastVisibleRange = null;
     renderPairSidebar();
     if (state.pairData.has(pair)) {
       renderSignalCard(pair);
@@ -1154,7 +1093,7 @@
     startLoadingAnimation();
     initChart();
     
-    await scanAllPairs(true, true);
+    await scanAllPairs(true);
     
     renderOpenTradesTable();
     renderHistoryTable();
@@ -1168,27 +1107,13 @@
     
     finishLoading();
     
-    // Update open trades every 3 seconds
     setInterval(updateOpenTrades, 3000);
     
-    // Refresh data every 15 seconds - BUT PRESERVE ZOOM!
     setInterval(async () => {
       if (!state.isScanning) {
-        // Save current zoom before refresh
-        if (chartState.chart && chartState.chart.timeScale()) {
-          try {
-            const range = chartState.chart.timeScale().getVisibleRange();
-            if (range) {
-              chartState.lastVisibleRange = range;
-            }
-          } catch(e) {}
-        }
-        
-        await scanAllPairs(false, true);
-        
+        await scanAllPairs(false);
         if (state.currentPair && state.pairData.has(state.currentPair)) {
           renderSignalCard(state.currentPair);
-          // Chart will restore zoom automatically in updateChart()
         }
       }
     }, 15000);
