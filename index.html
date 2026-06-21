@@ -556,9 +556,165 @@
       font-size: 12px;
       width: 100%;
     }
+
+    /* ===== LOADING OVERLAY ===== */
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 5, 10, 0.92);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+      opacity: 1;
+      visibility: visible;
+      padding: 20px;
+    }
+    .loading-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    /* Animated crypto spinner */
+    .crypto-spinner {
+      position: relative;
+      width: 100px;
+      height: 100px;
+    }
+    .crypto-spinner .orbit {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      border-top-color: var(--accent-blue);
+      animation: spin 1.2s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+    }
+    .crypto-spinner .orbit:nth-child(2) {
+      width: 75%;
+      height: 75%;
+      top: 12.5%;
+      left: 12.5%;
+      border-top-color: var(--accent-purple);
+      animation-duration: 1.8s;
+      animation-direction: reverse;
+    }
+    .crypto-spinner .orbit:nth-child(3) {
+      width: 50%;
+      height: 50%;
+      top: 25%;
+      left: 25%;
+      border-top-color: var(--accent-green);
+      animation-duration: 2.4s;
+    }
+    .crypto-spinner .center-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 32px;
+      animation: float 2s ease-in-out infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -60%) scale(1.1); }
+    }
+
+    /* Loading text */
+    .loading-title {
+      font-size: 22px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f0f4ff, #8b9cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+    }
+
+    .loading-message {
+      font-size: 15px;
+      color: var(--text-secondary);
+      text-align: center;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      font-weight: 400;
+      line-height: 1.6;
+      transition: opacity 0.3s ease;
+    }
+    .loading-message .emoji {
+      margin-right: 8px;
+    }
+
+    /* Progress bar */
+    .loading-progress {
+      width: 100%;
+      height: 4px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .loading-progress .bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-green));
+      border-radius: 4px;
+      transition: width 0.3s ease;
+      animation: shimmer 1.5s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .loading-percent {
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--text-secondary);
+      margin-top: 8px;
+      letter-spacing: 1px;
+    }
   </style>
 </head>
 <body>
+
+<!-- ===== LOADING OVERLAY ===== -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-container">
+    <div class="crypto-spinner">
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+      <div class="orbit"></div>
+      <div class="center-icon">📈</div>
+    </div>
+    <div class="loading-title">Quorix Futures Bot</div>
+    <div class="loading-message" id="loadingMessage">🔮 Analyzing the matrix...</div>
+    <div class="loading-progress">
+      <div class="bar" id="loadingBar"></div>
+    </div>
+    <div class="loading-percent" id="loadingPercent">0%</div>
+  </div>
+</div>
 
 <div class="app-header">
   <div class="logo-area">
@@ -674,22 +830,46 @@
 <div class="toast-container" id="toast-container"></div>
 
 <script>
+  // ========== FUNNY LOADING MESSAGES ==========
+  const LOADING_MESSAGES = [
+    { emoji: '🔮', text: 'Consulting the crypto crystal ball...' },
+    { emoji: '🤖', text: 'Training the trading AI with memes...' },
+    { emoji: '📊', text: 'Drawing lines that definitely mean something...' },
+    { emoji: '🦄', text: 'Searching for the next 100x gem...' },
+    { emoji: '☕', text: 'Brewing fresh market analysis...' },
+    { emoji: '🚀', text: 'Preparing for moon mission...' },
+    { emoji: '🐶', text: 'Asking Doge for financial advice...' },
+    { emoji: '🧠', text: 'Using 100% of the brain (finally)...' },
+    { emoji: '📈', text: 'Making lines go up (we hope)...' },
+    { emoji: '🎲', text: 'Rolling the crypto dice...' },
+    { emoji: '🌊', text: 'Riding the volatility wave...' },
+    { emoji: '🤑', text: 'Counting imaginary profits...' },
+    { emoji: '🤡', text: 'Pretending to know what we\'re doing...' },
+    { emoji: '🎯', text: 'Aiming for the moon, landing on Mars...' },
+    { emoji: '💎', text: 'Checking diamond hands status...' },
+    { emoji: '🔄', text: 'Buying high, selling low... just kidding!' },
+    { emoji: '🧘', text: 'Meditating on the candlesticks...' },
+    { emoji: '⚡', text: 'Channeling Elon\'s energy...' },
+    { emoji: '🎭', text: 'Watching the market drama unfold...' },
+    { emoji: '🍿', text: 'Grab popcorn, market is volatile!' },
+    { emoji: '🤞', text: 'Crossing fingers for green candles...' },
+    { emoji: '🏦', text: 'Bribing the market gods...' },
+    { emoji: '📚', text: 'Reading the crypto textbook we didn\'t write...' },
+    { emoji: '🧪', text: 'Mixing technical analysis with chaos...' },
+    { emoji: '🎪', text: 'Welcome to the crypto circus!' },
+    { emoji: '🔥', text: 'Everything is fine. This is fine.' },
+  ];
+
   // ========== 50+ CRYPTOCURRENCY ASSETS ==========
-  // Top 50+ cryptocurrencies by market cap (Binance Futures supported)
   const SYMBOLS = [
-    // Major Coins
     'BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'SOLUSDT', 'XRPUSDT', 'DOGEUSDT', 'ADAUSDT', 
     'AVAXUSDT', 'DOTUSDT', 'LINKUSDT', 'MATICUSDT', 'UNIUSDT', 'ATOMUSDT', 'LTCUSDT',
     'NEARUSDT', 'ALGOUSDT', 'VETUSDT', 'ICPUSDT', 'FILUSDT', 'EGLDUSDT', 'AAVEUSDT',
     'XTZUSDT', 'THETAUSDT', 'EOSUSDT', 'KSMUSDT', 'ZECUSDT', 'XLMUSDT', 'TRXUSDT',
-    // DeFi & Layer 2
     'ARBUSDT', 'OPUSDT', 'IMXUSDT', 'MKRUSDT', 'CRVUSDT', 'SUSHIUSDT', 'COMPUSDT',
     '1INCHUSDT', 'SNXUSDT', 'RUNEUSDT', 'FLOWUSDT', 'STXUSDT', 'SANDUSDT', 'MANAUSDT',
-    // Gaming & Metaverse
     'GALAUSDT', 'AXSUSDT', 'ENJUSDT', 'ILVUSDT', 'YGGUSDT', 'APEUSDT', 'MAGICUSDT',
-    // Memes & Community
     'SHIBUSDT', 'PEPEUSDT', 'FLOKIUSDT', 'BONKUSDT', 'WIFUSDT',
-    // Infrastructure
     'INJUSDT', 'TIAUSDT', 'SEIUSDT', 'SUIUSDT', 'APTUSDT', 'ARUSDT', 'RNDRUSDT',
     'FETUSDT', 'AGIXUSDT', 'OCEANUSDT'
   ];
@@ -704,6 +884,70 @@
   let pairDataCache = new Map();
   let countdownInterval = null;
   let searchQuery = '';
+  let loadingInterval = null;
+
+  // ========== LOADING OVERLAY FUNCTIONS ==========
+  function updateLoadingMessage() {
+    const msgEl = document.getElementById('loadingMessage');
+    const randomMsg = LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)];
+    msgEl.innerHTML = `<span class="emoji">${randomMsg.emoji}</span> ${randomMsg.text}`;
+    // Add a small fade effect
+    msgEl.style.opacity = '0';
+    setTimeout(() => {
+      msgEl.style.opacity = '1';
+    }, 50);
+  }
+
+  function updateLoadingProgress(percent) {
+    const bar = document.getElementById('loadingBar');
+    const percentEl = document.getElementById('loadingPercent');
+    bar.style.width = `${Math.min(100, percent)}%`;
+    percentEl.textContent = `${Math.min(100, Math.round(percent))}%`;
+  }
+
+  function hideLoadingOverlay() {
+    document.getElementById('loadingOverlay').classList.add('hidden');
+    if (loadingInterval) {
+      clearInterval(loadingInterval);
+      loadingInterval = null;
+    }
+  }
+
+  function startLoadingAnimation() {
+    // Initial message
+    updateLoadingMessage();
+    
+    // Change message every 3 seconds
+    loadingInterval = setInterval(() => {
+      updateLoadingMessage();
+    }, 3000);
+    
+    // Start progress bar animation (simulated until actual progress)
+    let progress = 0;
+    const progressInterval = setInterval(() => {
+      // Gradually increase, but never reach 100% until actually done
+      const increment = Math.random() * 8 + 2;
+      progress = Math.min(progress + increment, 95);
+      updateLoadingProgress(progress);
+    }, 600);
+    
+    // Store interval to clear later
+    window._progressInterval = progressInterval;
+  }
+
+  function finishLoading() {
+    // Complete the progress bar
+    updateLoadingProgress(100);
+    
+    // Small delay before hiding for a satisfying finish
+    setTimeout(() => {
+      hideLoadingOverlay();
+      if (window._progressInterval) {
+        clearInterval(window._progressInterval);
+        window._progressInterval = null;
+      }
+    }, 600);
+  }
 
   // ========== PERSISTENCE ==========
   const STORAGE_KEYS = { BALANCE: 'futuresedge_balance', OPEN_TRADES: 'futuresedge_open_trades', HISTORY: 'futuresedge_history' };
@@ -798,16 +1042,27 @@
 
   async function scanAllPairs() {
     const symbolsToScan = SYMBOLS;
+    let completed = 0;
+    const total = symbolsToScan.length;
+    
     for(let sym of symbolsToScan) {
       const [candles, ticker] = await Promise.all([fetchKlines(sym), fetchTicker(sym)]);
       if(candles.length && ticker.price) {
         const analysis = await analyzePair(sym, candles, ticker);
         pairDataCache.set(sym, { candles, ticker, analysis });
       }
+      completed++;
+      // Update progress
+      const percent = (completed / total) * 100;
+      updateLoadingProgress(percent);
     }
+    
     renderPairSidebar();
     if(currentPair && pairDataCache.has(currentPair)) renderSignalCard(currentPair);
     document.getElementById('asset-count').innerHTML = `${SYMBOLS.length} assets`;
+    
+    // Finish loading animation
+    finishLoading();
   }
 
   function renderPairSidebar() {
@@ -1072,7 +1327,13 @@
     loadPersistedData();
     initTimeframeButtons();
     startCountdown();
+    
+    // Start loading animation
+    startLoadingAnimation();
+    
+    // Load data with progress tracking
     await scanAllPairs();
+    
     renderOpenTradesTable();
     renderHistoryTable();
     updateHeaderAndMetrics();
