@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
   <title>Quorix Futures Bot | 50+ Assets Paper Trading Terminal</title>
-  <!-- Lightweight Charts for beautiful candlestick charts -->
+  <!-- Lightweight Charts -->
   <script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -222,7 +222,6 @@
     .accent-blue { color: #3b82f6; font-weight: 700; }
     .no-results { text-align: center; padding: 20px; color: var(--text-secondary); font-size: 12px; width: 100%; }
 
-    /* Chart container */
     .chart-container {
       height: 420px;
       width: 100%;
@@ -236,12 +235,7 @@
       width: 100% !important;
       height: 100% !important;
     }
-    .chart-container .tv-lightweight-charts {
-      width: 100% !important;
-      height: 100% !important;
-    }
 
-    /* Loading overlay */
     .loading-overlay {
       position: fixed; inset: 0; background: rgba(3, 5, 10, 0.92);
       backdrop-filter: blur(12px); display: flex; flex-direction: column;
@@ -298,7 +292,6 @@
 
 <!-- DASHBOARD -->
 <div class="dashboard">
-  <!-- Side Panel -->
   <div class="side-panel">
     <div class="tf-selector">
       <div style="font-size: 10px; color: var(--text-secondary);">TIMEFRAME</div>
@@ -315,9 +308,7 @@
     <div class="pair-list" id="pair-list-container"></div>
   </div>
 
-  <!-- Main Area -->
   <div class="main-area">
-    <!-- Signal Card -->
     <div class="signal-card" id="signal-card">
       <div class="signal-header">
         <div><span id="signal-pair-name" style="font-size: 18px; font-weight: 700;">BTC/USDT</span><div style="font-size: 9px;" id="signal-meta"></div></div>
@@ -336,10 +327,8 @@
       </div>
     </div>
 
-    <!-- Chart Container -->
     <div class="chart-container" id="chart-container"></div>
 
-    <!-- Tabs & Tables -->
     <div class="tabs">
       <button class="tab-btn active" data-tab="open">📂 OPEN (0)</button>
       <button class="tab-btn" data-tab="history">📜 HISTORY</button>
@@ -383,7 +372,7 @@
 <div class="toast-container" id="toast-container"></div>
 
 <script>
-  // ========== 50+ CRYPTO ASSETS ==========
+  // ========== CONSTANTS ==========
   const SYMBOLS = [
     'BTCUSDT', 'ETHUSDT', 'BNBUSDT', 'SOLUSDT', 'XRPUSDT', 'DOGEUSDT', 'ADAUSDT',
     'AVAXUSDT', 'DOTUSDT', 'LINKUSDT', 'MATICUSDT', 'UNIUSDT', 'ATOMUSDT', 'LTCUSDT',
@@ -397,113 +386,164 @@
     'FETUSDT', 'AGIXUSDT', 'OCEANUSDT'
   ];
   const TIMEFRAMES = ['1m','5m','15m','1h'];
-  let currentTF = '5m';
-  let currentPair = 'BTCUSDT';
-  let balance = 10000;
-  let openTrades = [];
-  let closedHistory = [];
-  let pairDataCache = new Map();
-  let countdownInterval = null;
-  let searchQuery = '';
-  let isLoadingComplete = false;
+
+  // ========== STATE ==========
+  let state = {
+    currentTF: '5m',
+    currentPair: 'BTCUSDT',
+    balance: 10000,
+    openTrades: [],
+    closedHistory: [],
+    pairData: new Map(),
+    searchQuery: '',
+    isInitialized: false,
+    isScanning: false
+  };
+
+  // ========== DOM REFS ==========
+  const $ = id => document.getElementById(id);
+  const dom = {
+    loadingOverlay: $('loadingOverlay'),
+    loadingMessage: $('loadingMessage'),
+    loadingBar: $('loadingBar'),
+    loadingPercent: $('loadingPercent'),
+    headerBalance: $('header-balance'),
+    headerUpnl: $('header-upnl'),
+    pairList: $('pair-list-container'),
+    signalPair: $('signal-pair-name'),
+    signalMeta: $('signal-meta'),
+    scoreValue: $('score-value'),
+    scoreRing: $('score-ring-path'),
+    signalDirection: $('signal-direction'),
+    signalConfidence: $('signal-confidence'),
+    signalAnalysis: $('signal-analysis'),
+    levelsContainer: $('levels-container'),
+    tradeButtons: $('trade-buttons-container'),
+    openPositions: $('open-positions-body'),
+    historyBody: $('history-body'),
+    countdownDisplay: $('countdown-display'),
+    progressFill: $('progress-fill'),
+    metricWr: $('metric-wr'),
+    metricTotal: $('metric-total'),
+    metricPf: $('metric-pf'),
+    metricExp: $('metric-exp'),
+    chartContainer: $('chart-container')
+  };
+
   let chart = null;
   let candlestickSeries = null;
+  let countdownInterval = null;
+  let loadingInterval = null;
+  let isChartUpdating = false;
 
   // ========== LOADING FUNCTIONS ==========
   const LOADING_MESSAGES = [
     { emoji: '🔮', text: 'Consulting the crypto crystal ball...' },
     { emoji: '🤖', text: 'Training the trading AI with memes...' },
     { emoji: '📊', text: 'Drawing lines that definitely mean something...' },
-    { emoji: '🦄', text: 'Searching for the next 100x gem...' },
-    { emoji: '☕', text: 'Brewing fresh market analysis...' },
     { emoji: '🚀', text: 'Preparing for moon mission...' },
-    { emoji: '🐶', text: 'Asking Doge for financial advice...' },
-    { emoji: '🧠', text: 'Using 100% of the brain (finally)...' },
     { emoji: '📈', text: 'Making lines go up (we hope)...' },
     { emoji: '🎲', text: 'Rolling the crypto dice...' },
-    { emoji: '🌊', text: 'Riding the volatility wave...' },
     { emoji: '🤑', text: 'Counting imaginary profits...' },
-    { emoji: '🤡', text: 'Pretending to know what we\'re doing...' },
     { emoji: '🎯', text: 'Aiming for the moon, landing on Mars...' },
     { emoji: '💎', text: 'Checking diamond hands status...' },
-    { emoji: '🔄', text: 'Buying high, selling low... just kidding!' },
     { emoji: '🧘', text: 'Meditating on the candlesticks...' },
-    { emoji: '⚡', text: 'Channeling Elon\'s energy...' },
-    { emoji: '🎭', text: 'Watching the market drama unfold...' },
+    { emoji: '⚡', text: 'Channeling market energy...' },
     { emoji: '🍿', text: 'Grab popcorn, market is volatile!' },
     { emoji: '🤞', text: 'Crossing fingers for green candles...' },
-    { emoji: '🏦', text: 'Bribing the market experts...' },
-    { emoji: '📚', text: 'Reading the crypto textbook we didn\'t write...' },
-    { emoji: '🧪', text: 'Mixing technical analysis with chaos...' },
-    { emoji: '🎪', text: 'Welcome to the crypto circus!' },
-    { emoji: '🔥', text: 'Everything is fine. This is fine.' },
   ];
-  let loadingInterval = null;
 
   function updateLoadingMessage() {
-    if (isLoadingComplete) return;
-    const msgEl = document.getElementById('loadingMessage');
-    const randomMsg = LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)];
-    msgEl.innerHTML = `<span class="emoji">${randomMsg.emoji}</span> ${randomMsg.text}`;
-    msgEl.style.opacity = '0';
-    setTimeout(() => msgEl.style.opacity = '1', 50);
+    if (state.isInitialized) return;
+    const msg = LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)];
+    dom.loadingMessage.innerHTML = `<span class="emoji">${msg.emoji}</span> ${msg.text}`;
   }
+
   function updateLoadingProgress(percent) {
-    const bar = document.getElementById('loadingBar');
-    const percentEl = document.getElementById('loadingPercent');
     const clamped = Math.min(100, Math.max(0, percent));
-    bar.style.width = `${clamped}%`;
-    percentEl.textContent = `${Math.round(clamped)}%`;
+    dom.loadingBar.style.width = `${clamped}%`;
+    dom.loadingPercent.textContent = `${Math.round(clamped)}%`;
   }
+
   function hideLoadingOverlay() {
-    document.getElementById('loadingOverlay').classList.add('hidden');
-    if (loadingInterval) { clearInterval(loadingInterval); loadingInterval = null; }
+    dom.loadingOverlay.classList.add('hidden');
+    if (loadingInterval) clearInterval(loadingInterval);
   }
+
   function startLoadingAnimation() {
-    isLoadingComplete = false;
+    state.isInitialized = false;
     updateLoadingMessage();
-    loadingInterval = setInterval(updateLoadingMessage, 3000);
+    loadingInterval = setInterval(updateLoadingMessage, 2500);
     updateLoadingProgress(0);
   }
+
   function finishLoading() {
-    isLoadingComplete = true;
+    state.isInitialized = true;
     updateLoadingProgress(100);
     setTimeout(hideLoadingOverlay, 400);
   }
 
   // ========== PERSISTENCE ==========
-  const STORAGE_KEYS = { BALANCE: 'futuresedge_balance', OPEN_TRADES: 'futuresedge_open_trades', HISTORY: 'futuresedge_history' };
+  const STORAGE_KEYS = {
+    BALANCE: 'quorix_balance',
+    OPEN_TRADES: 'quorix_open_trades',
+    HISTORY: 'quorix_history'
+  };
+
   function loadPersistedData() {
-    const savedBalance = localStorage.getItem(STORAGE_KEYS.BALANCE);
-    if (savedBalance && !isNaN(parseFloat(savedBalance))) balance = parseFloat(savedBalance);
-    const savedTrades = localStorage.getItem(STORAGE_KEYS.OPEN_TRADES);
-    if (savedTrades) { try { openTrades = JSON.parse(savedTrades); } catch(e) { openTrades = []; } }
-    const savedHistory = localStorage.getItem(STORAGE_KEYS.HISTORY);
-    if (savedHistory) { try { closedHistory = JSON.parse(savedHistory); } catch(e) { closedHistory = []; } }
-    openTrades = openTrades.map(t => ({ ...t, currentPrice: t.entryPrice, unrealizedPnl: 0 }));
-  }
-  function persistAll() {
-    localStorage.setItem(STORAGE_KEYS.BALANCE, balance.toString());
-    localStorage.setItem(STORAGE_KEYS.OPEN_TRADES, JSON.stringify(openTrades));
-    localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(closedHistory));
+    try {
+      const savedBalance = localStorage.getItem(STORAGE_KEYS.BALANCE);
+      if (savedBalance) state.balance = parseFloat(savedBalance) || 10000;
+      
+      const savedTrades = localStorage.getItem(STORAGE_KEYS.OPEN_TRADES);
+      if (savedTrades) state.openTrades = JSON.parse(savedTrades) || [];
+      
+      const savedHistory = localStorage.getItem(STORAGE_KEYS.HISTORY);
+      if (savedHistory) state.closedHistory = JSON.parse(savedHistory) || [];
+      
+      state.openTrades = state.openTrades.map(t => ({
+        ...t,
+        currentPrice: t.entryPrice,
+        unrealizedPnl: 0
+      }));
+    } catch(e) {
+      console.warn('Failed to load persisted data:', e);
+    }
   }
 
+  function persistAll() {
+    try {
+      localStorage.setItem(STORAGE_KEYS.BALANCE, state.balance.toString());
+      localStorage.setItem(STORAGE_KEYS.OPEN_TRADES, JSON.stringify(state.openTrades));
+      localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(state.closedHistory));
+    } catch(e) {
+      console.warn('Failed to persist data:', e);
+    }
+  }
+
+  // ========== UTILITY FUNCTIONS ==========
   const formatPrice = (p) => p ? `$${p.toLocaleString(undefined, {minimumFractionDigits: p<1?4:2})}` : '--';
   const formatShort = (p) => p ? `$${p.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}` : '--';
-  const toast = (msg, type='info') => {
-    const cont = document.getElementById('toast-container');
+
+  function toast(msg, type = 'info') {
+    const container = document.getElementById('toast-container');
     const t = document.createElement('div');
     t.className = 'toast';
     t.style.borderLeftColor = type === 'win' ? '#10b981' : type === 'loss' ? '#ef4444' : '#3b82f6';
     t.innerText = msg;
-    cont.appendChild(t);
+    container.appendChild(t);
     setTimeout(() => t.remove(), 2500);
-  };
-
-  // ========== BINANCE API HELPERS ==========
-  async function fetchRealtimePrice(sym) {
-    try { const res = await fetch(`https://fapi.binance.com/fapi/v1/ticker/price?symbol=${sym}`); const data = await res.json(); return parseFloat(data.price); } catch(e) { return null; }
   }
+
+  // ========== API HELPERS ==========
+  async function fetchRealtimePrice(sym) {
+    try {
+      const res = await fetch(`https://fapi.binance.com/fapi/v1/ticker/price?symbol=${sym}`);
+      const data = await res.json();
+      return parseFloat(data.price);
+    } catch(e) { return null; }
+  }
+
   async function fetchTicker(sym) {
     try {
       const [priceRes, changeRes] = await Promise.all([
@@ -512,97 +552,89 @@
       ]);
       const priceData = await priceRes.json();
       const changeData = await changeRes.json();
-      return { price: parseFloat(priceData.price), change24h: parseFloat(changeData.priceChangePercent || 0) };
-    } catch(e) { return { price: 0, change24h: 0 }; }
+      return {
+        price: parseFloat(priceData.price),
+        change24h: parseFloat(changeData.priceChangePercent || 0)
+      };
+    } catch(e) {
+      return { price: 0, change24h: 0 };
+    }
   }
+
   async function fetchKlines(sym, limit = 100) {
     try {
-      const res = await fetch(`https://fapi.binance.com/fapi/v1/klines?symbol=${sym}&interval=${currentTF}&limit=${limit}`);
+      const res = await fetch(`https://fapi.binance.com/fapi/v1/klines?symbol=${sym}&interval=${state.currentTF}&limit=${limit}`);
       const data = await res.json();
       if (!Array.isArray(data)) return [];
-      return data.map(k => ({ 
-        time: k[0] / 1000, // Convert to seconds for lightweight-charts
-        open: +k[1], 
-        high: +k[2], 
-        low: +k[3], 
-        close: +k[4], 
+      return data.map(k => ({
+        time: k[0] / 1000,
+        open: +k[1],
+        high: +k[2],
+        low: +k[3],
+        close: +k[4],
         volume: +k[5]
       }));
-    } catch(e) { return []; }
+    } catch(e) {
+      return [];
+    }
   }
 
-  async function analyzePair(symbol, candles, ticker) {
+  function analyzePair(symbol, candles, ticker) {
     const closes = candles.map(c => c.close);
-    if (closes.length < 30) return { signal: 'NEUTRAL', score: 50, entry: ticker.price, sl: 0, tp1: 0, rr: 0, atr: 0 };
+    if (closes.length < 30) {
+      return { signal: 'NEUTRAL', score: 50, entry: ticker.price, sl: 0, tp1: 0, rr: 0, atr: 0 };
+    }
     const price = ticker.price;
-    const ema9 = closes.slice(-9).reduce((a,b)=>a+b,0)/9;
-    const ema21 = closes.slice(-21).reduce((a,b)=>a+b,0)/21;
-    let gains=0, losses=0;
-    for (let i=closes.length-14; i<closes.length; i++) {
-      let diff = closes[i] - closes[i-1];
-      if (diff>0) gains+=diff; else losses-=diff;
+    const ema9 = closes.slice(-9).reduce((a,b) => a + b, 0) / 9;
+    const ema21 = closes.slice(-21).reduce((a,b) => a + b, 0) / 21;
+    let gains = 0, losses = 0;
+    for (let i = closes.length - 14; i < closes.length; i++) {
+      const diff = closes[i] - closes[i-1];
+      if (diff > 0) gains += diff;
+      else losses -= diff;
     }
-    let rsi = gains+losses===0 ? 50 : 100 - (100/(1+(gains/14)/(losses/14)));
-    let macdLine = ema9 - ema21;
-    let volatility = (Math.max(...closes.slice(-14)) - Math.min(...closes.slice(-14))) / price;
-    let atr = volatility * price;
+    const rsi = gains + losses === 0 ? 50 : 100 - (100 / (1 + (gains/14) / (losses/14)));
+    const macdLine = ema9 - ema21;
+    const volatility = (Math.max(...closes.slice(-14)) - Math.min(...closes.slice(-14))) / price;
+    const atr = volatility * price;
     let bullScore = 0, bearScore = 0;
-    if (ema9 > ema21) bullScore+=28; else bearScore+=28;
-    if (rsi < 35) bullScore+=28; else if (rsi > 65) bearScore+=28;
-    if (macdLine > 0) bullScore+=22; else bearScore+=22;
-    if (ticker.change24h > 1.2) bullScore+=12; else if (ticker.change24h < -1.2) bearScore+=12;
-    let total = bullScore + bearScore;
-    let finalScore = total ? (bullScore/total)*100 : 50;
-    let signalDir = finalScore >= 65 ? 'LONG' : (finalScore <= 35 ? 'SHORT' : 'NEUTRAL');
-    let sl = signalDir === 'LONG' ? price - atr * 1.6 : price + atr * 1.6;
-    let tp1 = signalDir === 'LONG' ? price + atr * 2.5 : price - atr * 2.5;
-    let rr = Math.abs(tp1-price) / Math.abs(price-sl);
-    return { signal: signalDir, score: Math.round(finalScore), entry: price, sl, tp1, rr, atr, rsi: rsi.toFixed(0) };
+    if (ema9 > ema21) bullScore += 28;
+    else bearScore += 28;
+    if (rsi < 35) bullScore += 28;
+    else if (rsi > 65) bearScore += 28;
+    if (macdLine > 0) bullScore += 22;
+    else bearScore += 22;
+    if (ticker.change24h > 1.2) bullScore += 12;
+    else if (ticker.change24h < -1.2) bearScore += 12;
+    const total = bullScore + bearScore;
+    const finalScore = total ? (bullScore / total) * 100 : 50;
+    const signalDir = finalScore >= 65 ? 'LONG' : (finalScore <= 35 ? 'SHORT' : 'NEUTRAL');
+    const sl = signalDir === 'LONG' ? price - atr * 1.6 : price + atr * 1.6;
+    const tp1 = signalDir === 'LONG' ? price + atr * 2.5 : price - atr * 2.5;
+    const rr = Math.abs(tp1 - price) / Math.abs(price - sl);
+    return {
+      signal: signalDir,
+      score: Math.round(finalScore),
+      entry: price,
+      sl,
+      tp1,
+      rr,
+      atr,
+      rsi: rsi.toFixed(0)
+    };
   }
 
-  // ========== SCAN ALL PAIRS ==========
-  async function scanAllPairs() {
-    const symbolsToScan = SYMBOLS;
-    let completed = 0;
-    const total = symbolsToScan.length;
-    const concurrencyLimit = 10;
-    const batches = [];
-    for (let i = 0; i < symbolsToScan.length; i += concurrencyLimit) {
-      batches.push(symbolsToScan.slice(i, i + concurrencyLimit));
-    }
-    for (const batch of batches) {
-      await Promise.all(batch.map(async (sym) => {
-        try {
-          const [candles, ticker] = await Promise.all([fetchKlines(sym, 80), fetchTicker(sym)]);
-          if (candles.length && ticker.price) {
-            const analysis = await analyzePair(sym, candles, ticker);
-            pairDataCache.set(sym, { candles, ticker, analysis });
-          }
-        } catch(e) {}
-        completed++;
-        updateLoadingProgress((completed / total) * 100);
-      }));
-    }
-    renderPairSidebar();
-    if (currentPair && pairDataCache.has(currentPair)) {
-      renderSignalCard(currentPair);
-      updateChart(currentPair);
-    }
-    finishLoading();
-  }
-
-  // ========== CHART FUNCTIONS (Lightweight Charts) ==========
+  // ========== CHART FUNCTIONS ==========
   function initChart() {
     if (chart) {
       chart.remove();
       chart = null;
       candlestickSeries = null;
     }
-    const container = document.getElementById('chart-container');
-    if (!container) return;
+    if (!dom.chartContainer) return false;
     
     try {
-      chart = LightweightCharts.createChart(container, {
+      chart = LightweightCharts.createChart(dom.chartContainer, {
         layout: {
           background: { color: '#03050a' },
           textColor: '#8b92b0',
@@ -622,8 +654,8 @@
           timeVisible: true,
           secondsVisible: false,
         },
-        width: container.clientWidth,
-        height: container.clientHeight || 420,
+        width: dom.chartContainer.clientWidth || 400,
+        height: dom.chartContainer.clientHeight || 420,
       });
       
       candlestickSeries = chart.addCandlestickSeries({
@@ -635,38 +667,43 @@
         wickUpColor: '#10b981',
       });
       
-      // Handle resize
-      window.addEventListener('resize', () => {
-        if (chart) {
-          const rect = container.getBoundingClientRect();
-          chart.applyOptions({ 
+      const resizeObserver = new ResizeObserver(() => {
+        if (chart && dom.chartContainer) {
+          const rect = dom.chartContainer.getBoundingClientRect();
+          chart.applyOptions({
             width: rect.width,
             height: rect.height || 420
           });
         }
       });
+      resizeObserver.observe(dom.chartContainer);
       
       return true;
     } catch(e) {
-      console.error('Chart init error:', e);
+      console.warn('Chart init error:', e);
       return false;
     }
   }
 
   async function updateChart(symbol) {
+    if (isChartUpdating) return;
+    isChartUpdating = true;
+    
     try {
       const candles = await fetchKlines(symbol, 100);
       if (!candles || candles.length === 0) {
-        console.warn('No candle data for', symbol);
+        isChartUpdating = false;
         return;
       }
       
       if (!chart || !candlestickSeries) {
         const inited = initChart();
-        if (!inited) return;
+        if (!inited) {
+          isChartUpdating = false;
+          return;
+        }
       }
       
-      // Format data for lightweight-charts
       const chartData = candles.map(c => ({
         time: c.time,
         open: c.open,
@@ -679,84 +716,152 @@
       chart.timeScale().fitContent();
       
     } catch(e) {
-      console.error('Chart update error:', e);
+      console.warn('Chart update error:', e);
+    } finally {
+      isChartUpdating = false;
+    }
+  }
+
+  // ========== SCAN PAIRS ==========
+  async function scanAllPairs(showProgress = true) {
+    if (state.isScanning) return;
+    state.isScanning = true;
+    
+    const symbolsToScan = SYMBOLS;
+    let completed = 0;
+    const total = symbolsToScan.length;
+    const concurrencyLimit = 8;
+    
+    const batches = [];
+    for (let i = 0; i < symbolsToScan.length; i += concurrencyLimit) {
+      batches.push(symbolsToScan.slice(i, i + concurrencyLimit));
+    }
+    
+    for (const batch of batches) {
+      await Promise.all(batch.map(async (sym) => {
+        try {
+          const [candles, ticker] = await Promise.all([
+            fetchKlines(sym, 80),
+            fetchTicker(sym)
+          ]);
+          if (candles.length && ticker.price) {
+            const analysis = analyzePair(sym, candles, ticker);
+            state.pairData.set(sym, { candles, ticker, analysis });
+          }
+        } catch(e) {
+          // Silent fail for individual pairs
+        }
+        completed++;
+        if (showProgress) {
+          updateLoadingProgress((completed / total) * 100);
+        }
+      }));
+    }
+    
+    state.isScanning = false;
+    renderPairSidebar();
+    
+    if (state.currentPair && state.pairData.has(state.currentPair)) {
+      renderSignalCard(state.currentPair);
     }
   }
 
   // ========== RENDER FUNCTIONS ==========
   function renderPairSidebar() {
-    const container = document.getElementById('pair-list-container');
-    const filtered = SYMBOLS.filter(sym => 
-      sym.toLowerCase().replace('usdt','').includes(searchQuery.toLowerCase()) ||
-      sym.toLowerCase().includes(searchQuery.toLowerCase())
+    const filtered = SYMBOLS.filter(sym =>
+      sym.toLowerCase().replace('usdt', '').includes(state.searchQuery.toLowerCase()) ||
+      sym.toLowerCase().includes(state.searchQuery.toLowerCase())
     );
-    if (!filtered.length) { container.innerHTML = '<div class="no-results">🔍 No matching assets found</div>'; return; }
-    container.innerHTML = filtered.map(sym => {
-      const data = pairDataCache.get(sym);
+    
+    if (!filtered.length) {
+      dom.pairList.innerHTML = '<div class="no-results">🔍 No matching assets found</div>';
+      return;
+    }
+    
+    dom.pairList.innerHTML = filtered.map(sym => {
+      const data = state.pairData.get(sym);
       const sig = data?.analysis.signal || 'NEUTRAL';
       const score = data?.analysis.score || 0;
       const price = data?.ticker.price;
-      const displayName = sym.replace('USDT','');
-      return `<div class="pair-row ${currentPair === sym ? 'active' : ''}" onclick="selectPair('${sym}')">
-        <div class="pair-info"><div class="pair-symbol">${displayName}</div><div class="pair-price">${price ? formatShort(price) : '--'}</div></div>
+      const displayName = sym.replace('USDT', '');
+      const isActive = state.currentPair === sym;
+      return `<div class="pair-row ${isActive ? 'active' : ''}" onclick="selectPair('${sym}')">
+        <div class="pair-info">
+          <div class="pair-symbol">${displayName}</div>
+          <div class="pair-price">${price ? formatShort(price) : '--'}</div>
+        </div>
         <span class="signal-badge ${sig === 'LONG' ? 'sig-long' : (sig === 'SHORT' ? 'sig-short' : '')}">${sig} ${score}</span>
       </div>`;
     }).join('');
   }
 
   function renderSignalCard(sym) {
-    const cache = pairDataCache.get(sym);
+    const cache = state.pairData.get(sym);
     if (!cache) return;
     const a = cache.analysis;
-    document.getElementById('signal-pair-name').innerHTML = sym.replace('USDT','/USDT');
-    document.getElementById('signal-meta').innerHTML = `24h: ${cache.ticker.change24h>0?'+':''}${cache.ticker.change24h.toFixed(2)}% | Real-time: ${formatPrice(cache.ticker.price)}`;
-    document.getElementById('score-value').innerText = a.score;
+    
+    dom.signalPair.textContent = sym.replace('USDT', '/USDT');
+    dom.signalMeta.innerHTML = `24h: ${cache.ticker.change24h > 0 ? '+' : ''}${cache.ticker.change24h.toFixed(2)}% | Real-time: ${formatPrice(cache.ticker.price)}`;
+    dom.scoreValue.textContent = a.score;
+    
     const circumference = 150.8;
     const offset = circumference - (a.score / 100) * circumference;
-    const ring = document.getElementById('score-ring-path');
-    ring.style.strokeDashoffset = offset;
-    ring.style.stroke = a.signal === 'LONG' ? '#10b981' : a.signal === 'SHORT' ? '#ef4444' : '#f59e0b';
-    document.getElementById('signal-direction').innerHTML = a.signal;
-    document.getElementById('signal-direction').style.color = a.signal === 'LONG' ? '#10b981' : a.signal === 'SHORT' ? '#ef4444' : '#f59e0b';
-    document.getElementById('signal-confidence').innerHTML = `Score ${a.score} | ${a.score>70?'High':a.score>50?'Medium':'Low'}`;
-    document.getElementById('signal-analysis').innerHTML = `📊 RSI: ${a.rsi} | R/R: 1:${a.rr.toFixed(2)} | ATR: $${a.atr?.toFixed(2) || 0}`;
-    document.getElementById('levels-container').innerHTML = `
+    dom.scoreRing.style.strokeDashoffset = offset;
+    dom.scoreRing.style.stroke = a.signal === 'LONG' ? '#10b981' : a.signal === 'SHORT' ? '#ef4444' : '#f59e0b';
+    
+    dom.signalDirection.textContent = a.signal;
+    dom.signalDirection.style.color = a.signal === 'LONG' ? '#10b981' : a.signal === 'SHORT' ? '#ef4444' : '#f59e0b';
+    dom.signalConfidence.textContent = `Score ${a.score} | ${a.score > 70 ? 'High' : a.score > 50 ? 'Medium' : 'Low'}`;
+    dom.signalAnalysis.innerHTML = `📊 RSI: ${a.rsi} | R/R: 1:${a.rr.toFixed(2)} | ATR: $${a.atr?.toFixed(2) || 0}`;
+    
+    dom.levelsContainer.innerHTML = `
       <div class="level-item"><div>🎯 Entry</div><div class="up">${formatPrice(a.entry)}</div></div>
       <div class="level-item"><div>🛑 SL</div><div class="down">${formatPrice(a.sl)}</div></div>
       <div class="level-item"><div>✅ TP</div><div class="up">${formatPrice(a.tp1)}</div></div>
     `;
+    
     const canLong = a.signal === 'LONG' && a.score >= 60;
     const canShort = a.signal === 'SHORT' && a.score >= 60;
-    document.getElementById('trade-buttons-container').innerHTML = `
+    dom.tradeButtons.innerHTML = `
       <button class="btn-long ${!canLong ? 'btn-disabled' : ''}" onclick="openTradeModal('LONG', '${sym}')">▲ LONG</button>
       <button class="btn-short ${!canShort ? 'btn-disabled' : ''}" onclick="openTradeModal('SHORT', '${sym}')">▼ SHORT</button>
     `;
   }
 
   function renderOpenTradesTable() {
-    const tbody = document.getElementById('open-positions-body');
-    if (!openTrades.length) { tbody.innerHTML = '<tr><td colspan="11" style="text-align:center;">No open positions</td></tr>'; return; }
-    tbody.innerHTML = openTrades.map(t => `
+    if (!state.openTrades.length) {
+      dom.openPositions.innerHTML = '<tr><td colspan="11" style="text-align:center;">No open positions</td></tr>';
+      return;
+    }
+    dom.openPositions.innerHTML = state.openTrades.map(t => `
       <tr>
-        <td>${t.symbol}</td><td class="${t.side==='LONG'?'up':'down'}">${t.side}</td>
-        <td>${formatPrice(t.entryPrice)}</td><td>$${t.initialMargin}</td>
+        <td>${t.symbol}</td>
+        <td class="${t.side === 'LONG' ? 'up' : 'down'}">${t.side}</td>
+        <td>${formatPrice(t.entryPrice)}</td>
+        <td>$${t.initialMargin}</td>
         <td class="accent-blue">${t.leverage}x</td>
-        <td class="down">${formatPrice(t.sl)}</td><td class="up">${formatPrice(t.tp)}</td>
+        <td class="down">${formatPrice(t.sl)}</td>
+        <td class="up">${formatPrice(t.tp)}</td>
         <td>${formatPrice(t.currentPrice)}</td>
-        <td class="${t.unrealizedPnl>=0?'up':'down'}">${t.unrealizedPnl>=0?'+':''}$${t.unrealizedPnl?.toFixed(2)||0}</td>
+        <td class="${t.unrealizedPnl >= 0 ? 'up' : 'down'}">${t.unrealizedPnl >= 0 ? '+' : ''}$${t.unrealizedPnl?.toFixed(2) || 0}</td>
         <td><button class="close-btn" onclick="closeTradeById(${t.id}, 'Manual')">✕ CLOSE</button></td>
       </tr>
     `).join('');
   }
 
   function renderHistoryTable() {
-    const hbody = document.getElementById('history-body');
-    if (!closedHistory.length) { hbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No closed trades</td></tr>'; return; }
-    hbody.innerHTML = closedHistory.map(h => `
+    if (!state.closedHistory.length) {
+      dom.historyBody.innerHTML = '<tr><td colspan="7" style="text-align:center;">No closed trades</td></tr>';
+      return;
+    }
+    dom.historyBody.innerHTML = state.closedHistory.map(h => `
       <tr>
-        <td>${h.closedAt}</td><td>${h.symbol}</td><td class="${h.side==='LONG'?'up':'down'}">${h.side}</td>
-        <td>${formatPrice(h.entryPrice)}</td><td>${formatPrice(h.exitPrice)}</td>
-        <td class="${h.realizedPnl>=0?'up':'down'}">${h.realizedPnl>=0?'+':''}$${h.realizedPnl.toFixed(2)}</td>
+        <td>${h.closedAt}</td>
+        <td>${h.symbol}</td>
+        <td class="${h.side === 'LONG' ? 'up' : 'down'}">${h.side}</td>
+        <td>${formatPrice(h.entryPrice)}</td>
+        <td>${formatPrice(h.exitPrice)}</td>
+        <td class="${h.realizedPnl >= 0 ? 'up' : 'down'}">${h.realizedPnl >= 0 ? '+' : ''}$${h.realizedPnl.toFixed(2)}</td>
         <td>${h.closeReason}</td>
       </tr>
     `).join('');
@@ -764,41 +869,55 @@
 
   function updateOpenCount() {
     const btn = document.querySelector('.tab-btn[data-tab="open"]');
-    if (btn) btn.innerHTML = `📂 OPEN (${openTrades.length})`;
+    if (btn) btn.innerHTML = `📂 OPEN (${state.openTrades.length})`;
   }
 
   function updateHeaderAndMetrics() {
-    const totalUpnl = openTrades.reduce((acc,t)=>acc+(t.unrealizedPnl||0),0);
-    document.getElementById('header-balance').innerHTML = balance >= 10000 ? `$${Math.round(balance/1000)}k` : `$${balance.toFixed(0)}`;
-    document.getElementById('header-upnl').innerHTML = `${totalUpnl>=0?'+':''}$${totalUpnl.toFixed(0)}`;
-    const wins = closedHistory.filter(t=>t.realizedPnl>0).length;
-    const total = closedHistory.length;
-    const wr = total ? ((wins/total)*100).toFixed(0) : '--';
-    document.getElementById('metric-wr').innerHTML = wr !== '--' ? `${wr}%` : '--';
-    document.getElementById('metric-total').innerHTML = total;
-    let grossProfit = closedHistory.filter(t=>t.realizedPnl>0).reduce((a,b)=>a+b.realizedPnl,0);
-    let grossLoss = Math.abs(closedHistory.filter(t=>t.realizedPnl<0).reduce((a,b)=>a+b.realizedPnl,0));
-    let pf = grossLoss>0 ? (grossProfit/grossLoss).toFixed(2) : '--';
-    document.getElementById('metric-pf').innerHTML = pf;
-    let avgProfit = closedHistory.length ? (closedHistory.reduce((a,b)=>a+b.realizedPnl,0)/closedHistory.length).toFixed(2) : 0;
-    document.getElementById('metric-exp').innerHTML = `$${avgProfit}`;
+    const totalUpnl = state.openTrades.reduce((acc, t) => acc + (t.unrealizedPnl || 0), 0);
+    dom.headerBalance.textContent = state.balance >= 10000 ? `$${Math.round(state.balance/1000)}k` : `$${state.balance.toFixed(0)}`;
+    dom.headerUpnl.textContent = `${totalUpnl >= 0 ? '+' : ''}$${totalUpnl.toFixed(0)}`;
+    
+    const wins = state.closedHistory.filter(t => t.realizedPnl > 0).length;
+    const total = state.closedHistory.length;
+    const wr = total ? ((wins / total) * 100).toFixed(0) : '--';
+    dom.metricWr.textContent = wr !== '--' ? `${wr}%` : '--';
+    dom.metricTotal.textContent = total;
+    
+    const grossProfit = state.closedHistory.filter(t => t.realizedPnl > 0).reduce((a, b) => a + b.realizedPnl, 0);
+    const grossLoss = Math.abs(state.closedHistory.filter(t => t.realizedPnl < 0).reduce((a, b) => a + b.realizedPnl, 0));
+    const pf = grossLoss > 0 ? (grossProfit / grossLoss).toFixed(2) : '--';
+    dom.metricPf.textContent = pf;
+    
+    const avgProfit = state.closedHistory.length ? (state.closedHistory.reduce((a, b) => a + b.realizedPnl, 0) / state.closedHistory.length).toFixed(2) : 0;
+    dom.metricExp.textContent = `$${avgProfit}`;
   }
 
   // ========== TRADING FUNCTIONS ==========
   window.closeTradeById = function(id, reason) {
-    const idx = openTrades.findIndex(t => t.id === id);
+    const idx = state.openTrades.findIndex(t => t.id === id);
     if (idx === -1) return;
-    const trade = openTrades[idx];
+    
+    const trade = state.openTrades[idx];
     const finalPnl = trade.unrealizedPnl;
-    balance += trade.initialMargin + finalPnl;
-    closedHistory.unshift({
-      id: trade.id, symbol: trade.symbol, side: trade.side,
-      entryPrice: trade.entryPrice, exitPrice: trade.currentPrice,
-      realizedPnl: finalPnl, closeReason: reason,
+    state.balance += trade.initialMargin + finalPnl;
+    
+    state.closedHistory.unshift({
+      id: trade.id,
+      symbol: trade.symbol,
+      side: trade.side,
+      entryPrice: trade.entryPrice,
+      exitPrice: trade.currentPrice,
+      realizedPnl: finalPnl,
+      closeReason: reason,
       closedAt: new Date().toLocaleString()
     });
-    openTrades.splice(idx,1);
-    toast(`${trade.symbol} ${trade.side} closed: ${finalPnl>=0 ? `+$${finalPnl.toFixed(2)}` : `-$${Math.abs(finalPnl).toFixed(2)}`} (${reason})`, finalPnl>=0 ? 'win' : 'loss');
+    
+    state.openTrades.splice(idx, 1);
+    
+    toast(`${trade.symbol} ${trade.side} closed: ${finalPnl >= 0 ? '+' : ''}$${finalPnl.toFixed(2)} (${reason})`,
+      finalPnl >= 0 ? 'win' : 'loss'
+    );
+    
     renderOpenTradesTable();
     renderHistoryTable();
     updateHeaderAndMetrics();
@@ -806,44 +925,60 @@
     updateOpenCount();
   };
 
-  function openTradeModal(side, sym) {
-    const data = pairDataCache.get(sym);
+  window.openTradeModal = function(side, sym) {
+    const data = state.pairData.get(sym);
     if (!data) return toast("Data not ready", "error");
     const analysis = data.analysis;
-    document.getElementById('modal-title').innerText = `Open ${side} ${sym}`;
-    const modal = document.getElementById('trade-modal');
-    modal.classList.add('open');
+    
+    document.getElementById('modal-title').textContent = `Open ${side} ${sym}`;
+    document.getElementById('trade-modal').classList.add('open');
+    
     const updateRisk = () => {
       const amount = parseFloat(document.getElementById('modal-amount').value) || 200;
       const lev = parseFloat(document.getElementById('modal-leverage').value);
       const positionSize = amount * lev;
       const riskAmount = Math.abs(analysis.entry - analysis.sl) / analysis.entry * positionSize;
-      const riskPct = (riskAmount / balance) * 100;
+      const riskPct = (riskAmount / state.balance) * 100;
       document.getElementById('modal-risk-info').innerHTML = `
         <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Position Size:</span><span class="accent-blue">$${positionSize.toFixed(2)}</span></div>
         <div style="display:flex; justify-content:space-between; margin-bottom:6px;"><span>Risk Amount:</span><span class="down">-$${riskAmount.toFixed(2)}</span></div>
-        <div style="display:flex; justify-content:space-between;"><span>Risk % of Balance:</span><span style="color:${riskPct>10?'#ef4444':riskPct>5?'#f59e0b':'#10b981'}">${riskPct.toFixed(1)}%</span></div>
+        <div style="display:flex; justify-content:space-between;"><span>Risk % of Balance:</span><span style="color:${riskPct > 10 ? '#ef4444' : riskPct > 5 ? '#f59e0b' : '#10b981'}">${riskPct.toFixed(1)}%</span></div>
       `;
     };
+    
     document.getElementById('modal-amount').oninput = updateRisk;
     document.getElementById('modal-leverage').onchange = updateRisk;
     updateRisk();
+    
     document.getElementById('modal-confirm').onclick = () => {
       const amount = parseFloat(document.getElementById('modal-amount').value);
       const lev = parseFloat(document.getElementById('modal-leverage').value);
-      if (amount > balance) { toast("Insufficient balance", "loss"); return; }
+      
+      if (amount > state.balance) { toast("Insufficient balance", "loss"); return; }
       if (amount < 10) { toast("Minimum $10", "loss"); return; }
+      
       const positionSize = amount * lev;
       const riskAmount = Math.abs(analysis.entry - analysis.sl) / analysis.entry * positionSize;
-      if (riskAmount > balance * 0.25) { toast("Risk >25% of balance", "loss"); return; }
+      if (riskAmount > state.balance * 0.25) { toast("Risk >25% of balance", "loss"); return; }
+      
       const newTrade = {
-        id: Date.now(), symbol: sym, side: side, entryPrice: analysis.entry,
-        sl: analysis.sl, tp: analysis.tp1, leverage: lev, initialMargin: amount,
-        positionSize: positionSize, currentPrice: analysis.entry, unrealizedPnl: 0,
+        id: Date.now(),
+        symbol: sym,
+        side: side,
+        entryPrice: analysis.entry,
+        sl: analysis.sl,
+        tp: analysis.tp1,
+        leverage: lev,
+        initialMargin: amount,
+        positionSize: positionSize,
+        currentPrice: analysis.entry,
+        unrealizedPnl: 0,
         openTime: new Date().toLocaleString()
       };
-      openTrades.push(newTrade);
-      balance -= amount;
+      
+      state.openTrades.push(newTrade);
+      state.balance -= amount;
+      
       toast(`✅ ${side} ${sym} opened @ ${formatPrice(analysis.entry)}`, "win");
       closeModal();
       renderOpenTradesTable();
@@ -851,29 +986,41 @@
       persistAll();
       updateOpenCount();
     };
-  }
+  };
 
-  function closeModal() { document.getElementById('trade-modal').classList.remove('open'); }
+  window.closeModal = function() {
+    document.getElementById('trade-modal').classList.remove('open');
+  };
 
   // ========== UPDATE OPEN TRADES ==========
   async function updateOpenTrades() {
-    if (!openTrades.length) return;
-    for (let trade of openTrades) {
+    if (!state.openTrades.length) return;
+    
+    for (const trade of state.openTrades) {
       const realPrice = await fetchRealtimePrice(trade.symbol);
       if (!realPrice) continue;
+      
       trade.currentPrice = realPrice;
-      let pnlRaw = trade.side === 'LONG' 
-        ? (realPrice - trade.entryPrice) / trade.entryPrice * trade.positionSize 
+      const pnlRaw = trade.side === 'LONG'
+        ? (realPrice - trade.entryPrice) / trade.entryPrice * trade.positionSize
         : (trade.entryPrice - realPrice) / trade.entryPrice * trade.positionSize;
       trade.unrealizedPnl = pnlRaw;
+      
+      let shouldClose = false;
+      let reason = '';
       if (trade.side === 'LONG') {
-        if (realPrice <= trade.sl) closeTradeById(trade.id, 'Stop Loss');
-        else if (realPrice >= trade.tp) closeTradeById(trade.id, 'Take Profit');
+        if (realPrice <= trade.sl) { shouldClose = true; reason = 'Stop Loss'; }
+        else if (realPrice >= trade.tp) { shouldClose = true; reason = 'Take Profit'; }
       } else {
-        if (realPrice >= trade.sl) closeTradeById(trade.id, 'Stop Loss');
-        else if (realPrice <= trade.tp) closeTradeById(trade.id, 'Take Profit');
+        if (realPrice >= trade.sl) { shouldClose = true; reason = 'Stop Loss'; }
+        else if (realPrice <= trade.tp) { shouldClose = true; reason = 'Take Profit'; }
+      }
+      
+      if (shouldClose) {
+        closeTradeById(trade.id, reason);
       }
     }
+    
     renderOpenTradesTable();
     updateHeaderAndMetrics();
     persistAll();
@@ -883,44 +1030,50 @@
   // ========== TIMEFRAME & COUNTDOWN ==========
   function initTimeframeButtons() {
     const cont = document.getElementById('tf-container');
-    cont.innerHTML = TIMEFRAMES.map(tf => `<button class="tf-btn ${tf===currentTF?'active':''}" onclick="changeTF('${tf}')">${tf}</button>`).join('');
+    cont.innerHTML = TIMEFRAMES.map(tf =>
+      `<button class="tf-btn ${tf === state.currentTF ? 'active' : ''}" onclick="changeTF('${tf}')">${tf}</button>`
+    ).join('');
   }
-  window.changeTF = (tf) => { 
-    currentTF = tf; 
-    initTimeframeButtons(); 
-    scanAllPairs(); 
+
+  window.changeTF = function(tf) {
+    state.currentTF = tf;
+    initTimeframeButtons();
+    scanAllPairs(true).then(() => {
+      if (state.currentPair && state.pairData.has(state.currentPair)) {
+        updateChart(state.currentPair);
+      }
+    });
   };
-  window.selectPair = (pair) => { 
-    currentPair = pair; 
-    renderPairSidebar(); 
-    if (pairDataCache.has(pair)) {
+
+  window.selectPair = function(pair) {
+    if (state.currentPair === pair) return;
+    state.currentPair = pair;
+    renderPairSidebar();
+    if (state.pairData.has(pair)) {
       renderSignalCard(pair);
       updateChart(pair);
     }
   };
-  window.openTradeModal = openTradeModal;
-  window.closeModal = closeModal;
 
   function startCountdown() {
     if (countdownInterval) clearInterval(countdownInterval);
     countdownInterval = setInterval(() => {
-      const tfMs = { '1m':60000, '5m':300000, '15m':900000, '1h':3600000 }[currentTF] || 300000;
+      const tfMs = { '1m': 60000, '5m': 300000, '15m': 900000, '1h': 3600000 }[state.currentTF] || 300000;
       const now = Date.now();
       const nextCandle = Math.ceil(now / tfMs) * tfMs;
       const remain = nextCandle - now;
-      const mins = Math.floor(remain/60000);
-      const secs = Math.floor((remain%60000)/1000);
-      document.getElementById('countdown-display').innerHTML = `${mins}m ${secs}s`;
-      const progress = ((tfMs-remain)/tfMs)*100;
-      document.getElementById('progress-fill').style.width = `${Math.min(100,progress)}%`;
-      if (remain < 800) setTimeout(()=> scanAllPairs(), 100);
+      const mins = Math.floor(remain / 60000);
+      const secs = Math.floor((remain % 60000) / 1000);
+      dom.countdownDisplay.textContent = `${mins}m ${secs}s`;
+      const progress = ((tfMs - remain) / tfMs) * 100;
+      dom.progressFill.style.width = `${Math.min(100, progress)}%`;
     }, 200);
   }
 
   // ========== TAB SWITCHING ==========
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const tabName = btn.getAttribute('data-tab');
       document.getElementById('tab-open').style.display = tabName === 'open' ? 'block' : 'none';
@@ -932,15 +1085,20 @@
 
   document.getElementById('clear-data-btn')?.addEventListener('click', () => {
     if (confirm('⚠️ Reset all trading data? Balance will return to $10,000')) {
-      balance = 10000; openTrades = []; closedHistory = [];
-      persistAll(); renderOpenTradesTable(); renderHistoryTable();
-      updateHeaderAndMetrics(); updateOpenCount();
+      state.balance = 10000;
+      state.openTrades = [];
+      state.closedHistory = [];
+      persistAll();
+      renderOpenTradesTable();
+      renderHistoryTable();
+      updateHeaderAndMetrics();
+      updateOpenCount();
       toast('All data reset', 'info');
     }
   });
 
   document.getElementById('search-input')?.addEventListener('input', (e) => {
-    searchQuery = e.target.value;
+    state.searchQuery = e.target.value;
     renderPairSidebar();
   });
 
@@ -950,31 +1108,48 @@
     initTimeframeButtons();
     startCountdown();
     startLoadingAnimation();
-    
-    // Initialize chart first
     initChart();
     
-    await scanAllPairs();
+    await scanAllPairs(true);
+    
     renderOpenTradesTable();
     renderHistoryTable();
     updateHeaderAndMetrics();
     updateOpenCount();
     
-    // Update chart after data loads
-    if (currentPair && pairDataCache.has(currentPair)) {
-      updateChart(currentPair);
+    if (state.currentPair && state.pairData.has(state.currentPair)) {
+      renderSignalCard(state.currentPair);
+      updateChart(state.currentPair);
     }
     
-    setInterval(async () => { await updateOpenTrades(); }, 2000);
-    setInterval(async () => { 
-      await scanAllPairs();
-      renderPairSidebar(); 
-      if (currentPair && pairDataCache.has(currentPair)) {
-        renderSignalCard(currentPair);
-        updateChart(currentPair);
+    finishLoading();
+    
+    // Update open trades every 3 seconds
+    setInterval(updateOpenTrades, 3000);
+    
+    // Refresh data every 15 seconds (only if not scanning)
+    setInterval(async () => {
+      if (!state.isScanning) {
+        await scanAllPairs(false);
+        if (state.currentPair && state.pairData.has(state.currentPair)) {
+          renderSignalCard(state.currentPair);
+        }
       }
-    }, 10000);
+    }, 15000);
   }
+
+  // Handle visibility change - pause updates when tab is hidden
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      // Tab hidden - reduce updates
+    } else {
+      // Tab visible - refresh data
+      if (!state.isScanning) {
+        scanAllPairs(false);
+      }
+    }
+  });
+
   bootstrap();
 </script>
 </body>
