@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>FuturesEdge | 50+ Assets Paper Trading Terminal</title>
+  <title>Quorix Futures Bot | 50+ Assets Paper Trading Terminal</title>
   <style>
     * {
       margin: 0;
@@ -69,19 +69,31 @@
       flex-wrap: wrap;
     }
     .logo-icon {
-      width: 28px;
-      height: 28px;
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      width: 32px;
+      height: 32px;
       border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
       font-size: 14px;
+      background: transparent;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .logo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
     }
     .logo-text {
       font-weight: 700;
       font-size: 14px;
+      background: linear-gradient(135deg, #f0f4ff, #8b9cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
     .badge-paper, .persist-badge, .asset-count {
       font-size: 8px;
@@ -546,8 +558,10 @@
 
 <div class="app-header">
   <div class="logo-area">
-    <div class="logo-icon">⚡</div>
-    <span class="logo-text">FuturesEdge</span>
+    <div class="logo-icon">
+      <img src="website/content/quorix_logo.png" alt="Quorix Futures Bot Logo" onerror="this.style.display='none'; this.parentElement.textContent='QF';">
+    </div>
+    <span class="logo-text">Quorix Futures Bot</span>
     <span class="badge-paper">paper</span>
     <span class="asset-count" id="asset-count">52 assets</span>
     <span class="persist-badge">💾 auto-save</span>
