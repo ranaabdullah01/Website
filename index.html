@@ -99,25 +99,6 @@
       letter-spacing: 0.3px;
     }
 
-    .live-indicator {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 10px;
-      background: var(--bg-elevated);
-      padding: 4px 10px;
-      border-radius: 20px;
-      border: 1px solid var(--border-dim);
-    }
-    .pulse-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--accent-green);
-      border-radius: 50%;
-      animation: pulse 1.8s infinite;
-    }
-    @keyframes pulse { 0% { opacity: 0.4; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
-
     .header-stats {
       display: flex;
       gap: 12px;
@@ -694,10 +675,6 @@
       <img src="content/quorix_logo.png" alt="Quorix Futures Bot Logo" onerror="this.style.display='none'; this.parentElement.textContent='QF';">
     </div>
     <span class="logo-text">Quorix Futures Bot</span>
-  </div>
-  <div class="live-indicator">
-    <div class="pulse-dot"></div>
-    <span>REAL-TIME</span>
   </div>
   <div class="header-stats">
     <div class="stat-chip"><span class="chip-label">Balance</span><span class="chip-value" id="header-balance">$10k</span></div>
