@@ -99,16 +99,6 @@
       background-clip: text;
       letter-spacing: 0.3px;
     }
-    .badge-paper, .persist-badge, .asset-count {
-      font-size: 8px;
-      padding: 2px 8px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.08);
-    }
-    .asset-count {
-      background: var(--accent-blue);
-      color: white;
-    }
 
     .live-indicator {
       display: flex;
@@ -722,9 +712,6 @@
       <img src="content/quorix_logo.png" alt="Quorix Futures Bot Logo" onerror="this.style.display='none'; this.parentElement.textContent='QF';">
     </div>
     <span class="logo-text">Quorix Futures Bot</span>
-    <span class="badge-paper">paper</span>
-    <span class="asset-count" id="asset-count">52 assets</span>
-    <span class="persist-badge">💾 auto-save</span>
   </div>
   <div class="live-indicator">
     <div class="pulse-dot"></div>
@@ -891,7 +878,6 @@
     const msgEl = document.getElementById('loadingMessage');
     const randomMsg = LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)];
     msgEl.innerHTML = `<span class="emoji">${randomMsg.emoji}</span> ${randomMsg.text}`;
-    // Add a small fade effect
     msgEl.style.opacity = '0';
     setTimeout(() => {
       msgEl.style.opacity = '1';
@@ -914,32 +900,23 @@
   }
 
   function startLoadingAnimation() {
-    // Initial message
     updateLoadingMessage();
-    
-    // Change message every 3 seconds
     loadingInterval = setInterval(() => {
       updateLoadingMessage();
     }, 3000);
     
-    // Start progress bar animation (simulated until actual progress)
     let progress = 0;
     const progressInterval = setInterval(() => {
-      // Gradually increase, but never reach 100% until actually done
       const increment = Math.random() * 8 + 2;
       progress = Math.min(progress + increment, 95);
       updateLoadingProgress(progress);
     }, 600);
     
-    // Store interval to clear later
     window._progressInterval = progressInterval;
   }
 
   function finishLoading() {
-    // Complete the progress bar
     updateLoadingProgress(100);
-    
-    // Small delay before hiding for a satisfying finish
     setTimeout(() => {
       hideLoadingOverlay();
       if (window._progressInterval) {
@@ -1052,16 +1029,13 @@
         pairDataCache.set(sym, { candles, ticker, analysis });
       }
       completed++;
-      // Update progress
       const percent = (completed / total) * 100;
       updateLoadingProgress(percent);
     }
     
     renderPairSidebar();
     if(currentPair && pairDataCache.has(currentPair)) renderSignalCard(currentPair);
-    document.getElementById('asset-count').innerHTML = `${SYMBOLS.length} assets`;
     
-    // Finish loading animation
     finishLoading();
   }
 
@@ -1279,7 +1253,6 @@
     }
   });
 
-  // Search functionality
   document.getElementById('search-input')?.addEventListener('input', (e) => {
     searchQuery = e.target.value;
     renderPairSidebar();
@@ -1327,13 +1300,8 @@
     loadPersistedData();
     initTimeframeButtons();
     startCountdown();
-    
-    // Start loading animation
     startLoadingAnimation();
-    
-    // Load data with progress tracking
     await scanAllPairs();
-    
     renderOpenTradesTable();
     renderHistoryTable();
     updateHeaderAndMetrics();
