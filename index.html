@@ -45,7 +45,6 @@
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #2a2f3f; border-radius: 6px; }
 
-    /* Mobile-first header */
     .app-header {
       position: sticky;
       top: 0;
@@ -143,7 +142,6 @@
       font-size: 12px;
     }
 
-    /* Dashboard - mobile column layout */
     .dashboard {
       display: flex;
       flex-direction: column;
@@ -151,7 +149,6 @@
       min-height: calc(100vh - 70px);
     }
 
-    /* Sidebar becomes top section on mobile */
     .side-panel {
       width: 100%;
       background: var(--bg-card);
@@ -198,7 +195,6 @@
       border: 1px solid var(--border-dim);
     }
 
-    /* Search Bar */
     .search-container {
       padding: 8px 12px;
       border-bottom: 1px solid var(--border-dim);
@@ -264,7 +260,6 @@
     .sig-long { background: var(--success-bg); color: var(--accent-green); }
     .sig-short { background: var(--danger-bg); color: var(--accent-red); }
 
-    /* Main area */
     .main-area {
       flex: 1;
       padding: 16px;
@@ -273,7 +268,6 @@
       gap: 16px;
     }
 
-    /* Signal card - mobile optimized */
     .signal-card {
       background: var(--bg-elevated);
       border-radius: 20px;
@@ -351,7 +345,6 @@
       text-align: center;
     }
 
-    /* Tabs - mobile friendly */
     .tabs {
       display: flex;
       gap: 4px;
@@ -374,7 +367,6 @@
       border-bottom: 2px solid var(--accent-blue);
     }
 
-    /* Tables - horizontal scroll on mobile */
     .table-wrapper {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -400,7 +392,6 @@
       font-size: 11px;
     }
     
-    /* HIGHLY VISIBLE CLOSE BUTTON */
     .close-btn {
       background: linear-gradient(135deg, #ef4444, #b91c1c);
       border: none;
@@ -419,7 +410,6 @@
       transform: scale(0.95);
     }
     
-    /* Cancel button - highly visible */
     .cancel-btn {
       background: linear-gradient(135deg, #6b7280, #4b5563);
       border: none;
@@ -435,7 +425,6 @@
     }
     .cancel-btn:active { transform: scale(0.98); }
     
-    /* Leverage selector - visible numbers */
     #modal-leverage {
       background: #1e2538;
       border: 1px solid var(--accent-blue);
@@ -453,7 +442,6 @@
       font-weight: 500;
     }
     
-    /* Modal */
     .modal-bg {
       position: fixed;
       inset: 0;
@@ -478,7 +466,6 @@
       border: 1px solid var(--border-glow);
     }
     
-    /* Toast */
     .toast-container {
       position: fixed;
       bottom: 20px;
@@ -508,7 +495,6 @@
     .up { color: var(--accent-green); }
     .down { color: var(--accent-red); }
     
-    /* Utility */
     #signal-details { padding: 0 16px 20px 16px; }
     #signal-analysis {
       font-size: 11px;
@@ -538,7 +524,6 @@
     }
     .accent-blue { color: #3b82f6; font-weight: 700; }
     
-    /* No results message */
     .no-results {
       text-align: center;
       padding: 20px;
@@ -578,7 +563,6 @@
       width: 100%;
     }
 
-    /* Animated crypto spinner */
     .crypto-spinner {
       position: relative;
       width: 100px;
@@ -627,7 +611,6 @@
       50% { transform: translate(-50%, -60%) scale(1.1); }
     }
 
-    /* Loading text */
     .loading-title {
       font-size: 22px;
       font-weight: 700;
@@ -655,7 +638,6 @@
       margin-right: 8px;
     }
 
-    /* Progress bar */
     .loading-progress {
       width: 100%;
       height: 4px;
@@ -735,7 +717,6 @@
       <div style="height: 3px; background: #1e2432; margin-top: 6px;"><div id="progress-fill" style="width: 0%; height: 100%; background: linear-gradient(90deg, #3b82f6, #8b5cf6); transition: width 0.3s linear;"></div></div>
     </div>
     
-    <!-- SEARCH BAR -->
     <div class="search-container">
       <input type="text" class="search-input" id="search-input" placeholder="🔍 Search crypto... (BTC, ETH, SOL, etc.)" autocomplete="off">
     </div>
@@ -872,9 +853,11 @@
   let countdownInterval = null;
   let searchQuery = '';
   let loadingInterval = null;
+  let isLoadingComplete = false;
 
   // ========== LOADING OVERLAY FUNCTIONS ==========
   function updateLoadingMessage() {
+    if (isLoadingComplete) return;
     const msgEl = document.getElementById('loadingMessage');
     const randomMsg = LOADING_MESSAGES[Math.floor(Math.random() * LOADING_MESSAGES.length)];
     msgEl.innerHTML = `<span class="emoji">${randomMsg.emoji}</span> ${randomMsg.text}`;
@@ -887,8 +870,9 @@
   function updateLoadingProgress(percent) {
     const bar = document.getElementById('loadingBar');
     const percentEl = document.getElementById('loadingPercent');
-    bar.style.width = `${Math.min(100, percent)}%`;
-    percentEl.textContent = `${Math.min(100, Math.round(percent))}%`;
+    const clampedPercent = Math.min(100, Math.max(0, percent));
+    bar.style.width = `${clampedPercent}%`;
+    percentEl.textContent = `${Math.round(clampedPercent)}%`;
   }
 
   function hideLoadingOverlay() {
@@ -900,30 +884,20 @@
   }
 
   function startLoadingAnimation() {
+    isLoadingComplete = false;
     updateLoadingMessage();
     loadingInterval = setInterval(() => {
       updateLoadingMessage();
     }, 3000);
-    
-    let progress = 0;
-    const progressInterval = setInterval(() => {
-      const increment = Math.random() * 8 + 2;
-      progress = Math.min(progress + increment, 95);
-      updateLoadingProgress(progress);
-    }, 600);
-    
-    window._progressInterval = progressInterval;
+    updateLoadingProgress(0);
   }
 
   function finishLoading() {
+    isLoadingComplete = true;
     updateLoadingProgress(100);
     setTimeout(() => {
       hideLoadingOverlay();
-      if (window._progressInterval) {
-        clearInterval(window._progressInterval);
-        window._progressInterval = null;
-      }
-    }, 600);
+    }, 400);
   }
 
   // ========== PERSISTENCE ==========
@@ -1022,15 +996,28 @@
     let completed = 0;
     const total = symbolsToScan.length;
     
-    for(let sym of symbolsToScan) {
-      const [candles, ticker] = await Promise.all([fetchKlines(sym), fetchTicker(sym)]);
-      if(candles.length && ticker.price) {
-        const analysis = await analyzePair(sym, candles, ticker);
-        pairDataCache.set(sym, { candles, ticker, analysis });
-      }
-      completed++;
-      const percent = (completed / total) * 100;
-      updateLoadingProgress(percent);
+    // Use Promise.all with concurrency limit for faster scanning
+    const concurrencyLimit = 10;
+    const batches = [];
+    for (let i = 0; i < symbolsToScan.length; i += concurrencyLimit) {
+      batches.push(symbolsToScan.slice(i, i + concurrencyLimit));
+    }
+    
+    for (const batch of batches) {
+      await Promise.all(batch.map(async (sym) => {
+        try {
+          const [candles, ticker] = await Promise.all([fetchKlines(sym), fetchTicker(sym)]);
+          if (candles.length && ticker.price) {
+            const analysis = await analyzePair(sym, candles, ticker);
+            pairDataCache.set(sym, { candles, ticker, analysis });
+          }
+        } catch (e) {
+          // Silent fail for individual pairs
+        }
+        completed++;
+        const percent = (completed / total) * 100;
+        updateLoadingProgress(percent);
+      }));
     }
     
     renderPairSidebar();
